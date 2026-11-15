@@ -1,0 +1,1 @@
+(setq s "Hi (there)")

@@ -1,0 +1,8 @@
+{
+  "source_file": "test/t_str.lisp",
+  "target_file": "data/program.bin",
+  "input_file": "data/input.txt",
+  "journal_file": "log/journal.log",
+  "input_first_tick": 100,
+  "input_period": 100
+}

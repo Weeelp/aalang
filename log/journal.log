@@ -1,0 +1,4 @@
+TICK      0 PC   0 | [main] j 0x0008
+TICK      1 PC   8 | [main] addi t0, zero, 0
+TICK      2 PC  12 | [main] sw t0, 12(zero)
+TICK     12 PC  16 | [main] halt
