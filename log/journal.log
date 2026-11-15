@@ -1,4 +1,801 @@
 TICK      0 PC   0 | [main] j 0x0008
-TICK      1 PC   8 | [main] addi t0, zero, 0
-TICK      2 PC  12 | [main] sw t0, 12(zero)
-TICK     12 PC  16 | [main] halt
+TICK      1 PC   8 | [main] addi sp, zero, 8192
+TICK      2 PC  12 | [main] addi t0, zero, 48
+TICK      3 PC  16 | [main] addi t2, zero, 7
+TICK      4 PC  20 | [main] addi a0, t2, 0
+TICK      5 PC  24 | [main] sw t0, 0(zero)
+TICK     15 PC  28 | [main] jal ra, 0x0034
+TICK     16 PC  52 | [main] addi sp, sp, -36
+TICK     17 PC  56 | [main] sw ra, 0(sp)
+TICK     27 PC  60 | [main] sw a0, 32(sp)
+TICK     37 PC  64 | [main] lw t1, 32(sp)
+TICK     38 PC  68 | [main] addi t2, zero, 2
+TICK     39 PC  72 | [main] bge t1, t2, 0x0054
+TICK     40 PC  84 | [main] lw t1, 32(sp)
+TICK     41 PC  88 | [main] addi t2, zero, 1
+TICK     42 PC  92 | [main] sub t1, t1, t2
+TICK     43 PC  96 | [main] addi a0, t1, 0
+TICK     44 PC 100 | [main] jal ra, 0x0034
+TICK     45 PC  52 | [main] addi sp, sp, -36
+TICK     46 PC  56 | [main] sw ra, 0(sp)
+TICK     56 PC  60 | [main] sw a0, 32(sp)
+TICK     66 PC  64 | [main] lw t1, 32(sp)
+TICK     67 PC  68 | [main] addi t2, zero, 2
+TICK     68 PC  72 | [main] bge t1, t2, 0x0054
+TICK     69 PC  84 | [main] lw t1, 32(sp)
+TICK     70 PC  88 | [main] addi t2, zero, 1
+TICK     71 PC  92 | [main] sub t1, t1, t2
+TICK     72 PC  96 | [main] addi a0, t1, 0
+TICK     73 PC 100 | [main] jal ra, 0x0034
+TICK     74 PC  52 | [main] addi sp, sp, -36
+TICK     75 PC  56 | [main] sw ra, 0(sp)
+TICK     85 PC  60 | [main] sw a0, 32(sp)
+TICK     95 PC  64 | [main] lw t1, 32(sp)
+TICK     96 PC  68 | [main] addi t2, zero, 2
+TICK     97 PC  72 | [main] bge t1, t2, 0x0054
+TICK     98 PC  84 | [main] lw t1, 32(sp)
+TICK     99 PC  88 | [main] addi t2, zero, 1
+TICK    100 PC  92 | IRQ raised (data='9')
+TICK    100 PC  92 | [main] sub t1, t1, t2
+TICK    101 PC  96 | [main] addi a0, t1, 0
+TICK    102 PC 100 | [main] jal ra, 0x0034
+TICK    103 PC  52 | [main] addi sp, sp, -36
+TICK    104 PC  56 | [main] sw ra, 0(sp)
+TICK    114 PC  60 | [main] sw a0, 32(sp)
+TICK    124 PC  64 | [main] lw t1, 32(sp)
+TICK    125 PC  68 | [main] addi t2, zero, 2
+TICK    126 PC  72 | [main] bge t1, t2, 0x0054
+TICK    127 PC  84 | [main] lw t1, 32(sp)
+TICK    128 PC  88 | [main] addi t2, zero, 1
+TICK    129 PC  92 | [main] sub t1, t1, t2
+TICK    130 PC  96 | [main] addi a0, t1, 0
+TICK    131 PC 100 | [main] jal ra, 0x0034
+TICK    132 PC  52 | [main] addi sp, sp, -36
+TICK    133 PC  56 | [main] sw ra, 0(sp)
+TICK    143 PC  60 | [main] sw a0, 32(sp)
+TICK    153 PC  64 | [main] lw t1, 32(sp)
+TICK    154 PC  68 | [main] addi t2, zero, 2
+TICK    155 PC  72 | [main] bge t1, t2, 0x0054
+TICK    156 PC  84 | [main] lw t1, 32(sp)
+TICK    157 PC  88 | [main] addi t2, zero, 1
+TICK    158 PC  92 | [main] sub t1, t1, t2
+TICK    159 PC  96 | [main] addi a0, t1, 0
+TICK    160 PC 100 | [main] jal ra, 0x0034
+TICK    161 PC  52 | [main] addi sp, sp, -36
+TICK    162 PC  56 | [main] sw ra, 0(sp)
+TICK    172 PC  60 | [main] sw a0, 32(sp)
+TICK    182 PC  64 | [main] lw t1, 32(sp)
+TICK    183 PC  68 | [main] addi t2, zero, 2
+TICK    184 PC  72 | [main] bge t1, t2, 0x0054
+TICK    185 PC  84 | [main] lw t1, 32(sp)
+TICK    186 PC  88 | [main] addi t2, zero, 1
+TICK    187 PC  92 | [main] sub t1, t1, t2
+TICK    188 PC  96 | [main] addi a0, t1, 0
+TICK    189 PC 100 | [main] jal ra, 0x0034
+TICK    190 PC  52 | [main] addi sp, sp, -36
+TICK    191 PC  56 | [main] sw ra, 0(sp)
+TICK    201 PC  60 | IRQ raised (data='7')
+TICK    201 PC  60 | OVERRUN: 1 char(s) lost
+TICK    201 PC  60 | [main] sw a0, 32(sp)
+TICK    211 PC  64 | [main] lw t1, 32(sp)
+TICK    212 PC  68 | [main] addi t2, zero, 2
+TICK    213 PC  72 | [main] bge t1, t2, 0x0054
+TICK    214 PC  76 | [main] lw t0, 32(sp)
+TICK    215 PC  80 | [main] j 0x0090
+TICK    216 PC 144 | [main] addi a0, t0, 0
+TICK    217 PC 148 | [main] lw ra, 0(sp)
+TICK    218 PC 152 | [main] addi sp, sp, 36
+TICK    219 PC 156 | [main] jalr zero, ra, 0
+TICK    220 PC 104 | [main] addi t0, a0, 0
+TICK    221 PC 108 | [main] lw t2, 32(sp)
+TICK    222 PC 112 | [main] addi t3, zero, 2
+TICK    223 PC 116 | [main] sub t2, t2, t3
+TICK    224 PC 120 | [main] addi a0, t2, 0
+TICK    225 PC 124 | [main] sw t0, 4(sp)
+TICK    235 PC 128 | [main] jal ra, 0x0034
+TICK    236 PC  52 | [main] addi sp, sp, -36
+TICK    237 PC  56 | [main] sw ra, 0(sp)
+TICK    247 PC  60 | [main] sw a0, 32(sp)
+TICK    257 PC  64 | [main] lw t1, 32(sp)
+TICK    258 PC  68 | [main] addi t2, zero, 2
+TICK    259 PC  72 | [main] bge t1, t2, 0x0054
+TICK    260 PC  76 | [main] lw t0, 32(sp)
+TICK    261 PC  80 | [main] j 0x0090
+TICK    262 PC 144 | [main] addi a0, t0, 0
+TICK    263 PC 148 | [main] lw ra, 0(sp)
+TICK    273 PC 152 | [main] addi sp, sp, 36
+TICK    274 PC 156 | [main] jalr zero, ra, 0
+TICK    275 PC 132 | [main] lw t0, 4(sp)
+TICK    276 PC 136 | [main] addi t1, a0, 0
+TICK    277 PC 140 | [main] add t0, t0, t1
+TICK    278 PC 144 | [main] addi a0, t0, 0
+TICK    279 PC 148 | [main] lw ra, 0(sp)
+TICK    280 PC 152 | [main] addi sp, sp, 36
+TICK    281 PC 156 | [main] jalr zero, ra, 0
+TICK    282 PC 104 | [main] addi t0, a0, 0
+TICK    283 PC 108 | [main] lw t2, 32(sp)
+TICK    293 PC 112 | [main] addi t3, zero, 2
+TICK    294 PC 116 | [main] sub t2, t2, t3
+TICK    295 PC 120 | [main] addi a0, t2, 0
+TICK    296 PC 124 | [main] sw t0, 4(sp)
+TICK    306 PC 128 | IRQ raised (data='\n')
+TICK    306 PC 128 | OVERRUN: 1 char(s) lost
+TICK    306 PC 128 | [main] jal ra, 0x0034
+TICK    307 PC  52 | [main] addi sp, sp, -36
+TICK    308 PC  56 | [main] sw ra, 0(sp)
+TICK    318 PC  60 | [main] sw a0, 32(sp)
+TICK    328 PC  64 | [main] lw t1, 32(sp)
+TICK    329 PC  68 | [main] addi t2, zero, 2
+TICK    330 PC  72 | [main] bge t1, t2, 0x0054
+TICK    331 PC  76 | [main] lw t0, 32(sp)
+TICK    332 PC  80 | [main] j 0x0090
+TICK    333 PC 144 | [main] addi a0, t0, 0
+TICK    334 PC 148 | [main] lw ra, 0(sp)
+TICK    344 PC 152 | [main] addi sp, sp, 36
+TICK    345 PC 156 | [main] jalr zero, ra, 0
+TICK    346 PC 132 | [main] lw t0, 4(sp)
+TICK    347 PC 136 | [main] addi t1, a0, 0
+TICK    348 PC 140 | [main] add t0, t0, t1
+TICK    349 PC 144 | [main] addi a0, t0, 0
+TICK    350 PC 148 | [main] lw ra, 0(sp)
+TICK    360 PC 152 | [main] addi sp, sp, 36
+TICK    361 PC 156 | [main] jalr zero, ra, 0
+TICK    362 PC 104 | [main] addi t0, a0, 0
+TICK    363 PC 108 | [main] lw t2, 32(sp)
+TICK    373 PC 112 | [main] addi t3, zero, 2
+TICK    374 PC 116 | [main] sub t2, t2, t3
+TICK    375 PC 120 | [main] addi a0, t2, 0
+TICK    376 PC 124 | [main] sw t0, 4(sp)
+TICK    386 PC 128 | [main] jal ra, 0x0034
+TICK    387 PC  52 | [main] addi sp, sp, -36
+TICK    388 PC  56 | [main] sw ra, 0(sp)
+TICK    398 PC  60 | [main] sw a0, 32(sp)
+TICK    408 PC  64 | IRQ raised (data='k')
+TICK    408 PC  64 | OVERRUN: 1 char(s) lost
+TICK    408 PC  64 | [main] lw t1, 32(sp)
+TICK    409 PC  68 | [main] addi t2, zero, 2
+TICK    410 PC  72 | [main] bge t1, t2, 0x0054
+TICK    411 PC  84 | [main] lw t1, 32(sp)
+TICK    412 PC  88 | [main] addi t2, zero, 1
+TICK    413 PC  92 | [main] sub t1, t1, t2
+TICK    414 PC  96 | [main] addi a0, t1, 0
+TICK    415 PC 100 | [main] jal ra, 0x0034
+TICK    416 PC  52 | [main] addi sp, sp, -36
+TICK    417 PC  56 | [main] sw ra, 0(sp)
+TICK    427 PC  60 | [main] sw a0, 32(sp)
+TICK    437 PC  64 | [main] lw t1, 32(sp)
+TICK    438 PC  68 | [main] addi t2, zero, 2
+TICK    439 PC  72 | [main] bge t1, t2, 0x0054
+TICK    440 PC  76 | [main] lw t0, 32(sp)
+TICK    441 PC  80 | [main] j 0x0090
+TICK    442 PC 144 | [main] addi a0, t0, 0
+TICK    443 PC 148 | [main] lw ra, 0(sp)
+TICK    444 PC 152 | [main] addi sp, sp, 36
+TICK    445 PC 156 | [main] jalr zero, ra, 0
+TICK    446 PC 104 | [main] addi t0, a0, 0
+TICK    447 PC 108 | [main] lw t2, 32(sp)
+TICK    448 PC 112 | [main] addi t3, zero, 2
+TICK    449 PC 116 | [main] sub t2, t2, t3
+TICK    450 PC 120 | [main] addi a0, t2, 0
+TICK    451 PC 124 | [main] sw t0, 4(sp)
+TICK    461 PC 128 | [main] jal ra, 0x0034
+TICK    462 PC  52 | [main] addi sp, sp, -36
+TICK    463 PC  56 | [main] sw ra, 0(sp)
+TICK    473 PC  60 | [main] sw a0, 32(sp)
+TICK    483 PC  64 | [main] lw t1, 32(sp)
+TICK    484 PC  68 | [main] addi t2, zero, 2
+TICK    485 PC  72 | [main] bge t1, t2, 0x0054
+TICK    486 PC  76 | [main] lw t0, 32(sp)
+TICK    487 PC  80 | [main] j 0x0090
+TICK    488 PC 144 | [main] addi a0, t0, 0
+TICK    489 PC 148 | [main] lw ra, 0(sp)
+TICK    499 PC 152 | [main] addi sp, sp, 36
+TICK    500 PC 156 | IRQ raised (data='l')
+TICK    500 PC 156 | OVERRUN: 1 char(s) lost
+TICK    500 PC 156 | [main] jalr zero, ra, 0
+TICK    501 PC 132 | [main] lw t0, 4(sp)
+TICK    502 PC 136 | [main] addi t1, a0, 0
+TICK    503 PC 140 | [main] add t0, t0, t1
+TICK    504 PC 144 | [main] addi a0, t0, 0
+TICK    505 PC 148 | [main] lw ra, 0(sp)
+TICK    515 PC 152 | [main] addi sp, sp, 36
+TICK    516 PC 156 | [main] jalr zero, ra, 0
+TICK    517 PC 132 | [main] lw t0, 4(sp)
+TICK    527 PC 136 | [main] addi t1, a0, 0
+TICK    528 PC 140 | [main] add t0, t0, t1
+TICK    529 PC 144 | [main] addi a0, t0, 0
+TICK    530 PC 148 | [main] lw ra, 0(sp)
+TICK    540 PC 152 | [main] addi sp, sp, 36
+TICK    541 PC 156 | [main] jalr zero, ra, 0
+TICK    542 PC 104 | [main] addi t0, a0, 0
+TICK    543 PC 108 | [main] lw t2, 32(sp)
+TICK    553 PC 112 | [main] addi t3, zero, 2
+TICK    554 PC 116 | [main] sub t2, t2, t3
+TICK    555 PC 120 | [main] addi a0, t2, 0
+TICK    556 PC 124 | [main] sw t0, 4(sp)
+TICK    566 PC 128 | [main] jal ra, 0x0034
+TICK    567 PC  52 | [main] addi sp, sp, -36
+TICK    568 PC  56 | [main] sw ra, 0(sp)
+TICK    578 PC  60 | [main] sw a0, 32(sp)
+TICK    588 PC  64 | [main] lw t1, 32(sp)
+TICK    589 PC  68 | [main] addi t2, zero, 2
+TICK    590 PC  72 | [main] bge t1, t2, 0x0054
+TICK    591 PC  84 | [main] lw t1, 32(sp)
+TICK    592 PC  88 | [main] addi t2, zero, 1
+TICK    593 PC  92 | [main] sub t1, t1, t2
+TICK    594 PC  96 | [main] addi a0, t1, 0
+TICK    595 PC 100 | [main] jal ra, 0x0034
+TICK    596 PC  52 | [main] addi sp, sp, -36
+TICK    597 PC  56 | [main] sw ra, 0(sp)
+TICK    607 PC  60 | IRQ raised (data='f')
+TICK    607 PC  60 | OVERRUN: 1 char(s) lost
+TICK    607 PC  60 | [main] sw a0, 32(sp)
+TICK    617 PC  64 | [main] lw t1, 32(sp)
+TICK    618 PC  68 | [main] addi t2, zero, 2
+TICK    619 PC  72 | [main] bge t1, t2, 0x0054
+TICK    620 PC  84 | [main] lw t1, 32(sp)
+TICK    621 PC  88 | [main] addi t2, zero, 1
+TICK    622 PC  92 | [main] sub t1, t1, t2
+TICK    623 PC  96 | [main] addi a0, t1, 0
+TICK    624 PC 100 | [main] jal ra, 0x0034
+TICK    625 PC  52 | [main] addi sp, sp, -36
+TICK    626 PC  56 | [main] sw ra, 0(sp)
+TICK    636 PC  60 | [main] sw a0, 32(sp)
+TICK    646 PC  64 | [main] lw t1, 32(sp)
+TICK    647 PC  68 | [main] addi t2, zero, 2
+TICK    648 PC  72 | [main] bge t1, t2, 0x0054
+TICK    649 PC  76 | [main] lw t0, 32(sp)
+TICK    650 PC  80 | [main] j 0x0090
+TICK    651 PC 144 | [main] addi a0, t0, 0
+TICK    652 PC 148 | [main] lw ra, 0(sp)
+TICK    653 PC 152 | [main] addi sp, sp, 36
+TICK    654 PC 156 | [main] jalr zero, ra, 0
+TICK    655 PC 104 | [main] addi t0, a0, 0
+TICK    656 PC 108 | [main] lw t2, 32(sp)
+TICK    657 PC 112 | [main] addi t3, zero, 2
+TICK    658 PC 116 | [main] sub t2, t2, t3
+TICK    659 PC 120 | [main] addi a0, t2, 0
+TICK    660 PC 124 | [main] sw t0, 4(sp)
+TICK    670 PC 128 | [main] jal ra, 0x0034
+TICK    671 PC  52 | [main] addi sp, sp, -36
+TICK    672 PC  56 | [main] sw ra, 0(sp)
+TICK    682 PC  60 | [main] sw a0, 32(sp)
+TICK    692 PC  64 | [main] lw t1, 32(sp)
+TICK    693 PC  68 | [main] addi t2, zero, 2
+TICK    694 PC  72 | [main] bge t1, t2, 0x0054
+TICK    695 PC  76 | [main] lw t0, 32(sp)
+TICK    696 PC  80 | [main] j 0x0090
+TICK    697 PC 144 | [main] addi a0, t0, 0
+TICK    698 PC 148 | [main] lw ra, 0(sp)
+TICK    708 PC 152 | IRQ raised (data='d')
+TICK    708 PC 152 | OVERRUN: 1 char(s) lost
+TICK    708 PC 152 | [main] addi sp, sp, 36
+TICK    709 PC 156 | [main] jalr zero, ra, 0
+TICK    710 PC 132 | [main] lw t0, 4(sp)
+TICK    711 PC 136 | [main] addi t1, a0, 0
+TICK    712 PC 140 | [main] add t0, t0, t1
+TICK    713 PC 144 | [main] addi a0, t0, 0
+TICK    714 PC 148 | [main] lw ra, 0(sp)
+TICK    724 PC 152 | [main] addi sp, sp, 36
+TICK    725 PC 156 | [main] jalr zero, ra, 0
+TICK    726 PC 104 | [main] addi t0, a0, 0
+TICK    727 PC 108 | [main] lw t2, 32(sp)
+TICK    737 PC 112 | [main] addi t3, zero, 2
+TICK    738 PC 116 | [main] sub t2, t2, t3
+TICK    739 PC 120 | [main] addi a0, t2, 0
+TICK    740 PC 124 | [main] sw t0, 4(sp)
+TICK    750 PC 128 | [main] jal ra, 0x0034
+TICK    751 PC  52 | [main] addi sp, sp, -36
+TICK    752 PC  56 | [main] sw ra, 0(sp)
+TICK    762 PC  60 | [main] sw a0, 32(sp)
+TICK    772 PC  64 | [main] lw t1, 32(sp)
+TICK    773 PC  68 | [main] addi t2, zero, 2
+TICK    774 PC  72 | [main] bge t1, t2, 0x0054
+TICK    775 PC  76 | [main] lw t0, 32(sp)
+TICK    776 PC  80 | [main] j 0x0090
+TICK    777 PC 144 | [main] addi a0, t0, 0
+TICK    778 PC 148 | [main] lw ra, 0(sp)
+TICK    788 PC 152 | [main] addi sp, sp, 36
+TICK    789 PC 156 | [main] jalr zero, ra, 0
+TICK    790 PC 132 | [main] lw t0, 4(sp)
+TICK    800 PC 136 | IRQ raised (data='s')
+TICK    800 PC 136 | OVERRUN: 1 char(s) lost
+TICK    800 PC 136 | [main] addi t1, a0, 0
+TICK    801 PC 140 | [main] add t0, t0, t1
+TICK    802 PC 144 | [main] addi a0, t0, 0
+TICK    803 PC 148 | [main] lw ra, 0(sp)
+TICK    813 PC 152 | [main] addi sp, sp, 36
+TICK    814 PC 156 | [main] jalr zero, ra, 0
+TICK    815 PC 132 | [main] lw t0, 4(sp)
+TICK    825 PC 136 | [main] addi t1, a0, 0
+TICK    826 PC 140 | [main] add t0, t0, t1
+TICK    827 PC 144 | [main] addi a0, t0, 0
+TICK    828 PC 148 | [main] lw ra, 0(sp)
+TICK    838 PC 152 | [main] addi sp, sp, 36
+TICK    839 PC 156 | [main] jalr zero, ra, 0
+TICK    840 PC 104 | [main] addi t0, a0, 0
+TICK    841 PC 108 | [main] lw t2, 32(sp)
+TICK    851 PC 112 | [main] addi t3, zero, 2
+TICK    852 PC 116 | [main] sub t2, t2, t3
+TICK    853 PC 120 | [main] addi a0, t2, 0
+TICK    854 PC 124 | [main] sw t0, 4(sp)
+TICK    864 PC 128 | [main] jal ra, 0x0034
+TICK    865 PC  52 | [main] addi sp, sp, -36
+TICK    866 PC  56 | [main] sw ra, 0(sp)
+TICK    876 PC  60 | [main] sw a0, 32(sp)
+TICK    886 PC  64 | [main] lw t1, 32(sp)
+TICK    887 PC  68 | [main] addi t2, zero, 2
+TICK    888 PC  72 | [main] bge t1, t2, 0x0054
+TICK    889 PC  84 | [main] lw t1, 32(sp)
+TICK    890 PC  88 | [main] addi t2, zero, 1
+TICK    891 PC  92 | [main] sub t1, t1, t2
+TICK    892 PC  96 | [main] addi a0, t1, 0
+TICK    893 PC 100 | [main] jal ra, 0x0034
+TICK    894 PC  52 | [main] addi sp, sp, -36
+TICK    895 PC  56 | [main] sw ra, 0(sp)
+TICK    905 PC  60 | IRQ raised (data='k')
+TICK    905 PC  60 | OVERRUN: 1 char(s) lost
+TICK    905 PC  60 | [main] sw a0, 32(sp)
+TICK    915 PC  64 | [main] lw t1, 32(sp)
+TICK    916 PC  68 | [main] addi t2, zero, 2
+TICK    917 PC  72 | [main] bge t1, t2, 0x0054
+TICK    918 PC  84 | [main] lw t1, 32(sp)
+TICK    919 PC  88 | [main] addi t2, zero, 1
+TICK    920 PC  92 | [main] sub t1, t1, t2
+TICK    921 PC  96 | [main] addi a0, t1, 0
+TICK    922 PC 100 | [main] jal ra, 0x0034
+TICK    923 PC  52 | [main] addi sp, sp, -36
+TICK    924 PC  56 | [main] sw ra, 0(sp)
+TICK    934 PC  60 | [main] sw a0, 32(sp)
+TICK    944 PC  64 | [main] lw t1, 32(sp)
+TICK    945 PC  68 | [main] addi t2, zero, 2
+TICK    946 PC  72 | [main] bge t1, t2, 0x0054
+TICK    947 PC  84 | [main] lw t1, 32(sp)
+TICK    948 PC  88 | [main] addi t2, zero, 1
+TICK    949 PC  92 | [main] sub t1, t1, t2
+TICK    950 PC  96 | [main] addi a0, t1, 0
+TICK    951 PC 100 | [main] jal ra, 0x0034
+TICK    952 PC  52 | [main] addi sp, sp, -36
+TICK    953 PC  56 | [main] sw ra, 0(sp)
+TICK    963 PC  60 | [main] sw a0, 32(sp)
+TICK    973 PC  64 | [main] lw t1, 32(sp)
+TICK    974 PC  68 | [main] addi t2, zero, 2
+TICK    975 PC  72 | [main] bge t1, t2, 0x0054
+TICK    976 PC  76 | [main] lw t0, 32(sp)
+TICK    977 PC  80 | [main] j 0x0090
+TICK    978 PC 144 | [main] addi a0, t0, 0
+TICK    979 PC 148 | [main] lw ra, 0(sp)
+TICK    980 PC 152 | [main] addi sp, sp, 36
+TICK    981 PC 156 | [main] jalr zero, ra, 0
+TICK    982 PC 104 | [main] addi t0, a0, 0
+TICK    983 PC 108 | [main] lw t2, 32(sp)
+TICK    984 PC 112 | [main] addi t3, zero, 2
+TICK    985 PC 116 | [main] sub t2, t2, t3
+TICK    986 PC 120 | [main] addi a0, t2, 0
+TICK    987 PC 124 | [main] sw t0, 4(sp)
+TICK    997 PC 128 | [main] jal ra, 0x0034
+TICK    998 PC  52 | [main] addi sp, sp, -36
+TICK    999 PC  56 | [main] sw ra, 0(sp)
+TICK   1009 PC  60 | IRQ raised (data='l')
+TICK   1009 PC  60 | OVERRUN: 1 char(s) lost
+TICK   1009 PC  60 | [main] sw a0, 32(sp)
+TICK   1019 PC  64 | [main] lw t1, 32(sp)
+TICK   1020 PC  68 | [main] addi t2, zero, 2
+TICK   1021 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1022 PC  76 | [main] lw t0, 32(sp)
+TICK   1023 PC  80 | [main] j 0x0090
+TICK   1024 PC 144 | [main] addi a0, t0, 0
+TICK   1025 PC 148 | [main] lw ra, 0(sp)
+TICK   1035 PC 152 | [main] addi sp, sp, 36
+TICK   1036 PC 156 | [main] jalr zero, ra, 0
+TICK   1037 PC 132 | [main] lw t0, 4(sp)
+TICK   1038 PC 136 | [main] addi t1, a0, 0
+TICK   1039 PC 140 | [main] add t0, t0, t1
+TICK   1040 PC 144 | [main] addi a0, t0, 0
+TICK   1041 PC 148 | [main] lw ra, 0(sp)
+TICK   1042 PC 152 | [main] addi sp, sp, 36
+TICK   1043 PC 156 | [main] jalr zero, ra, 0
+TICK   1044 PC 104 | [main] addi t0, a0, 0
+TICK   1045 PC 108 | [main] lw t2, 32(sp)
+TICK   1055 PC 112 | [main] addi t3, zero, 2
+TICK   1056 PC 116 | [main] sub t2, t2, t3
+TICK   1057 PC 120 | [main] addi a0, t2, 0
+TICK   1058 PC 124 | [main] sw t0, 4(sp)
+TICK   1068 PC 128 | [main] jal ra, 0x0034
+TICK   1069 PC  52 | [main] addi sp, sp, -36
+TICK   1070 PC  56 | [main] sw ra, 0(sp)
+TICK   1080 PC  60 | [main] sw a0, 32(sp)
+TICK   1090 PC  64 | [main] lw t1, 32(sp)
+TICK   1091 PC  68 | [main] addi t2, zero, 2
+TICK   1092 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1093 PC  76 | [main] lw t0, 32(sp)
+TICK   1094 PC  80 | [main] j 0x0090
+TICK   1095 PC 144 | [main] addi a0, t0, 0
+TICK   1096 PC 148 | [main] lw ra, 0(sp)
+TICK   1106 PC 152 | IRQ raised (data='f')
+TICK   1106 PC 152 | OVERRUN: 1 char(s) lost
+TICK   1106 PC 152 | [main] addi sp, sp, 36
+TICK   1107 PC 156 | [main] jalr zero, ra, 0
+TICK   1108 PC 132 | [main] lw t0, 4(sp)
+TICK   1109 PC 136 | [main] addi t1, a0, 0
+TICK   1110 PC 140 | [main] add t0, t0, t1
+TICK   1111 PC 144 | [main] addi a0, t0, 0
+TICK   1112 PC 148 | [main] lw ra, 0(sp)
+TICK   1122 PC 152 | [main] addi sp, sp, 36
+TICK   1123 PC 156 | [main] jalr zero, ra, 0
+TICK   1124 PC 104 | [main] addi t0, a0, 0
+TICK   1125 PC 108 | [main] lw t2, 32(sp)
+TICK   1135 PC 112 | [main] addi t3, zero, 2
+TICK   1136 PC 116 | [main] sub t2, t2, t3
+TICK   1137 PC 120 | [main] addi a0, t2, 0
+TICK   1138 PC 124 | [main] sw t0, 4(sp)
+TICK   1148 PC 128 | [main] jal ra, 0x0034
+TICK   1149 PC  52 | [main] addi sp, sp, -36
+TICK   1150 PC  56 | [main] sw ra, 0(sp)
+TICK   1160 PC  60 | [main] sw a0, 32(sp)
+TICK   1170 PC  64 | [main] lw t1, 32(sp)
+TICK   1171 PC  68 | [main] addi t2, zero, 2
+TICK   1172 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1173 PC  84 | [main] lw t1, 32(sp)
+TICK   1174 PC  88 | [main] addi t2, zero, 1
+TICK   1175 PC  92 | [main] sub t1, t1, t2
+TICK   1176 PC  96 | [main] addi a0, t1, 0
+TICK   1177 PC 100 | [main] jal ra, 0x0034
+TICK   1178 PC  52 | [main] addi sp, sp, -36
+TICK   1179 PC  56 | [main] sw ra, 0(sp)
+TICK   1189 PC  60 | [main] sw a0, 32(sp)
+TICK   1199 PC  64 | [main] lw t1, 32(sp)
+TICK   1200 PC  68 | IRQ raised (data='h')
+TICK   1200 PC  68 | OVERRUN: 1 char(s) lost
+TICK   1200 PC  68 | [main] addi t2, zero, 2
+TICK   1201 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1202 PC  76 | [main] lw t0, 32(sp)
+TICK   1203 PC  80 | [main] j 0x0090
+TICK   1204 PC 144 | [main] addi a0, t0, 0
+TICK   1205 PC 148 | [main] lw ra, 0(sp)
+TICK   1206 PC 152 | [main] addi sp, sp, 36
+TICK   1207 PC 156 | [main] jalr zero, ra, 0
+TICK   1208 PC 104 | [main] addi t0, a0, 0
+TICK   1209 PC 108 | [main] lw t2, 32(sp)
+TICK   1210 PC 112 | [main] addi t3, zero, 2
+TICK   1211 PC 116 | [main] sub t2, t2, t3
+TICK   1212 PC 120 | [main] addi a0, t2, 0
+TICK   1213 PC 124 | [main] sw t0, 4(sp)
+TICK   1223 PC 128 | [main] jal ra, 0x0034
+TICK   1224 PC  52 | [main] addi sp, sp, -36
+TICK   1225 PC  56 | [main] sw ra, 0(sp)
+TICK   1235 PC  60 | [main] sw a0, 32(sp)
+TICK   1245 PC  64 | [main] lw t1, 32(sp)
+TICK   1246 PC  68 | [main] addi t2, zero, 2
+TICK   1247 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1248 PC  76 | [main] lw t0, 32(sp)
+TICK   1249 PC  80 | [main] j 0x0090
+TICK   1250 PC 144 | [main] addi a0, t0, 0
+TICK   1251 PC 148 | [main] lw ra, 0(sp)
+TICK   1252 PC 152 | [main] addi sp, sp, 36
+TICK   1253 PC 156 | [main] jalr zero, ra, 0
+TICK   1254 PC 132 | [main] lw t0, 4(sp)
+TICK   1255 PC 136 | [main] addi t1, a0, 0
+TICK   1256 PC 140 | [main] add t0, t0, t1
+TICK   1257 PC 144 | [main] addi a0, t0, 0
+TICK   1258 PC 148 | [main] lw ra, 0(sp)
+TICK   1268 PC 152 | [main] addi sp, sp, 36
+TICK   1269 PC 156 | [main] jalr zero, ra, 0
+TICK   1270 PC 132 | [main] lw t0, 4(sp)
+TICK   1271 PC 136 | [main] addi t1, a0, 0
+TICK   1272 PC 140 | [main] add t0, t0, t1
+TICK   1273 PC 144 | [main] addi a0, t0, 0
+TICK   1274 PC 148 | [main] lw ra, 0(sp)
+TICK   1284 PC 152 | [main] addi sp, sp, 36
+TICK   1285 PC 156 | [main] jalr zero, ra, 0
+TICK   1286 PC 132 | [main] lw t0, 4(sp)
+TICK   1296 PC 136 | [main] addi t1, a0, 0
+TICK   1297 PC 140 | [main] add t0, t0, t1
+TICK   1298 PC 144 | [main] addi a0, t0, 0
+TICK   1299 PC 148 | [main] lw ra, 0(sp)
+TICK   1309 PC 152 | IRQ raised (data='f')
+TICK   1309 PC 152 | OVERRUN: 1 char(s) lost
+TICK   1309 PC 152 | [main] addi sp, sp, 36
+TICK   1310 PC 156 | [main] jalr zero, ra, 0
+TICK   1311 PC 104 | [main] addi t0, a0, 0
+TICK   1312 PC 108 | [main] lw t2, 32(sp)
+TICK   1322 PC 112 | [main] addi t3, zero, 2
+TICK   1323 PC 116 | [main] sub t2, t2, t3
+TICK   1324 PC 120 | [main] addi a0, t2, 0
+TICK   1325 PC 124 | [main] sw t0, 4(sp)
+TICK   1335 PC 128 | [main] jal ra, 0x0034
+TICK   1336 PC  52 | [main] addi sp, sp, -36
+TICK   1337 PC  56 | [main] sw ra, 0(sp)
+TICK   1347 PC  60 | [main] sw a0, 32(sp)
+TICK   1357 PC  64 | [main] lw t1, 32(sp)
+TICK   1358 PC  68 | [main] addi t2, zero, 2
+TICK   1359 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1360 PC  84 | [main] lw t1, 32(sp)
+TICK   1361 PC  88 | [main] addi t2, zero, 1
+TICK   1362 PC  92 | [main] sub t1, t1, t2
+TICK   1363 PC  96 | [main] addi a0, t1, 0
+TICK   1364 PC 100 | [main] jal ra, 0x0034
+TICK   1365 PC  52 | [main] addi sp, sp, -36
+TICK   1366 PC  56 | [main] sw ra, 0(sp)
+TICK   1376 PC  60 | [main] sw a0, 32(sp)
+TICK   1386 PC  64 | [main] lw t1, 32(sp)
+TICK   1387 PC  68 | [main] addi t2, zero, 2
+TICK   1388 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1389 PC  84 | [main] lw t1, 32(sp)
+TICK   1390 PC  88 | [main] addi t2, zero, 1
+TICK   1391 PC  92 | [main] sub t1, t1, t2
+TICK   1392 PC  96 | [main] addi a0, t1, 0
+TICK   1393 PC 100 | [main] jal ra, 0x0034
+TICK   1394 PC  52 | [main] addi sp, sp, -36
+TICK   1395 PC  56 | [main] sw ra, 0(sp)
+TICK   1405 PC  60 | IRQ raised (data='j')
+TICK   1405 PC  60 | OVERRUN: 1 char(s) lost
+TICK   1405 PC  60 | [main] sw a0, 32(sp)
+TICK   1415 PC  64 | [main] lw t1, 32(sp)
+TICK   1416 PC  68 | [main] addi t2, zero, 2
+TICK   1417 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1418 PC  84 | [main] lw t1, 32(sp)
+TICK   1419 PC  88 | [main] addi t2, zero, 1
+TICK   1420 PC  92 | [main] sub t1, t1, t2
+TICK   1421 PC  96 | [main] addi a0, t1, 0
+TICK   1422 PC 100 | [main] jal ra, 0x0034
+TICK   1423 PC  52 | [main] addi sp, sp, -36
+TICK   1424 PC  56 | [main] sw ra, 0(sp)
+TICK   1434 PC  60 | [main] sw a0, 32(sp)
+TICK   1444 PC  64 | [main] lw t1, 32(sp)
+TICK   1445 PC  68 | [main] addi t2, zero, 2
+TICK   1446 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1447 PC  84 | [main] lw t1, 32(sp)
+TICK   1448 PC  88 | [main] addi t2, zero, 1
+TICK   1449 PC  92 | [main] sub t1, t1, t2
+TICK   1450 PC  96 | [main] addi a0, t1, 0
+TICK   1451 PC 100 | [main] jal ra, 0x0034
+TICK   1452 PC  52 | [main] addi sp, sp, -36
+TICK   1453 PC  56 | [main] sw ra, 0(sp)
+TICK   1463 PC  60 | [main] sw a0, 32(sp)
+TICK   1473 PC  64 | [main] lw t1, 32(sp)
+TICK   1474 PC  68 | [main] addi t2, zero, 2
+TICK   1475 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1476 PC  76 | [main] lw t0, 32(sp)
+TICK   1477 PC  80 | [main] j 0x0090
+TICK   1478 PC 144 | [main] addi a0, t0, 0
+TICK   1479 PC 148 | [main] lw ra, 0(sp)
+TICK   1480 PC 152 | [main] addi sp, sp, 36
+TICK   1481 PC 156 | [main] jalr zero, ra, 0
+TICK   1482 PC 104 | [main] addi t0, a0, 0
+TICK   1483 PC 108 | [main] lw t2, 32(sp)
+TICK   1484 PC 112 | [main] addi t3, zero, 2
+TICK   1485 PC 116 | [main] sub t2, t2, t3
+TICK   1486 PC 120 | [main] addi a0, t2, 0
+TICK   1487 PC 124 | [main] sw t0, 4(sp)
+TICK   1497 PC 128 | [main] jal ra, 0x0034
+TICK   1498 PC  52 | [main] addi sp, sp, -36
+TICK   1499 PC  56 | [main] sw ra, 0(sp)
+TICK   1509 PC  60 | IRQ raised (data='k')
+TICK   1509 PC  60 | OVERRUN: 1 char(s) lost
+TICK   1509 PC  60 | [main] sw a0, 32(sp)
+TICK   1519 PC  64 | [main] lw t1, 32(sp)
+TICK   1520 PC  68 | [main] addi t2, zero, 2
+TICK   1521 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1522 PC  76 | [main] lw t0, 32(sp)
+TICK   1523 PC  80 | [main] j 0x0090
+TICK   1524 PC 144 | [main] addi a0, t0, 0
+TICK   1525 PC 148 | [main] lw ra, 0(sp)
+TICK   1535 PC 152 | [main] addi sp, sp, 36
+TICK   1536 PC 156 | [main] jalr zero, ra, 0
+TICK   1537 PC 132 | [main] lw t0, 4(sp)
+TICK   1538 PC 136 | [main] addi t1, a0, 0
+TICK   1539 PC 140 | [main] add t0, t0, t1
+TICK   1540 PC 144 | [main] addi a0, t0, 0
+TICK   1541 PC 148 | [main] lw ra, 0(sp)
+TICK   1551 PC 152 | [main] addi sp, sp, 36
+TICK   1552 PC 156 | [main] jalr zero, ra, 0
+TICK   1553 PC 104 | [main] addi t0, a0, 0
+TICK   1554 PC 108 | [main] lw t2, 32(sp)
+TICK   1564 PC 112 | [main] addi t3, zero, 2
+TICK   1565 PC 116 | [main] sub t2, t2, t3
+TICK   1566 PC 120 | [main] addi a0, t2, 0
+TICK   1567 PC 124 | [main] sw t0, 4(sp)
+TICK   1577 PC 128 | [main] jal ra, 0x0034
+TICK   1578 PC  52 | [main] addi sp, sp, -36
+TICK   1579 PC  56 | [main] sw ra, 0(sp)
+TICK   1589 PC  60 | [main] sw a0, 32(sp)
+TICK   1599 PC  64 | [main] lw t1, 32(sp)
+TICK   1600 PC  68 | IRQ raised (data='d')
+TICK   1600 PC  68 | OVERRUN: 1 char(s) lost
+TICK   1600 PC  68 | [main] addi t2, zero, 2
+TICK   1601 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1602 PC  76 | [main] lw t0, 32(sp)
+TICK   1603 PC  80 | [main] j 0x0090
+TICK   1604 PC 144 | [main] addi a0, t0, 0
+TICK   1605 PC 148 | [main] lw ra, 0(sp)
+TICK   1615 PC 152 | [main] addi sp, sp, 36
+TICK   1616 PC 156 | [main] jalr zero, ra, 0
+TICK   1617 PC 132 | [main] lw t0, 4(sp)
+TICK   1627 PC 136 | [main] addi t1, a0, 0
+TICK   1628 PC 140 | [main] add t0, t0, t1
+TICK   1629 PC 144 | [main] addi a0, t0, 0
+TICK   1630 PC 148 | [main] lw ra, 0(sp)
+TICK   1640 PC 152 | [main] addi sp, sp, 36
+TICK   1641 PC 156 | [main] jalr zero, ra, 0
+TICK   1642 PC 104 | [main] addi t0, a0, 0
+TICK   1643 PC 108 | [main] lw t2, 32(sp)
+TICK   1653 PC 112 | [main] addi t3, zero, 2
+TICK   1654 PC 116 | [main] sub t2, t2, t3
+TICK   1655 PC 120 | [main] addi a0, t2, 0
+TICK   1656 PC 124 | [main] sw t0, 4(sp)
+TICK   1666 PC 128 | [main] jal ra, 0x0034
+TICK   1667 PC  52 | [main] addi sp, sp, -36
+TICK   1668 PC  56 | [main] sw ra, 0(sp)
+TICK   1678 PC  60 | [main] sw a0, 32(sp)
+TICK   1688 PC  64 | [main] lw t1, 32(sp)
+TICK   1689 PC  68 | [main] addi t2, zero, 2
+TICK   1690 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1691 PC  84 | [main] lw t1, 32(sp)
+TICK   1692 PC  88 | [main] addi t2, zero, 1
+TICK   1693 PC  92 | [main] sub t1, t1, t2
+TICK   1694 PC  96 | [main] addi a0, t1, 0
+TICK   1695 PC 100 | [main] jal ra, 0x0034
+TICK   1696 PC  52 | [main] addi sp, sp, -36
+TICK   1697 PC  56 | [main] sw ra, 0(sp)
+TICK   1707 PC  60 | IRQ raised (data='h')
+TICK   1707 PC  60 | OVERRUN: 1 char(s) lost
+TICK   1707 PC  60 | [main] sw a0, 32(sp)
+TICK   1717 PC  64 | [main] lw t1, 32(sp)
+TICK   1718 PC  68 | [main] addi t2, zero, 2
+TICK   1719 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1720 PC  76 | [main] lw t0, 32(sp)
+TICK   1721 PC  80 | [main] j 0x0090
+TICK   1722 PC 144 | [main] addi a0, t0, 0
+TICK   1723 PC 148 | [main] lw ra, 0(sp)
+TICK   1733 PC 152 | [main] addi sp, sp, 36
+TICK   1734 PC 156 | [main] jalr zero, ra, 0
+TICK   1735 PC 104 | [main] addi t0, a0, 0
+TICK   1736 PC 108 | [main] lw t2, 32(sp)
+TICK   1737 PC 112 | [main] addi t3, zero, 2
+TICK   1738 PC 116 | [main] sub t2, t2, t3
+TICK   1739 PC 120 | [main] addi a0, t2, 0
+TICK   1740 PC 124 | [main] sw t0, 4(sp)
+TICK   1750 PC 128 | [main] jal ra, 0x0034
+TICK   1751 PC  52 | [main] addi sp, sp, -36
+TICK   1752 PC  56 | [main] sw ra, 0(sp)
+TICK   1762 PC  60 | [main] sw a0, 32(sp)
+TICK   1772 PC  64 | [main] lw t1, 32(sp)
+TICK   1773 PC  68 | [main] addi t2, zero, 2
+TICK   1774 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1775 PC  76 | [main] lw t0, 32(sp)
+TICK   1776 PC  80 | [main] j 0x0090
+TICK   1777 PC 144 | [main] addi a0, t0, 0
+TICK   1778 PC 148 | [main] lw ra, 0(sp)
+TICK   1779 PC 152 | [main] addi sp, sp, 36
+TICK   1780 PC 156 | [main] jalr zero, ra, 0
+TICK   1781 PC 132 | [main] lw t0, 4(sp)
+TICK   1782 PC 136 | [main] addi t1, a0, 0
+TICK   1783 PC 140 | [main] add t0, t0, t1
+TICK   1784 PC 144 | [main] addi a0, t0, 0
+TICK   1785 PC 148 | [main] lw ra, 0(sp)
+TICK   1786 PC 152 | [main] addi sp, sp, 36
+TICK   1787 PC 156 | [main] jalr zero, ra, 0
+TICK   1788 PC 132 | [main] lw t0, 4(sp)
+TICK   1798 PC 136 | [main] addi t1, a0, 0
+TICK   1799 PC 140 | [main] add t0, t0, t1
+TICK   1800 PC 144 | IRQ raised (data='\n')
+TICK   1800 PC 144 | OVERRUN: 1 char(s) lost
+TICK   1800 PC 144 | [main] addi a0, t0, 0
+TICK   1801 PC 148 | [main] lw ra, 0(sp)
+TICK   1811 PC 152 | [main] addi sp, sp, 36
+TICK   1812 PC 156 | [main] jalr zero, ra, 0
+TICK   1813 PC 104 | [main] addi t0, a0, 0
+TICK   1814 PC 108 | [main] lw t2, 32(sp)
+TICK   1824 PC 112 | [main] addi t3, zero, 2
+TICK   1825 PC 116 | [main] sub t2, t2, t3
+TICK   1826 PC 120 | [main] addi a0, t2, 0
+TICK   1827 PC 124 | [main] sw t0, 4(sp)
+TICK   1837 PC 128 | [main] jal ra, 0x0034
+TICK   1838 PC  52 | [main] addi sp, sp, -36
+TICK   1839 PC  56 | [main] sw ra, 0(sp)
+TICK   1849 PC  60 | [main] sw a0, 32(sp)
+TICK   1859 PC  64 | [main] lw t1, 32(sp)
+TICK   1860 PC  68 | [main] addi t2, zero, 2
+TICK   1861 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1862 PC  84 | [main] lw t1, 32(sp)
+TICK   1863 PC  88 | [main] addi t2, zero, 1
+TICK   1864 PC  92 | [main] sub t1, t1, t2
+TICK   1865 PC  96 | [main] addi a0, t1, 0
+TICK   1866 PC 100 | [main] jal ra, 0x0034
+TICK   1867 PC  52 | [main] addi sp, sp, -36
+TICK   1868 PC  56 | [main] sw ra, 0(sp)
+TICK   1878 PC  60 | [main] sw a0, 32(sp)
+TICK   1888 PC  64 | [main] lw t1, 32(sp)
+TICK   1889 PC  68 | [main] addi t2, zero, 2
+TICK   1890 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1891 PC  84 | [main] lw t1, 32(sp)
+TICK   1892 PC  88 | [main] addi t2, zero, 1
+TICK   1893 PC  92 | [main] sub t1, t1, t2
+TICK   1894 PC  96 | [main] addi a0, t1, 0
+TICK   1895 PC 100 | [main] jal ra, 0x0034
+TICK   1896 PC  52 | [main] addi sp, sp, -36
+TICK   1897 PC  56 | [main] sw ra, 0(sp)
+TICK   1907 PC  60 | IRQ raised (data='\x00')
+TICK   1907 PC  60 | OVERRUN: 1 char(s) lost
+TICK   1907 PC  60 | [main] sw a0, 32(sp)
+TICK   1917 PC  64 | [main] lw t1, 32(sp)
+TICK   1918 PC  68 | [main] addi t2, zero, 2
+TICK   1919 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1920 PC  76 | [main] lw t0, 32(sp)
+TICK   1921 PC  80 | [main] j 0x0090
+TICK   1922 PC 144 | [main] addi a0, t0, 0
+TICK   1923 PC 148 | [main] lw ra, 0(sp)
+TICK   1924 PC 152 | [main] addi sp, sp, 36
+TICK   1925 PC 156 | [main] jalr zero, ra, 0
+TICK   1926 PC 104 | [main] addi t0, a0, 0
+TICK   1927 PC 108 | [main] lw t2, 32(sp)
+TICK   1928 PC 112 | [main] addi t3, zero, 2
+TICK   1929 PC 116 | [main] sub t2, t2, t3
+TICK   1930 PC 120 | [main] addi a0, t2, 0
+TICK   1931 PC 124 | [main] sw t0, 4(sp)
+TICK   1941 PC 128 | [main] jal ra, 0x0034
+TICK   1942 PC  52 | [main] addi sp, sp, -36
+TICK   1943 PC  56 | [main] sw ra, 0(sp)
+TICK   1953 PC  60 | [main] sw a0, 32(sp)
+TICK   1963 PC  64 | [main] lw t1, 32(sp)
+TICK   1964 PC  68 | [main] addi t2, zero, 2
+TICK   1965 PC  72 | [main] bge t1, t2, 0x0054
+TICK   1966 PC  76 | [main] lw t0, 32(sp)
+TICK   1967 PC  80 | [main] j 0x0090
+TICK   1968 PC 144 | [main] addi a0, t0, 0
+TICK   1969 PC 148 | [main] lw ra, 0(sp)
+TICK   1979 PC 152 | [main] addi sp, sp, 36
+TICK   1980 PC 156 | [main] jalr zero, ra, 0
+TICK   1981 PC 132 | [main] lw t0, 4(sp)
+TICK   1991 PC 136 | [main] addi t1, a0, 0
+TICK   1992 PC 140 | [main] add t0, t0, t1
+TICK   1993 PC 144 | [main] addi a0, t0, 0
+TICK   1994 PC 148 | [main] lw ra, 0(sp)
+TICK   2004 PC 152 | [main] addi sp, sp, 36
+TICK   2005 PC 156 | [main] jalr zero, ra, 0
+TICK   2006 PC 104 | [main] addi t0, a0, 0
+TICK   2007 PC 108 | [main] lw t2, 32(sp)
+TICK   2017 PC 112 | [main] addi t3, zero, 2
+TICK   2018 PC 116 | [main] sub t2, t2, t3
+TICK   2019 PC 120 | [main] addi a0, t2, 0
+TICK   2020 PC 124 | [main] sw t0, 4(sp)
+TICK   2030 PC 128 | [main] jal ra, 0x0034
+TICK   2031 PC  52 | [main] addi sp, sp, -36
+TICK   2032 PC  56 | [main] sw ra, 0(sp)
+TICK   2042 PC  60 | [main] sw a0, 32(sp)
+TICK   2052 PC  64 | [main] lw t1, 32(sp)
+TICK   2053 PC  68 | [main] addi t2, zero, 2
+TICK   2054 PC  72 | [main] bge t1, t2, 0x0054
+TICK   2055 PC  76 | [main] lw t0, 32(sp)
+TICK   2056 PC  80 | [main] j 0x0090
+TICK   2057 PC 144 | [main] addi a0, t0, 0
+TICK   2058 PC 148 | [main] lw ra, 0(sp)
+TICK   2059 PC 152 | [main] addi sp, sp, 36
+TICK   2060 PC 156 | [main] jalr zero, ra, 0
+TICK   2061 PC 132 | [main] lw t0, 4(sp)
+TICK   2062 PC 136 | [main] addi t1, a0, 0
+TICK   2063 PC 140 | [main] add t0, t0, t1
+TICK   2064 PC 144 | [main] addi a0, t0, 0
+TICK   2065 PC 148 | [main] lw ra, 0(sp)
+TICK   2075 PC 152 | [main] addi sp, sp, 36
+TICK   2076 PC 156 | [main] jalr zero, ra, 0
+TICK   2077 PC 132 | [main] lw t0, 4(sp)
+TICK   2087 PC 136 | [main] addi t1, a0, 0
+TICK   2088 PC 140 | [main] add t0, t0, t1
+TICK   2089 PC 144 | [main] addi a0, t0, 0
+TICK   2090 PC 148 | [main] lw ra, 0(sp)
+TICK   2100 PC 152 | [main] addi sp, sp, 36
+TICK   2101 PC 156 | [main] jalr zero, ra, 0
+TICK   2102 PC 132 | [main] lw t0, 4(sp)
+TICK   2112 PC 136 | [main] addi t1, a0, 0
+TICK   2113 PC 140 | [main] add t0, t0, t1
+TICK   2114 PC 144 | [main] addi a0, t0, 0
+TICK   2115 PC 148 | [main] lw ra, 0(sp)
+TICK   2125 PC 152 | [main] addi sp, sp, 36
+TICK   2126 PC 156 | [main] jalr zero, ra, 0
+TICK   2127 PC  32 | [main] lw t0, 0(zero)
+TICK   2137 PC  36 | [main] addi t1, a0, 0
+TICK   2138 PC  40 | [main] add t0, t0, t1
+TICK   2139 PC  44 | [main] out t0, 1
+TICK   2140 PC  48 | [main] halt

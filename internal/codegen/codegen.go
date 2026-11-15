@@ -18,20 +18,53 @@ type item struct {
 }
 
 type Compiler struct {
-	code     []item
-	symbols  map[string]int
-	data     []byte
-	strs     map[string]int
-	labelCnt int
-	freeRegs []string
+	code      []item
+	symbols   map[string]int
+	data      []byte
+	strs      map[string]int
+	labelCnt  int
+	freeRegs  []string
+	funcs     map[string]*funcInfo
+	funcOrder []*funcInfo
+	fn        *frame
+	spillAddr int
+	inHandler bool
 }
 
 func New() *Compiler {
 	return &Compiler{
 		symbols:  make(map[string]int),
 		strs:     make(map[string]int),
-		freeRegs: []string{"t0", "t1", "t2", "t3", "t4", "t5", "t6"},
+		funcs:    make(map[string]*funcInfo),
+		freeRegs: append([]string(nil), tempRegs...),
 	}
+}
+
+var tempRegs = []string{"t0", "t1", "t2", "t3", "t4", "t5", "t6"}
+
+const frameHeader = 4 + 4*7
+
+type funcInfo struct {
+	name   string
+	params []string
+	body   []any
+	label  string
+}
+
+type frame struct {
+	locals  map[string]int
+	nextOff int
+}
+
+var builtins = map[string]bool{
+	"setq": true, "print": true, "if": true, "while": true, "progn": true,
+	"in": true, "out": true, "ei": true, "di": true, "interrupt": true,
+	"load": true, "loadb": true, "store": true, "storeb": true, "defun": true,
+}
+
+func isBuiltin(op string) bool {
+	_, bin := binOps[op]
+	return bin || isCmp(op) || builtins[op]
 }
 
 func (c *Compiler) emit(i isa.Instruction) {
@@ -69,7 +102,7 @@ func (c *Compiler) alloc(b []byte) (int, error) {
 		c.data = append(c.data, 0)
 	}
 	addr := len(c.data)
-	if addr+len(b) > isa.DataMemSize {
+	if addr+len(b) > isa.DataMemSize-isa.StackSize {
 		return 0, fmt.Errorf("Data memory has run out")
 	}
 	c.data = append(c.data, b...)
@@ -134,31 +167,57 @@ func isCmp(op string) bool {
 }
 
 func (c *Compiler) Compile(program []any) ([]isa.Instruction, []byte, error) {
+	var body []any
+	var handler []any
+	for _, expr := range program {
+		if l, ok := expr.([]any); ok && len(l) > 0 {
+			switch l[0] {
+			case "interrupt":
+				if handler != nil {
+					return nil, nil, fmt.Errorf("only one interrupt handler is allowed")
+				}
+				handler = l
+				continue
+			case "defun":
+				if err := c.registerFunc(l); err != nil {
+					return nil, nil, err
+				}
+				continue
+			}
+		}
+		body = append(body, expr)
+	}
+
+	var err error
+	c.spillAddr, err = c.alloc(make([]byte, 4*len(tempRegs)))
+	if err != nil {
+		return nil, nil, err
+	}
+
 	c.emitJump(isa.Instruction{Opcode: "j"}, "main")
 	c.emitJump(isa.Instruction{Opcode: "j"}, "irq_handler")
 	c.emitLabel("main")
+	if err := c.loadImm("sp", isa.DataMemSize); err != nil {
+		return nil, nil, err
+	}
 
 	target, err := c.allocReg()
 	if err != nil {
 		return nil, nil, err
 	}
-
-	var handler []any
-	for _, expr := range program {
-		if l, ok := expr.([]any); ok && len(l) > 0 && l[0] == "interrupt" {
-			if handler != nil {
-				return nil, nil, fmt.Errorf("only one interrupt handler is allowed")
-			}
-			handler = l
-			continue
-		}
+	for _, expr := range body {
 		if err := c.gen(expr, target); err != nil {
 			return nil, nil, err
 		}
 	}
-
 	c.freeReg(target)
 	c.emit(isa.Instruction{Opcode: "halt"})
+
+	for _, f := range c.funcOrder {
+		if err := c.genFunc(f); err != nil {
+			return nil, nil, err
+		}
+	}
 
 	c.emitLabel("irq_handler")
 	if handler != nil {
@@ -167,6 +226,7 @@ func (c *Compiler) Compile(program []any) ([]isa.Instruction, []byte, error) {
 		}
 	}
 	c.emit(isa.Instruction{Opcode: "iret"})
+
 	code, err := c.resolveLabels()
 	return code, c.data, err
 }
@@ -182,11 +242,11 @@ func (c *Compiler) gen(expr any, target string) error {
 		}
 		return c.loadImm(target, addr)
 	case string:
-		addr, ok := c.symbols[v]
+		base, off, ok := c.resolveVar(v)
 		if !ok {
 			return fmt.Errorf("Undefined variable %q", v)
 		}
-		c.emit(isa.Instruction{Opcode: "lw", Reg: target, Reg1: "zero", Value: addr})
+		c.emit(isa.Instruction{Opcode: "lw", Reg: target, Reg1: base, Value: off})
 		return nil
 	case []any:
 		return c.genList(v, target)
@@ -234,8 +294,13 @@ func (c *Compiler) genList(v []any, target string) error {
 		return c.genIntFlag(op, v, target)
 	case "interrupt":
 		return fmt.Errorf("interrupt must be a top-level form")
+	case "defun":
+		return fmt.Errorf("defun must be a top-level form")
 	default:
-		return fmt.Errorf("неизвестная операция %q", op)
+		if f, ok := c.funcs[op]; ok {
+			return c.genCall(f, v, target)
+		}
+		return fmt.Errorf("Unknown operation %q", op)
 	}
 }
 
@@ -373,13 +438,11 @@ func (c *Compiler) genSetq(v []any, target string) error {
 		return err
 	}
 
-	addr, err := c.declare(name)
-
+	base, off, err := c.declareVar(name)
 	if err != nil {
 		return err
 	}
-
-	c.emit(isa.Instruction{Opcode: "sw", Reg: target, Reg1: "zero", Value: addr})
+	c.emit(isa.Instruction{Opcode: "sw", Reg: target, Reg1: base, Value: off})
 	return nil
 }
 
@@ -484,6 +547,8 @@ func (c *Compiler) genIntFlag(op string, v []any, target string) error {
 
 func (c *Compiler) genHandler(v []any) error {
 	saved := c.freeRegs
+	c.inHandler = true
+	defer func() { c.inHandler = false }()
 	c.freeRegs = []string{"s1", "s2", "s3", "s4", "s5", "s6"}
 	defer func() { c.freeRegs = saved }()
 
@@ -555,6 +620,171 @@ func (c *Compiler) genWhile(v []any, target string) error {
 	c.emitJump(isa.Instruction{Opcode: "j"}, startL)
 	c.emitLabel(endL)
 	c.emit(isa.Instruction{Opcode: "addi", Reg: target, Reg1: "zero", Value: 0}) // while даёт 0
+	return nil
+}
+
+func (c *Compiler) resolveVar(name string) (base string, off int, ok bool) {
+	if c.fn != nil {
+		if o, found := c.fn.locals[name]; found {
+			return "sp", o, true
+		}
+	}
+	if a, found := c.symbols[name]; found {
+		return "zero", a, true
+	}
+	return "", 0, false
+}
+
+func (c *Compiler) declareVar(name string) (string, int, error) {
+	if base, off, ok := c.resolveVar(name); ok {
+		return base, off, nil
+	}
+	if c.fn != nil {
+		off := c.fn.nextOff
+		c.fn.nextOff += 4
+		c.fn.locals[name] = off
+		return "sp", off, nil
+	}
+	addr, err := c.declare(name)
+	return "zero", addr, err
+}
+
+func (c *Compiler) registerFunc(v []any) error {
+	if len(v) < 4 {
+		return fmt.Errorf("defun: expected (defun name (params) body...)")
+	}
+	name, ok := v[1].(string)
+	if !ok {
+		return fmt.Errorf("defun: function name must be an identifier")
+	}
+	if isBuiltin(name) {
+		return fmt.Errorf("defun: %q is a reserved name", name)
+	}
+	if _, dup := c.funcs[name]; dup {
+		return fmt.Errorf("defun: function %q is already defined", name)
+	}
+	plist, ok := v[2].([]any)
+	if !ok {
+		return fmt.Errorf("defun %s: parameter list expected", name)
+	}
+	if len(plist) > 8 {
+		return fmt.Errorf("defun %s: at most 8 parameters are supported", name)
+	}
+	seen := map[string]bool{}
+	params := make([]string, 0, len(plist))
+	for _, p := range plist {
+		s, ok := p.(string)
+		if !ok || seen[s] {
+			return fmt.Errorf("defun %s: bad or duplicate parameter %v", name, p)
+		}
+		seen[s] = true
+		params = append(params, s)
+	}
+	f := &funcInfo{name: name, params: params, body: v[3:], label: "fn_" + name}
+	c.funcs[name] = f
+	c.funcOrder = append(c.funcOrder, f)
+	return nil
+}
+
+func (c *Compiler) genFunc(f *funcInfo) error {
+	c.fn = &frame{locals: map[string]int{}, nextOff: frameHeader}
+	defer func() { c.fn = nil }()
+
+	for _, p := range f.params {
+		c.fn.locals[p] = c.fn.nextOff
+		c.fn.nextOff += 4
+	}
+
+	c.emitLabel(f.label)
+	c.emit(isa.Instruction{Opcode: "addi", Reg: "sp", Reg1: "sp"}) // размер допишем в конце
+	prologue := len(c.code) - 1
+	c.emit(isa.Instruction{Opcode: "sw", Reg: "ra", Reg1: "sp", Value: 0})
+	for i, p := range f.params {
+		c.emit(isa.Instruction{Opcode: "sw", Reg: fmt.Sprintf("a%d", i), Reg1: "sp", Value: c.fn.locals[p]})
+	}
+
+	target, err := c.allocReg()
+	if err != nil {
+		return err
+	}
+	for _, e := range f.body {
+		if err := c.gen(e, target); err != nil {
+			return fmt.Errorf("in function %s: %w", f.name, err)
+		}
+	}
+	c.emit(isa.Instruction{Opcode: "addi", Reg: "a0", Reg1: target}) // результат = значение последнего выражения
+	c.freeReg(target)
+
+	size := c.fn.nextOff
+	c.code[prologue].ins.Value = -size
+	c.emit(isa.Instruction{Opcode: "lw", Reg: "ra", Reg1: "sp", Value: 0})
+	c.emit(isa.Instruction{Opcode: "addi", Reg: "sp", Reg1: "sp", Value: size})
+	c.emit(isa.Instruction{Opcode: "jalr", Reg: "zero", Reg1: "ra", Value: 0})
+	return nil
+}
+
+func (c *Compiler) liveTemps(except string) []string {
+	free := map[string]bool{}
+	for _, r := range c.freeRegs {
+		free[r] = true
+	}
+	var live []string
+	for _, r := range tempRegs {
+		if !free[r] && r != except {
+			live = append(live, r)
+		}
+	}
+	return live
+}
+
+func (c *Compiler) spillOp(op string, regs []string) {
+	for _, r := range regs {
+		i := 0
+		for j, t := range tempRegs {
+			if t == r {
+				i = j
+			}
+		}
+		base, off := "zero", c.spillAddr+4*i
+		if c.fn != nil {
+			base, off = "sp", 4+4*i
+		}
+		c.emit(isa.Instruction{Opcode: op, Reg: r, Reg1: base, Value: off})
+	}
+}
+
+func (c *Compiler) genCall(f *funcInfo, v []any, target string) error {
+	if c.inHandler {
+		return fmt.Errorf("function %q cannot be called from an interrupt handler", f.name)
+	}
+	if len(v)-1 != len(f.params) {
+		return fmt.Errorf("function %q expects %d argument(s), got %d", f.name, len(f.params), len(v)-1)
+	}
+
+	var regs []string
+	for _, a := range v[1:] {
+		r, err := c.allocReg()
+		if err != nil {
+			return err
+		}
+		regs = append(regs, r)
+		if err := c.gen(a, r); err != nil {
+			return err
+		}
+	}
+	for i, r := range regs {
+		c.emit(isa.Instruction{Opcode: "addi", Reg: fmt.Sprintf("a%d", i), Reg1: r})
+	}
+	for i := len(regs) - 1; i >= 0; i-- {
+		c.freeReg(regs[i])
+	}
+
+	live := c.liveTemps(target)
+	c.spillOp("sw", live)
+	c.emitJump(isa.Instruction{Opcode: "jal", Reg: "ra"}, f.label)
+	c.spillOp("lw", live)
+
+	c.emit(isa.Instruction{Opcode: "addi", Reg: target, Reg1: "a0"})
 	return nil
 }
 

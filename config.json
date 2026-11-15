@@ -1,5 +1,5 @@
 {
-  "source_file": "test/t_str.lisp",
+  "source_file": "test/factorial.lisp",
   "target_file": "data/program.bin",
   "input_file": "data/input.txt",
   "journal_file": "log/journal.log",

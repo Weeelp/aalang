@@ -7,5 +7,6 @@ const (
 	VectorReset = 0
 	VectorIRQ   = 4
 
-	DataMemSize = 4096
+	DataMemSize = 8192
+	StackSize   = 4096
 )
