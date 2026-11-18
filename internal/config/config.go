@@ -5,17 +5,20 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
+	"strings"
 )
 
 var ErrConfig = errors.New("config error")
 
 type Config struct {
-	SourceFile     string `json:"source_file"`
-	TargetFile     string `json:"target_file"`
-	InputFile      string `json:"input_file"`
-	JournalFile    string `json:"journal_file"`
-	InputFirstTick int    `json:"input_first_tick"`
-	InputPeriod    int    `json:"input_period"`
+	SourceFile     []string `json:"source_file"`
+	InputFile      []string `json:"input_file"`
+	TargetDir      string   `json:"target_dir"`
+	JournalFile    string   `json:"journal_file"`
+	InputFirstTick int      `json:"input_first_tick"`
+	InputPeriod    int      `json:"input_period"`
+	CacheOff       bool     `json:"cache_off"`
 }
 
 func Load(path string) (*Config, error) {
@@ -27,6 +30,10 @@ func Load(path string) (*Config, error) {
 	var cfg Config
 	if err := json.Unmarshal(data, &cfg); err != nil {
 		return nil, fmt.Errorf("%w: cannot parse %s: %v", ErrConfig, path, err)
+	}
+
+	if cfg.TargetDir == "" {
+		cfg.TargetDir = "data"
 	}
 
 	if cfg.JournalFile == "" {
@@ -48,4 +55,16 @@ func (c *Config) Require(fields map[string]string) error {
 		}
 	}
 	return nil
+}
+
+func (c *Config) TargetPath(src string) string {
+	base := strings.TrimSuffix(filepath.Base(src), filepath.Ext(src))
+	return filepath.Join(c.TargetDir, base+".bin")
+}
+
+func (c *Config) JournalPath(src string) string {
+	ext := filepath.Ext(c.JournalFile)
+	base := strings.TrimSuffix(c.JournalFile, ext)
+	name := strings.TrimSuffix(filepath.Base(src), filepath.Ext(src))
+	return base + "_" + name + ext
 }

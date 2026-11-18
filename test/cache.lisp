@@ -1,0 +1,5 @@
+(setq src "abcdefghijklmnopqrstuvwxyz")
+(setq i 1)
+(while (< i 25)
+  (out 1 (/ (+ (+ (loadb (+ src (- i 1))) (loadb (+ src i))) (loadb (+ src (+ i 1)))) 3))
+  (setq i (+ i 1)))

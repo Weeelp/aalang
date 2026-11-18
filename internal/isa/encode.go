@@ -55,6 +55,8 @@ func init() {
 	}
 }
 
+func RegisterNames() []string { return regNames[:] }
+
 func reg(name string) (uint32, error) {
 	if name == "" {
 		return 0, nil

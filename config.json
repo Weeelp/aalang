@@ -1,8 +1,9 @@
 {
-  "source_file": "test/factorial.lisp",
-  "target_file": "data/program.bin",
-  "input_file": "data/input.txt",
+  "source_file": ["test/cache.lisp", "test/t_str.lisp", "test/is_prime.lisp"],
+  "target_dir": "data/output",
+  "input_file": ["data/input/input0.txt", "", "data/input/input1.txt"],
   "journal_file": "log/journal.log",
   "input_first_tick": 100,
-  "input_period": 100
+  "input_period": 100,
+  "cache_off": false
 }

@@ -1,10 +1,8 @@
-TARGET = program.json
+pc:
+	go run cmd/pc/main.go
 
-all:
-	go run cmd/main/main.go
-
-trans: clean
-	go run cmd/translator/main.go
+tr: clean
+	go run cmd/tr/main.go
 
 clean:
-	@rm -f $(TARGET)
+	@rm -rf data/output/*

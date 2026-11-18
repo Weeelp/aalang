@@ -1,8 +1,9 @@
 (setq n 0)
-(read c)
+
+(setq c (in 0))
 (while (> c 47)
     (setq n (+ (* n 10) (- c 48)))
-    (read c))
+    (setq c (in 0)))
 
 (setq is_prime 1)
 (setq i 2)

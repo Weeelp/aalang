@@ -4,14 +4,38 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
+	"strings"
 
 	"github.com/Weeelp/aalang/internal/isa"
 )
 
-type CacheLine struct {
-	Valid bool
-	Addr  int
-	Value int
+const (
+	CacheLatency = 1
+	MemLatency   = 10
+)
+
+type phase int
+
+const (
+	phFetch phase = iota
+	phExec
+	phMem
+	phIRQ
+)
+
+var validReg = func() map[string]bool {
+	m := make(map[string]bool)
+	for _, n := range isa.RegisterNames() {
+		m[n] = true
+	}
+	return m
+}()
+
+type memOp struct {
+	addr int
+	wa   int
+	hit  bool
+	val  int32
 }
 
 type Processor struct {
@@ -20,61 +44,141 @@ type Processor struct {
 	Registers         map[string]int
 	PC                int
 	Tick              int
+	Instructions      int
+	Halted            bool
+	Fault             string
 
-	Cache          [4]CacheLine
-	CacheHitCount  int
-	CacheMissCount int
+	Cache *Cache
+	Dev   *Device
 
-	Dev       *Device
 	IE        bool
 	Pending   bool
 	InHandler bool
 	EPC       int
-	Log       io.Writer
+
+	Log io.Writer
+
+	phase   phase
+	ir      isa.Instruction
+	wait    int
+	total   int
+	mem     memOp
+	dataEnd int
 }
 
 func NewProcessor(code []isa.Instruction, schedule []InputEvent) *Processor {
-	regs := make(map[string]int)
-
-	regs["zero"] = 0
-
-	regs["ra"] = 0
-	regs["sp"] = 0
-	regs["gp"] = 0
-	regs["tp"] = 0
-
-	for i := 0; i <= 7; i++ {
-		regs[fmt.Sprintf("a%d", i)] = 0
-	}
-
-	for i := 0; i <= 6; i++ {
-		regs[fmt.Sprintf("t%d", i)] = 0
-	}
-
-	regs["s0"] = 0
-
-	for i := 1; i <= 11; i++ {
-		regs[fmt.Sprintf("s%d", i)] = 0
-	}
-
 	return &Processor{
 		InstructionMemory: code,
-		Registers:         regs,
-		PC:                0,
-		Tick:              0,
+		Registers:         make(map[string]int),
+		Cache:             NewCache(CacheLines),
 		Dev:               &Device{Schedule: schedule},
 	}
 }
 
-// TODO
 func (p *Processor) logf(format string, a ...any) {
 	if p.Log == nil {
 		return
 	}
-	fmt.Fprintf(p.Log, "TICK %6d PC %3d | "+format+"\n", append([]any{p.Tick, p.PC}, a...)...)
+	mode := "main"
+	if p.InHandler {
+		mode = "irq "
+	}
+	fmt.Fprintf(p.Log, "TICK %6d PC %4d [%s] %s\n", p.Tick, p.PC, mode, fmt.Sprintf(format, a...))
 }
 
-func (p *Processor) Step() bool {
+func (p *Processor) fault(format string, a ...any) {
+	p.Fault = fmt.Sprintf(format, a...)
+	p.logf("FAULT: %s", p.Fault)
+	p.Halted = true
+}
+
+func (p *Processor) get(name string) int32 {
+	if name == "" {
+		return 0
+	}
+	if !validReg[name] {
+		p.fault("unknown register %q", name)
+		return 0
+	}
+	return int32(p.Registers[name])
+}
+
+func (p *Processor) set(name string, v int32) {
+	if name == "" || name == "zero" {
+		return
+	}
+	if !validReg[name] {
+		p.fault("unknown register %q", name)
+		return
+	}
+	if name == "sp" && int(v) < p.dataEnd {
+		p.fault("stack overflow: sp=%d is inside the data section (ends at %d)", v, p.dataEnd)
+		return
+	}
+	p.Registers[name] = int(v)
+}
+
+func (p *Processor) regDump() string {
+	var sb strings.Builder
+	for _, n := range isa.RegisterNames() {
+		if v := p.Registers[n]; n != "zero" && v != 0 {
+			fmt.Fprintf(&sb, "%s=%d ", n, v)
+		}
+	}
+	fmt.Fprintf(&sb, "IE=%t", p.IE)
+	return sb.String()
+}
+
+func (p *Processor) LoadData(data []byte) error {
+	if len(data) > len(p.DataMemory) {
+		return fmt.Errorf("data section too large: %d bytes", len(data))
+	}
+	copy(p.DataMemory[:], data)
+	p.dataEnd = len(data)
+	return nil
+}
+
+func (p *Processor) word(addr int) int32 {
+	return int32(binary.LittleEndian.Uint32(p.DataMemory[addr : addr+4]))
+}
+
+func (p *Processor) setWord(addr int, v int32) {
+	binary.LittleEndian.PutUint32(p.DataMemory[addr:addr+4], uint32(v))
+}
+
+func (p *Processor) checkAddr(addr, size int) bool {
+	if addr < 0 || addr+size > len(p.DataMemory) || addr%size != 0 {
+		p.fault("bad data address %d (size %d)", addr, size)
+		return false
+	}
+	return true
+}
+
+func (p *Processor) portIn(port int) int32 {
+	if port == isa.PortInData {
+		v, valid := p.Dev.read()
+		if !valid {
+			p.logf("in port 0: data register is empty")
+		}
+		return int32(v)
+	}
+	p.logf("in from unknown port %d", port)
+	return 0
+}
+
+func (p *Processor) portOut(port int, v int32) {
+	if port == isa.PortOutData {
+		p.Dev.Output = append(p.Dev.Output, byte(v))
+		return
+	}
+	p.logf("out to unknown port %d", port)
+}
+
+func (p *Processor) Cycle() bool {
+	if p.Halted {
+		return false
+	}
+
 	if raised, lost := p.Dev.poll(p.Tick); raised {
 		p.Pending = true
 		p.logf("IRQ raised (data=%q)", p.Dev.DataReg)
@@ -83,230 +187,104 @@ func (p *Processor) Step() bool {
 		}
 	}
 
+	switch p.phase {
+	case phFetch:
+		p.fetch()
+	case phExec:
+		p.execute()
+	case phMem:
+		p.memWait()
+	case phIRQ:
+		p.PC = isa.VectorIRQ
+		p.phase = phFetch
+		p.logf("IRQ vector loaded")
+	}
+
+	p.Tick++
+	return !p.Halted
+}
+
+func (p *Processor) fetch() {
 	if p.Pending && p.IE {
-		p.Pending = false
 		p.EPC = p.PC
+		p.Pending = false
 		p.IE = false
 		p.InHandler = true
+		p.phase = phIRQ
 		p.logf("ENTER interrupt, epc=%d", p.EPC)
-		p.PC = isa.VectorIRQ
-		p.Tick += 2
+		return
 	}
 
 	idx := p.PC / 4
-	if p.PC >= 0 && idx < len(p.InstructionMemory) {
-		mode := "main"
-		if p.InHandler {
-			mode = "irq "
-		}
-		p.logf("[%s] %s", mode, p.InstructionMemory[idx])
-	} else {
-		p.logf("PC out of range, stopping")
-	}
-	return p.RunStep()
-}
-
-func (p *Processor) portIn(port int) int {
-	if port == isa.PortInData {
-		v, valid := p.Dev.read()
-		if !valid {
-			p.logf("in port 0: data register is empty")
-		}
-		return v
-	}
-	p.logf("in from unknown port %d", port)
-	return 0
-}
-
-func (p *Processor) portOut(port, v int) {
-	if port == isa.PortOutData {
-		p.Dev.Output = append(p.Dev.Output, byte(v))
+	if p.PC < 0 || p.PC%4 != 0 || idx >= len(p.InstructionMemory) {
+		p.fault("PC out of range: %d", p.PC)
 		return
 	}
-	p.logf("out to unknown port %d", port)
+	p.ir = p.InstructionMemory[idx]
+	p.phase = phExec
+	p.logf("FETCH  %s", p.ir)
 }
 
-func (p *Processor) readData(addr int) int {
-	for i := 0; i < len(p.Cache); i++ {
-		if p.Cache[i].Valid && p.Cache[i].Addr == addr {
-			p.CacheHitCount++
-			p.Tick += 1
-			return p.Cache[i].Value
-		}
-	}
-
-	p.CacheMissCount++
-	p.Tick += 10
-	value := p.word(addr)
-
-	victimIdx := p.CacheMissCount % 4
-	p.Cache[victimIdx] = CacheLine{Valid: true, Addr: addr, Value: value}
-
-	return value
+func (p *Processor) retire(next int) {
+	p.Instructions++
+	p.logf("RETIRE %s | %s", p.ir, p.regDump())
+	p.PC = next
+	p.phase = phFetch
 }
 
-func (p *Processor) writeData(addr int, value int) {
-	p.setWord(addr, value)
-	p.Tick += 10
+func (p *Processor) execute() {
+	in := p.ir
+	a := p.get(in.Reg1)
+	b := p.get(in.Reg2)
+	imm := int32(in.Value)
+	next := p.PC + 4
 
-	updated := false
-	for i := 0; i < len(p.Cache); i++ {
-		if p.Cache[i].Valid && p.Cache[i].Addr == addr {
-			p.Cache[i].Value = value
-			updated = true
-			break
-		}
-	}
-
-	if !updated {
-		victimIdx := p.Tick % 4
-		p.Cache[victimIdx] = CacheLine{Valid: true, Addr: addr, Value: value}
-	}
-}
-
-func (p *Processor) LoadData(data []byte) error {
-	if len(data) > len(p.DataMemory) {
-		return fmt.Errorf("data section too large: %d bytes", len(data))
-	}
-	copy(p.DataMemory[:], data)
-	return nil
-}
-
-func (p *Processor) word(addr int) int {
-	return int(int32(binary.LittleEndian.Uint32(p.DataMemory[addr : addr+4])))
-}
-
-func (p *Processor) setWord(addr, v int) {
-	binary.LittleEndian.PutUint32(p.DataMemory[addr:addr+4], uint32(int32(v)))
-}
-
-func (p *Processor) checkAddr(addr, size int) bool {
-	if addr < 0 || addr+size > len(p.DataMemory) || addr%size != 0 {
-		p.logf("FAULT: bad data address %d (size %d)", addr, size)
-		return false
-	}
-	return true
-}
-
-func (p *Processor) RunStep() bool {
-	if p.PC < 0 || p.PC/4 >= len(p.InstructionMemory) {
-		return false
-	}
-
-	p.Registers["zero"] = 0
-
-	instr := p.InstructionMemory[p.PC/4]
-
-	switch instr.Opcode {
-	case "addi":
-		p.Registers[instr.Reg] = p.Registers[instr.Reg1] + instr.Value
-		p.Tick++
-		p.PC += 4
-
-	case "lw":
-		addr := p.Registers[instr.Reg1] + instr.Value
-		if !p.checkAddr(addr, 4) {
-			return false
-		}
-		p.Registers[instr.Reg] = p.readData(addr)
-		p.PC += 4
-
-	case "sw":
-		addr := p.Registers[instr.Reg1] + instr.Value
-		if !p.checkAddr(addr, 4) {
-			return false
-		}
-		p.writeData(addr, p.Registers[instr.Reg])
-		p.PC += 4
-
-	case "lb":
-		addr := p.Registers[instr.Reg1] + instr.Value
-		if !p.checkAddr(addr, 1) {
-			return false
-		}
-		w := uint32(p.readData(addr &^ 3))
-		p.Registers[instr.Reg] = int(w >> (8 * uint(addr&3)) & 0xFF)
-		p.PC += 4
-
-	case "sb":
-		addr := p.Registers[instr.Reg1] + instr.Value
-		if !p.checkAddr(addr, 1) {
-			return false
-		}
-		sh := 8 * uint(addr&3)
-		w := uint32(p.readData(addr &^ 3))
-		w = w&^(0xFF<<sh) | uint32(p.Registers[instr.Reg]&0xFF)<<sh
-		p.writeData(addr&^3, int(int32(w)))
-		p.PC += 4
-
-	case "lui":
-		p.Registers[instr.Reg] = int(int32(instr.Value) << 16)
-		p.Tick++
-		p.PC += 4
-
+	switch in.Opcode {
 	case "add":
-		p.Registers[instr.Reg] = p.Registers[instr.Reg1] + p.Registers[instr.Reg2]
-		p.Tick++
-		p.PC += 4
-
+		p.set(in.Reg, a+b)
 	case "sub":
-		p.Registers[instr.Reg] = p.Registers[instr.Reg1] - p.Registers[instr.Reg2]
-		p.Tick++
-		p.PC += 4
-
+		p.set(in.Reg, a-b)
 	case "mul":
-		p.Registers[instr.Reg] = p.Registers[instr.Reg1] * p.Registers[instr.Reg2]
-		p.Tick++
-		p.PC += 4
-
+		p.set(in.Reg, a*b)
 	case "div":
-		if p.Registers[instr.Reg2] == 0 {
-			p.Registers[instr.Reg] = -1
+		if b == 0 {
+			p.set(in.Reg, -1)
 		} else {
-			p.Registers[instr.Reg] = p.Registers[instr.Reg1] / p.Registers[instr.Reg2]
+			p.set(in.Reg, a/b)
 		}
-		p.Tick++
-		p.PC += 4
-
 	case "rem":
-		if p.Registers[instr.Reg2] == 0 {
-			p.Registers[instr.Reg] = p.Registers[instr.Reg1]
+		if b == 0 {
+			p.set(in.Reg, a)
 		} else {
-			p.Registers[instr.Reg] = p.Registers[instr.Reg1] % p.Registers[instr.Reg2]
+			p.set(in.Reg, a%b)
 		}
-		p.Tick++
-		p.PC += 4
-
 	case "slt":
-		if p.Registers[instr.Reg1] < p.Registers[instr.Reg2] {
-			p.Registers[instr.Reg] = 1
-		} else {
-			p.Registers[instr.Reg] = 0
-		}
-		p.Tick++
-		p.PC += 4
-
+		p.set(in.Reg, b2i(a < b))
 	case "slti":
-		if p.Registers[instr.Reg1] < instr.Value {
-			p.Registers[instr.Reg] = 1
-		} else {
-			p.Registers[instr.Reg] = 0
-		}
-		p.Tick++
-		p.PC += 4
-
-	case "j":
-		p.PC = instr.Addr
-		p.Tick++
+		p.set(in.Reg, b2i(a < imm))
+	case "sll":
+		p.set(in.Reg, a<<(uint32(b)&31))
+	case "srl":
+		p.set(in.Reg, int32(uint32(a)>>(uint32(b)&31)))
+	case "sra":
+		p.set(in.Reg, a>>(uint32(b)&31))
+	case "addi":
+		p.set(in.Reg, a+imm)
+	case "slli":
+		p.set(in.Reg, a<<(uint32(imm)&31))
+	case "srli":
+		p.set(in.Reg, int32(uint32(a)>>(uint32(imm)&31)))
+	case "srai":
+		p.set(in.Reg, a>>(uint32(imm)&31))
+	case "lui":
+		p.set(in.Reg, imm<<16)
 
 	case "beq", "bne", "blt", "bge", "bltu", "bgeu", "beqz", "bnez":
-		a := int32(p.Registers[instr.Reg1])
-		b := int32(p.Registers[instr.Reg2])
 		taken := false
-		switch instr.Opcode {
-		case "beq", "beqz":
+		switch in.Opcode {
+		case "beq":
 			taken = a == b
-		case "bne", "bnez":
+		case "bne":
 			taken = a != b
 		case "blt":
 			taken = a < b
@@ -316,61 +294,139 @@ func (p *Processor) RunStep() bool {
 			taken = uint32(a) < uint32(b)
 		case "bgeu":
 			taken = uint32(a) >= uint32(b)
+		case "beqz":
+			taken = a == 0
+		case "bnez":
+			taken = a != 0
 		}
 		if taken {
-			p.PC = instr.Addr
-		} else {
-			p.PC += 4
+			next = in.Addr
 		}
-		p.Tick++
-
+	case "j":
+		next = in.Addr
 	case "jal":
-		p.Registers[instr.Reg] = p.PC + 4
-		p.PC = instr.Addr
-		p.Tick++
-
+		p.set(in.Reg, int32(p.PC+4))
+		next = in.Addr
 	case "jalr":
-		ret := p.PC + 4
-		p.PC = p.Registers[instr.Reg1] + instr.Value
-		p.Registers[instr.Reg] = ret
-		p.Tick++
+		target := int(a) + in.Value
+		p.set(in.Reg, int32(p.PC+4))
+		next = target
 
-	case "halt":
-		return false
+	case "lw", "lb", "sw", "sb":
+		p.startMem(in, a)
+		return
 
 	case "in":
-		p.Registers[instr.Reg] = p.portIn(instr.Value)
-		p.Tick++
-		p.PC += 4
-
+		p.set(in.Reg, p.portIn(in.Value))
 	case "out":
-		p.portOut(instr.Value, p.Registers[instr.Reg])
-		p.Tick++
-		p.PC += 4
-
+		p.portOut(in.Value, p.get(in.Reg))
 	case "ei":
 		p.IE = true
-		p.Tick++
-		p.PC += 4
-
 	case "di":
 		p.IE = false
-		p.Tick++
-		p.PC += 4
-
 	case "iret":
-		p.PC = p.EPC
+		next = p.EPC
 		p.IE = true
 		p.InHandler = false
-		p.Tick += 2
 		p.logf("LEAVE interrupt")
-
+	case "halt":
+		p.Halted = true
+		p.logf("HALT")
+		p.Instructions++
+		return
 	default:
-		fmt.Printf("Критическая ошибка: неизвестная инструкция %s\n", instr.Opcode)
-		return false
+		p.fault("unknown instruction %q", in.Opcode)
+		return
 	}
 
-	p.Registers["zero"] = 0
+	if p.Halted {
+		return
+	}
+	p.retire(next)
+}
 
-	return true
+func b2i(c bool) int32 {
+	if c {
+		return 1
+	}
+	return 0
+}
+
+func (p *Processor) startMem(in isa.Instruction, base int32) {
+	addr := int(base) + in.Value
+	size := 4
+	if in.Opcode == "lb" || in.Opcode == "sb" {
+		size = 1
+	}
+	if !p.checkAddr(addr, size) {
+		return
+	}
+	m := memOp{addr: addr, wa: addr &^ 3}
+
+	switch in.Opcode {
+	case "lw", "lb":
+		v, hit := p.Cache.lookup(m.wa)
+		m.hit, m.val = hit, v
+		kind := "MISS"
+		p.total = MemLatency
+		switch {
+		case hit:
+			kind, p.total = "HIT", CacheLatency
+		case !p.Cache.Enabled:
+			kind = "NO-CACHE"
+		}
+		p.logf("MEM    %s addr=%d %s, %d tick(s)", in.Opcode, addr, kind, p.total)
+	default:
+		m.val = p.get(in.Reg)
+		p.total = MemLatency
+		p.logf("MEM    %s addr=%d WRITE-THROUGH, %d tick(s)", in.Opcode, addr, p.total)
+	}
+	p.mem = m
+	p.wait = p.total
+	p.phase = phMem
+}
+
+func (p *Processor) memWait() {
+	p.wait--
+	p.logf("WAIT   mem %d/%d", p.total-p.wait, p.total)
+	if p.wait > 0 {
+		return
+	}
+	p.finishMem()
+}
+
+func (p *Processor) finishMem() {
+	m := p.mem
+	switch p.ir.Opcode {
+	case "lw", "lb":
+		w := m.val
+		if !m.hit {
+			w = p.word(m.wa)
+			if idx, old := p.Cache.fill(m.wa, w); idx >= 0 {
+				if old.valid {
+					p.logf("CACHE  fill line %d addr=%d (evicted addr=%d)", idx, m.wa, old.addr)
+				} else {
+					p.logf("CACHE  fill line %d addr=%d", idx, m.wa)
+				}
+			}
+		}
+		if p.ir.Opcode == "lw" {
+			p.set(p.ir.Reg, w)
+		} else {
+			p.set(p.ir.Reg, int32(uint32(w)>>(8*uint(m.addr&3))&0xFF))
+		}
+	case "sw":
+		p.setWord(m.addr, m.val)
+		p.Cache.update(m.wa, m.val)
+	case "sb":
+		sh := 8 * uint(m.addr&3)
+		w := uint32(p.word(m.wa))
+		w = w&^(0xFF<<sh) | (uint32(m.val)&0xFF)<<sh
+		p.setWord(m.wa, int32(w))
+		p.Cache.update(m.wa, int32(w))
+	}
+	if p.Halted {
+		return
+	}
+	p.retire(p.PC + 4)
 }
