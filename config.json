@@ -1,7 +1,7 @@
 {
-  "source_file": ["test/cache.lisp", "test/t_str.lisp", "test/is_prime.lisp"],
+  "source_file": ["test/hello_world.lisp", "test/formater.lisp", "test/is_prime.lisp"],
   "target_dir": "data/output",
-  "input_file": ["data/input/input0.txt", "", "data/input/input1.txt"],
+  "input_file": ["", "data/input/formater.txt", "data/input/is_prime.txt"],
   "journal_file": "log/journal.log",
   "input_first_tick": 100,
   "input_period": 100,

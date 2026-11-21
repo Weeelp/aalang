@@ -1,9 +1,29 @@
-(setq n 0)
+(setq head 0)
+(setq tail 0)
+(setq eof 0)
+(setq qbuf "q               ")
 
-(setq c (in 0))
+(interrupt
+  (storeb (+ qbuf tail) (in 0))
+  (setq tail (% (+ tail 1) 16)))
+
+(defun getc ()
+  (if eof
+      0
+      (progn
+        (while (== head tail))
+        (setq gc_v (loadb (+ qbuf head)))
+        (setq head (% (+ head 1) 16))
+        (if (== gc_v 0) (setq eof 1))
+        gc_v)))
+
+(ei)
+
+(setq n 0)
+(setq c (getc))
 (while (> c 47)
     (setq n (+ (* n 10) (- c 48)))
-    (setq c (in 0)))
+    (setq c (getc)))
 
 (setq is_prime 1)
 (setq i 2)
@@ -27,4 +47,4 @@
 
     (setq i (+ i 1)))
 
-(print is_prime)
+(print (+ 48 is_prime))

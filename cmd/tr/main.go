@@ -1,9 +1,11 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"sync"
+	"sync/atomic"
 
 	"github.com/Weeelp/aalang/internal/config"
 	"github.com/Weeelp/aalang/internal/translator"
@@ -13,31 +15,30 @@ const maxG = 5
 
 func main() {
 	cfg, err := config.Load("config.json")
+	if err == nil && len(cfg.SourceFile) == 0 {
+		err = errors.New("source_file is empty")
+	}
+	if err == nil {
+		err = cfg.CheckDuplicates(cfg.SourceFile)
+	}
+	if err == nil {
+		err = os.MkdirAll(cfg.TargetDir, 0o755)
+	}
 	if err != nil {
-		fmt.Printf("Config error: %v\n", err)
-		return
-	}
-	if len(cfg.SourceFile) == 0 {
-		fmt.Println("Config error: source_file is empty")
-		return
-	}
-	if err := translator.CheckDuplicates(cfg.TargetDir, cfg.SourceFile); err != nil {
-		fmt.Printf("Config error: %v\n", err)
-		return
-	}
-	if err := os.MkdirAll(cfg.TargetDir, 0o755); err != nil {
-		fmt.Printf("Cannot create %s: %v\n", cfg.TargetDir, err)
-		return
+		fmt.Fprintln(os.Stderr, "Error:", err)
+		os.Exit(1)
 	}
 
-	tasks := make(chan string)
+	var failed atomic.Bool
 	var wg sync.WaitGroup
+	tasks := make(chan string)
 
 	for range min(maxG, len(cfg.SourceFile)) {
 		wg.Go(func() {
 			for src := range tasks {
-				if err := translator.Translate(src, translator.TargetPath(cfg.TargetDir, src)); err != nil {
+				if err := translator.Translate(src, cfg.TargetPath(src)); err != nil {
 					fmt.Printf("[%s] ERROR: %v\n", src, err)
+					failed.Store(true)
 				}
 			}
 		})
@@ -48,4 +49,8 @@ func main() {
 	}
 	close(tasks)
 	wg.Wait()
+
+	if failed.Load() {
+		os.Exit(1)
+	}
 }

@@ -3,31 +3,12 @@ package translator
 import (
 	"fmt"
 	"os"
-	"path/filepath"
-	"strings"
 
 	"github.com/Weeelp/aalang/internal/codegen"
 	"github.com/Weeelp/aalang/internal/isa"
 	"github.com/Weeelp/aalang/internal/lexer"
 	"github.com/Weeelp/aalang/internal/parser"
 )
-
-func TargetPath(dir, src string) string {
-	base := strings.TrimSuffix(filepath.Base(src), filepath.Ext(src))
-	return filepath.Join(dir, base+".bin")
-}
-
-func CheckDuplicates(dir string, sources []string) error {
-	seen := make(map[string]string, len(sources))
-	for _, src := range sources {
-		dst := TargetPath(dir, src)
-		if prev, ok := seen[dst]; ok {
-			return fmt.Errorf("%s and %s both produce %s", prev, src, dst)
-		}
-		seen[dst] = src
-	}
-	return nil
-}
 
 func Translate(src, dst string) error {
 	content, err := os.ReadFile(src)

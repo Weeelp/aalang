@@ -1,167 +1,1250 @@
-TICK      0 PC    0 [main] FETCH  j 0x0008
-TICK      1 PC    0 [main] RETIRE j 0x0008 | IE=false
-TICK      2 PC    8 [main] FETCH  addi sp, zero, 8192
-TICK      3 PC    8 [main] RETIRE addi sp, zero, 8192 | sp=8192 IE=false
-TICK      4 PC   12 [main] FETCH  addi t0, zero, 0
-TICK      5 PC   12 [main] RETIRE addi t0, zero, 0 | sp=8192 IE=false
-TICK      6 PC   16 [main] FETCH  sw t0, 28(zero)
-TICK      7 PC   16 [main] MEM    sw addr=28 WRITE-THROUGH, 10 tick(s)
-TICK      8 PC   16 [main] WAIT   mem 1/10
-TICK      9 PC   16 [main] WAIT   mem 2/10
-TICK     10 PC   16 [main] WAIT   mem 3/10
-TICK     11 PC   16 [main] WAIT   mem 4/10
-TICK     12 PC   16 [main] WAIT   mem 5/10
-TICK     13 PC   16 [main] WAIT   mem 6/10
-TICK     14 PC   16 [main] WAIT   mem 7/10
-TICK     15 PC   16 [main] WAIT   mem 8/10
-TICK     16 PC   16 [main] WAIT   mem 9/10
-TICK     17 PC   16 [main] WAIT   mem 10/10
-TICK     17 PC   16 [main] RETIRE sw t0, 28(zero) | sp=8192 IE=false
-TICK     18 PC   20 [main] FETCH  in t0, 0
-TICK     19 PC   20 [main] in port 0: data register is empty
-TICK     19 PC   20 [main] RETIRE in t0, 0 | sp=8192 IE=false
-TICK     20 PC   24 [main] FETCH  sw t0, 32(zero)
-TICK     21 PC   24 [main] MEM    sw addr=32 WRITE-THROUGH, 10 tick(s)
-TICK     22 PC   24 [main] WAIT   mem 1/10
-TICK     23 PC   24 [main] WAIT   mem 2/10
-TICK     24 PC   24 [main] WAIT   mem 3/10
-TICK     25 PC   24 [main] WAIT   mem 4/10
-TICK     26 PC   24 [main] WAIT   mem 5/10
-TICK     27 PC   24 [main] WAIT   mem 6/10
-TICK     28 PC   24 [main] WAIT   mem 7/10
-TICK     29 PC   24 [main] WAIT   mem 8/10
-TICK     30 PC   24 [main] WAIT   mem 9/10
-TICK     31 PC   24 [main] WAIT   mem 10/10
-TICK     31 PC   24 [main] RETIRE sw t0, 32(zero) | sp=8192 IE=false
-TICK     32 PC   28 [main] FETCH  lw t1, 32(zero)
-TICK     33 PC   28 [main] MEM    lw addr=32 MISS, 10 tick(s)
-TICK     34 PC   28 [main] WAIT   mem 1/10
-TICK     35 PC   28 [main] WAIT   mem 2/10
-TICK     36 PC   28 [main] WAIT   mem 3/10
-TICK     37 PC   28 [main] WAIT   mem 4/10
-TICK     38 PC   28 [main] WAIT   mem 5/10
-TICK     39 PC   28 [main] WAIT   mem 6/10
-TICK     40 PC   28 [main] WAIT   mem 7/10
-TICK     41 PC   28 [main] WAIT   mem 8/10
-TICK     42 PC   28 [main] WAIT   mem 9/10
-TICK     43 PC   28 [main] WAIT   mem 10/10
-TICK     43 PC   28 [main] CACHE  fill line 0 addr=32
-TICK     43 PC   28 [main] RETIRE lw t1, 32(zero) | sp=8192 IE=false
-TICK     44 PC   32 [main] FETCH  addi t2, zero, 47
-TICK     45 PC   32 [main] RETIRE addi t2, zero, 47 | sp=8192 t2=47 IE=false
-TICK     46 PC   36 [main] FETCH  bge t2, t1, 0x0054
-TICK     47 PC   36 [main] RETIRE bge t2, t1, 0x0054 | sp=8192 t2=47 IE=false
-TICK     48 PC   84 [main] FETCH  addi t0, zero, 0
-TICK     49 PC   84 [main] RETIRE addi t0, zero, 0 | sp=8192 t2=47 IE=false
-TICK     50 PC   88 [main] FETCH  addi t0, zero, 1
-TICK     51 PC   88 [main] RETIRE addi t0, zero, 1 | sp=8192 t0=1 t2=47 IE=false
-TICK     52 PC   92 [main] FETCH  sw t0, 36(zero)
-TICK     53 PC   92 [main] MEM    sw addr=36 WRITE-THROUGH, 10 tick(s)
-TICK     54 PC   92 [main] WAIT   mem 1/10
-TICK     55 PC   92 [main] WAIT   mem 2/10
-TICK     56 PC   92 [main] WAIT   mem 3/10
-TICK     57 PC   92 [main] WAIT   mem 4/10
-TICK     58 PC   92 [main] WAIT   mem 5/10
-TICK     59 PC   92 [main] WAIT   mem 6/10
-TICK     60 PC   92 [main] WAIT   mem 7/10
-TICK     61 PC   92 [main] WAIT   mem 8/10
-TICK     62 PC   92 [main] WAIT   mem 9/10
-TICK     63 PC   92 [main] WAIT   mem 10/10
-TICK     63 PC   92 [main] RETIRE sw t0, 36(zero) | sp=8192 t0=1 t2=47 IE=false
-TICK     64 PC   96 [main] FETCH  addi t0, zero, 2
-TICK     65 PC   96 [main] RETIRE addi t0, zero, 2 | sp=8192 t0=2 t2=47 IE=false
-TICK     66 PC  100 [main] FETCH  sw t0, 40(zero)
-TICK     67 PC  100 [main] MEM    sw addr=40 WRITE-THROUGH, 10 tick(s)
-TICK     68 PC  100 [main] WAIT   mem 1/10
-TICK     69 PC  100 [main] WAIT   mem 2/10
-TICK     70 PC  100 [main] WAIT   mem 3/10
-TICK     71 PC  100 [main] WAIT   mem 4/10
-TICK     72 PC  100 [main] WAIT   mem 5/10
-TICK     73 PC  100 [main] WAIT   mem 6/10
-TICK     74 PC  100 [main] WAIT   mem 7/10
-TICK     75 PC  100 [main] WAIT   mem 8/10
-TICK     76 PC  100 [main] WAIT   mem 9/10
-TICK     77 PC  100 [main] WAIT   mem 10/10
-TICK     77 PC  100 [main] RETIRE sw t0, 40(zero) | sp=8192 t0=2 t2=47 IE=false
-TICK     78 PC  104 [main] FETCH  lw t1, 28(zero)
-TICK     79 PC  104 [main] MEM    lw addr=28 MISS, 10 tick(s)
-TICK     80 PC  104 [main] WAIT   mem 1/10
-TICK     81 PC  104 [main] WAIT   mem 2/10
-TICK     82 PC  104 [main] WAIT   mem 3/10
-TICK     83 PC  104 [main] WAIT   mem 4/10
-TICK     84 PC  104 [main] WAIT   mem 5/10
-TICK     85 PC  104 [main] WAIT   mem 6/10
-TICK     86 PC  104 [main] WAIT   mem 7/10
-TICK     87 PC  104 [main] WAIT   mem 8/10
-TICK     88 PC  104 [main] WAIT   mem 9/10
-TICK     89 PC  104 [main] WAIT   mem 10/10
-TICK     89 PC  104 [main] CACHE  fill line 1 addr=28
-TICK     89 PC  104 [main] RETIRE lw t1, 28(zero) | sp=8192 t0=2 t2=47 IE=false
-TICK     90 PC  108 [main] FETCH  addi t2, zero, 2
-TICK     91 PC  108 [main] RETIRE addi t2, zero, 2 | sp=8192 t0=2 t2=2 IE=false
-TICK     92 PC  112 [main] FETCH  bge t1, t2, 0x0080
-TICK     93 PC  112 [main] RETIRE bge t1, t2, 0x0080 | sp=8192 t0=2 t2=2 IE=false
-TICK     94 PC  116 [main] FETCH  addi t0, zero, 0
-TICK     95 PC  116 [main] RETIRE addi t0, zero, 0 | sp=8192 t2=2 IE=false
-TICK     96 PC  120 [main] FETCH  sw t0, 36(zero)
-TICK     97 PC  120 [main] MEM    sw addr=36 WRITE-THROUGH, 10 tick(s)
-TICK     98 PC  120 [main] WAIT   mem 1/10
-TICK     99 PC  120 [main] WAIT   mem 2/10
-TICK    100 PC  120 [main] IRQ raised (data='1')
-TICK    100 PC  120 [main] WAIT   mem 3/10
-TICK    101 PC  120 [main] WAIT   mem 4/10
-TICK    102 PC  120 [main] WAIT   mem 5/10
-TICK    103 PC  120 [main] WAIT   mem 6/10
-TICK    104 PC  120 [main] WAIT   mem 7/10
-TICK    105 PC  120 [main] WAIT   mem 8/10
-TICK    106 PC  120 [main] WAIT   mem 9/10
-TICK    107 PC  120 [main] WAIT   mem 10/10
-TICK    107 PC  120 [main] RETIRE sw t0, 36(zero) | sp=8192 t2=2 IE=false
-TICK    108 PC  124 [main] FETCH  j 0x0088
-TICK    109 PC  124 [main] RETIRE j 0x0088 | sp=8192 t2=2 IE=false
-TICK    110 PC  136 [main] FETCH  lw t1, 40(zero)
-TICK    111 PC  136 [main] MEM    lw addr=40 MISS, 10 tick(s)
-TICK    112 PC  136 [main] WAIT   mem 1/10
-TICK    113 PC  136 [main] WAIT   mem 2/10
-TICK    114 PC  136 [main] WAIT   mem 3/10
-TICK    115 PC  136 [main] WAIT   mem 4/10
-TICK    116 PC  136 [main] WAIT   mem 5/10
-TICK    117 PC  136 [main] WAIT   mem 6/10
-TICK    118 PC  136 [main] WAIT   mem 7/10
-TICK    119 PC  136 [main] WAIT   mem 8/10
-TICK    120 PC  136 [main] WAIT   mem 9/10
-TICK    121 PC  136 [main] WAIT   mem 10/10
-TICK    121 PC  136 [main] CACHE  fill line 2 addr=40
-TICK    121 PC  136 [main] RETIRE lw t1, 40(zero) | sp=8192 t1=2 t2=2 IE=false
-TICK    122 PC  140 [main] FETCH  lw t2, 40(zero)
-TICK    123 PC  140 [main] MEM    lw addr=40 HIT, 1 tick(s)
-TICK    124 PC  140 [main] WAIT   mem 1/1
-TICK    124 PC  140 [main] RETIRE lw t2, 40(zero) | sp=8192 t1=2 t2=2 IE=false
-TICK    125 PC  144 [main] FETCH  mul t1, t1, t2
-TICK    126 PC  144 [main] RETIRE mul t1, t1, t2 | sp=8192 t1=4 t2=2 IE=false
-TICK    127 PC  148 [main] FETCH  lw t2, 28(zero)
-TICK    128 PC  148 [main] MEM    lw addr=28 HIT, 1 tick(s)
-TICK    129 PC  148 [main] WAIT   mem 1/1
-TICK    129 PC  148 [main] RETIRE lw t2, 28(zero) | sp=8192 t1=4 IE=false
-TICK    130 PC  152 [main] FETCH  blt t2, t1, 0x0128
-TICK    131 PC  152 [main] RETIRE blt t2, t1, 0x0128 | sp=8192 t1=4 IE=false
-TICK    132 PC  296 [main] FETCH  addi t0, zero, 0
-TICK    133 PC  296 [main] RETIRE addi t0, zero, 0 | sp=8192 t1=4 IE=false
-TICK    134 PC  300 [main] FETCH  lw t0, 36(zero)
-TICK    135 PC  300 [main] MEM    lw addr=36 MISS, 10 tick(s)
-TICK    136 PC  300 [main] WAIT   mem 1/10
-TICK    137 PC  300 [main] WAIT   mem 2/10
-TICK    138 PC  300 [main] WAIT   mem 3/10
-TICK    139 PC  300 [main] WAIT   mem 4/10
-TICK    140 PC  300 [main] WAIT   mem 5/10
-TICK    141 PC  300 [main] WAIT   mem 6/10
-TICK    142 PC  300 [main] WAIT   mem 7/10
-TICK    143 PC  300 [main] WAIT   mem 8/10
-TICK    144 PC  300 [main] WAIT   mem 9/10
-TICK    145 PC  300 [main] WAIT   mem 10/10
-TICK    145 PC  300 [main] CACHE  fill line 3 addr=36
-TICK    145 PC  300 [main] RETIRE lw t0, 36(zero) | sp=8192 t1=4 IE=false
-TICK    146 PC  304 [main] FETCH  out t0, 1
-TICK    147 PC  304 [main] RETIRE out t0, 1 | sp=8192 t1=4 IE=false
-TICK    148 PC  308 [main] FETCH  halt
-TICK    149 PC  308 [main] HALT
+TICK      0 | PC    0 | [main] FETCH  j 0x0008
+TICK      1 | PC    0 | [main] RETIRE j 0x0008 | IE=false
+TICK      2 | PC    8 | [main] FETCH  addi sp, zero, 8192
+TICK      3 | PC    8 | [main] RETIRE addi sp, zero, 8192 | sp=8192 IE=false
+TICK      4 | PC   12 | [main] FETCH  addi t0, zero, 0
+TICK      5 | PC   12 | [main] RETIRE addi t0, zero, 0 | sp=8192 IE=false
+TICK      6 | PC   16 | [main] FETCH  sw t0, 0(zero)
+TICK      7 | PC   16 | [main] MEM    sw addr=0 WRITE-THROUGH, 10 tick(s)
+TICK      8 | PC   16 | [main] WAIT   mem 1/10
+TICK      9 | PC   16 | [main] WAIT   mem 2/10
+TICK     10 | PC   16 | [main] WAIT   mem 3/10
+TICK     11 | PC   16 | [main] WAIT   mem 4/10
+TICK     12 | PC   16 | [main] WAIT   mem 5/10
+TICK     13 | PC   16 | [main] WAIT   mem 6/10
+TICK     14 | PC   16 | [main] WAIT   mem 7/10
+TICK     15 | PC   16 | [main] WAIT   mem 8/10
+TICK     16 | PC   16 | [main] WAIT   mem 9/10
+TICK     17 | PC   16 | [main] WAIT   mem 10/10
+TICK     17 | PC   16 | [main] RETIRE sw t0, 0(zero) | sp=8192 IE=false
+TICK     18 | PC   20 | [main] FETCH  addi t0, zero, 0
+TICK     19 | PC   20 | [main] RETIRE addi t0, zero, 0 | sp=8192 IE=false
+TICK     20 | PC   24 | [main] FETCH  sw t0, 4(zero)
+TICK     21 | PC   24 | [main] MEM    sw addr=4 WRITE-THROUGH, 10 tick(s)
+TICK     22 | PC   24 | [main] WAIT   mem 1/10
+TICK     23 | PC   24 | [main] WAIT   mem 2/10
+TICK     24 | PC   24 | [main] WAIT   mem 3/10
+TICK     25 | PC   24 | [main] WAIT   mem 4/10
+TICK     26 | PC   24 | [main] WAIT   mem 5/10
+TICK     27 | PC   24 | [main] WAIT   mem 6/10
+TICK     28 | PC   24 | [main] WAIT   mem 7/10
+TICK     29 | PC   24 | [main] WAIT   mem 8/10
+TICK     30 | PC   24 | [main] WAIT   mem 9/10
+TICK     31 | PC   24 | [main] WAIT   mem 10/10
+TICK     31 | PC   24 | [main] RETIRE sw t0, 4(zero) | sp=8192 IE=false
+TICK     32 | PC   28 | [main] FETCH  addi t0, zero, 0
+TICK     33 | PC   28 | [main] RETIRE addi t0, zero, 0 | sp=8192 IE=false
+TICK     34 | PC   32 | [main] FETCH  sw t0, 8(zero)
+TICK     35 | PC   32 | [main] MEM    sw addr=8 WRITE-THROUGH, 10 tick(s)
+TICK     36 | PC   32 | [main] WAIT   mem 1/10
+TICK     37 | PC   32 | [main] WAIT   mem 2/10
+TICK     38 | PC   32 | [main] WAIT   mem 3/10
+TICK     39 | PC   32 | [main] WAIT   mem 4/10
+TICK     40 | PC   32 | [main] WAIT   mem 5/10
+TICK     41 | PC   32 | [main] WAIT   mem 6/10
+TICK     42 | PC   32 | [main] WAIT   mem 7/10
+TICK     43 | PC   32 | [main] WAIT   mem 8/10
+TICK     44 | PC   32 | [main] WAIT   mem 9/10
+TICK     45 | PC   32 | [main] WAIT   mem 10/10
+TICK     45 | PC   32 | [main] RETIRE sw t0, 8(zero) | sp=8192 IE=false
+TICK     46 | PC   36 | [main] FETCH  addi t0, zero, 12
+TICK     47 | PC   36 | [main] RETIRE addi t0, zero, 12 | sp=8192 t0=12 IE=false
+TICK     48 | PC   40 | [main] FETCH  sw t0, 32(zero)
+TICK     49 | PC   40 | [main] MEM    sw addr=32 WRITE-THROUGH, 10 tick(s)
+TICK     50 | PC   40 | [main] WAIT   mem 1/10
+TICK     51 | PC   40 | [main] WAIT   mem 2/10
+TICK     52 | PC   40 | [main] WAIT   mem 3/10
+TICK     53 | PC   40 | [main] WAIT   mem 4/10
+TICK     54 | PC   40 | [main] WAIT   mem 5/10
+TICK     55 | PC   40 | [main] WAIT   mem 6/10
+TICK     56 | PC   40 | [main] WAIT   mem 7/10
+TICK     57 | PC   40 | [main] WAIT   mem 8/10
+TICK     58 | PC   40 | [main] WAIT   mem 9/10
+TICK     59 | PC   40 | [main] WAIT   mem 10/10
+TICK     59 | PC   40 | [main] RETIRE sw t0, 32(zero) | sp=8192 t0=12 IE=false
+TICK     60 | PC   44 | [main] FETCH  ei
+TICK     61 | PC   44 | [main] RETIRE ei | sp=8192 t0=12 IE=true
+TICK     62 | PC   48 | [main] FETCH  addi t0, zero, 0
+TICK     63 | PC   48 | [main] RETIRE addi t0, zero, 0 | sp=8192 IE=true
+TICK     64 | PC   52 | [main] FETCH  addi t0, zero, 0
+TICK     65 | PC   52 | [main] RETIRE addi t0, zero, 0 | sp=8192 IE=true
+TICK     66 | PC   56 | [main] FETCH  sw t0, 36(zero)
+TICK     67 | PC   56 | [main] MEM    sw addr=36 WRITE-THROUGH, 10 tick(s)
+TICK     68 | PC   56 | [main] WAIT   mem 1/10
+TICK     69 | PC   56 | [main] WAIT   mem 2/10
+TICK     70 | PC   56 | [main] WAIT   mem 3/10
+TICK     71 | PC   56 | [main] WAIT   mem 4/10
+TICK     72 | PC   56 | [main] WAIT   mem 5/10
+TICK     73 | PC   56 | [main] WAIT   mem 6/10
+TICK     74 | PC   56 | [main] WAIT   mem 7/10
+TICK     75 | PC   56 | [main] WAIT   mem 8/10
+TICK     76 | PC   56 | [main] WAIT   mem 9/10
+TICK     77 | PC   56 | [main] WAIT   mem 10/10
+TICK     77 | PC   56 | [main] RETIRE sw t0, 36(zero) | sp=8192 IE=true
+TICK     78 | PC   60 | [main] FETCH  jal ra, 0x0170
+TICK     79 | PC   60 | [main] RETIRE jal ra, 0x0170 | ra=64 sp=8192 IE=true
+TICK     80 | PC  368 | [main] FETCH  addi sp, sp, -8
+TICK     81 | PC  368 | [main] RETIRE addi sp, sp, -8 | ra=64 sp=8184 IE=true
+TICK     82 | PC  372 | [main] FETCH  sw ra, 0(sp)
+TICK     83 | PC  372 | [main] MEM    sw addr=8184 WRITE-THROUGH, 10 tick(s)
+TICK     84 | PC  372 | [main] WAIT   mem 1/10
+TICK     85 | PC  372 | [main] WAIT   mem 2/10
+TICK     86 | PC  372 | [main] WAIT   mem 3/10
+TICK     87 | PC  372 | [main] WAIT   mem 4/10
+TICK     88 | PC  372 | [main] WAIT   mem 5/10
+TICK     89 | PC  372 | [main] WAIT   mem 6/10
+TICK     90 | PC  372 | [main] WAIT   mem 7/10
+TICK     91 | PC  372 | [main] WAIT   mem 8/10
+TICK     92 | PC  372 | [main] WAIT   mem 9/10
+TICK     93 | PC  372 | [main] WAIT   mem 10/10
+TICK     93 | PC  372 | [main] RETIRE sw ra, 0(sp) | ra=64 sp=8184 IE=true
+TICK     94 | PC  376 | [main] FETCH  lw t1, 8(zero)
+TICK     95 | PC  376 | [main] MEM    lw addr=8 MISS, 10 tick(s)
+TICK     96 | PC  376 | [main] WAIT   mem 1/10
+TICK     97 | PC  376 | [main] WAIT   mem 2/10
+TICK     98 | PC  376 | [main] WAIT   mem 3/10
+TICK     99 | PC  376 | [main] WAIT   mem 4/10
+TICK    100 | PC  376 | [main] IRQ raised (data='9')
+TICK    100 | PC  376 | [main] WAIT   mem 5/10
+TICK    101 | PC  376 | [main] WAIT   mem 6/10
+TICK    102 | PC  376 | [main] WAIT   mem 7/10
+TICK    103 | PC  376 | [main] WAIT   mem 8/10
+TICK    104 | PC  376 | [main] WAIT   mem 9/10
+TICK    105 | PC  376 | [main] WAIT   mem 10/10
+TICK    105 | PC  376 | [main] CACHE  fill line 0 addr=8 (evicted valid=false addr=0)
+TICK    105 | PC  376 | [main] RETIRE lw t1, 8(zero) | ra=64 sp=8184 IE=true
+TICK    106 | PC  380 | [main] ENTER interrupt, epc=380
+TICK    107 | PC    4 | [irq ] FETCH  j 0x01F4
+TICK    108 | PC    4 | [irq ] RETIRE j 0x01F4 | ra=64 sp=8184 IE=false
+TICK    109 | PC  500 | [irq ] FETCH  lw s1, 32(zero)
+TICK    110 | PC  500 | [irq ] MEM    lw addr=32 MISS, 10 tick(s)
+TICK    111 | PC  500 | [irq ] WAIT   mem 1/10
+TICK    112 | PC  500 | [irq ] WAIT   mem 2/10
+TICK    113 | PC  500 | [irq ] WAIT   mem 3/10
+TICK    114 | PC  500 | [irq ] WAIT   mem 4/10
+TICK    115 | PC  500 | [irq ] WAIT   mem 5/10
+TICK    116 | PC  500 | [irq ] WAIT   mem 6/10
+TICK    117 | PC  500 | [irq ] WAIT   mem 7/10
+TICK    118 | PC  500 | [irq ] WAIT   mem 8/10
+TICK    119 | PC  500 | [irq ] WAIT   mem 9/10
+TICK    120 | PC  500 | [irq ] WAIT   mem 10/10
+TICK    120 | PC  500 | [irq ] CACHE  fill line 1 addr=32 (evicted valid=false addr=0)
+TICK    120 | PC  500 | [irq ] RETIRE lw s1, 32(zero) | ra=64 sp=8184 s1=12 IE=false
+TICK    121 | PC  504 | [irq ] FETCH  lw s2, 4(zero)
+TICK    122 | PC  504 | [irq ] MEM    lw addr=4 MISS, 10 tick(s)
+TICK    123 | PC  504 | [irq ] WAIT   mem 1/10
+TICK    124 | PC  504 | [irq ] WAIT   mem 2/10
+TICK    125 | PC  504 | [irq ] WAIT   mem 3/10
+TICK    126 | PC  504 | [irq ] WAIT   mem 4/10
+TICK    127 | PC  504 | [irq ] WAIT   mem 5/10
+TICK    128 | PC  504 | [irq ] WAIT   mem 6/10
+TICK    129 | PC  504 | [irq ] WAIT   mem 7/10
+TICK    130 | PC  504 | [irq ] WAIT   mem 8/10
+TICK    131 | PC  504 | [irq ] WAIT   mem 9/10
+TICK    132 | PC  504 | [irq ] WAIT   mem 10/10
+TICK    132 | PC  504 | [irq ] CACHE  fill line 2 addr=4 (evicted valid=false addr=0)
+TICK    132 | PC  504 | [irq ] RETIRE lw s2, 4(zero) | ra=64 sp=8184 s1=12 IE=false
+TICK    133 | PC  508 | [irq ] FETCH  add s1, s1, s2
+TICK    134 | PC  508 | [irq ] RETIRE add s1, s1, s2 | ra=64 sp=8184 s1=12 IE=false
+TICK    135 | PC  512 | [irq ] FETCH  in s2, 0
+TICK    136 | PC  512 | [irq ] RETIRE in s2, 0 | ra=64 sp=8184 s1=12 s2=57 IE=false
+TICK    137 | PC  516 | [irq ] FETCH  sb s2, 0(s1)
+TICK    138 | PC  516 | [irq ] MEM    sb addr=12 WRITE-THROUGH, 10 tick(s)
+TICK    139 | PC  516 | [irq ] WAIT   mem 1/10
+TICK    140 | PC  516 | [irq ] WAIT   mem 2/10
+TICK    141 | PC  516 | [irq ] WAIT   mem 3/10
+TICK    142 | PC  516 | [irq ] WAIT   mem 4/10
+TICK    143 | PC  516 | [irq ] WAIT   mem 5/10
+TICK    144 | PC  516 | [irq ] WAIT   mem 6/10
+TICK    145 | PC  516 | [irq ] WAIT   mem 7/10
+TICK    146 | PC  516 | [irq ] WAIT   mem 8/10
+TICK    147 | PC  516 | [irq ] WAIT   mem 9/10
+TICK    148 | PC  516 | [irq ] WAIT   mem 10/10
+TICK    148 | PC  516 | [irq ] RETIRE sb s2, 0(s1) | ra=64 sp=8184 s1=12 s2=57 IE=false
+TICK    149 | PC  520 | [irq ] FETCH  addi s1, s2, 0
+TICK    150 | PC  520 | [irq ] RETIRE addi s1, s2, 0 | ra=64 sp=8184 s1=57 s2=57 IE=false
+TICK    151 | PC  524 | [irq ] FETCH  lw s1, 4(zero)
+TICK    152 | PC  524 | [irq ] MEM    lw addr=4 HIT, 1 tick(s)
+TICK    153 | PC  524 | [irq ] WAIT   mem 1/1
+TICK    153 | PC  524 | [irq ] RETIRE lw s1, 4(zero) | ra=64 sp=8184 s2=57 IE=false
+TICK    154 | PC  528 | [irq ] FETCH  addi s2, zero, 1
+TICK    155 | PC  528 | [irq ] RETIRE addi s2, zero, 1 | ra=64 sp=8184 s2=1 IE=false
+TICK    156 | PC  532 | [irq ] FETCH  add s1, s1, s2
+TICK    157 | PC  532 | [irq ] RETIRE add s1, s1, s2 | ra=64 sp=8184 s1=1 s2=1 IE=false
+TICK    158 | PC  536 | [irq ] FETCH  addi s2, zero, 16
+TICK    159 | PC  536 | [irq ] RETIRE addi s2, zero, 16 | ra=64 sp=8184 s1=1 s2=16 IE=false
+TICK    160 | PC  540 | [irq ] FETCH  rem s1, s1, s2
+TICK    161 | PC  540 | [irq ] RETIRE rem s1, s1, s2 | ra=64 sp=8184 s1=1 s2=16 IE=false
+TICK    162 | PC  544 | [irq ] FETCH  sw s1, 4(zero)
+TICK    163 | PC  544 | [irq ] MEM    sw addr=4 WRITE-THROUGH, 10 tick(s)
+TICK    164 | PC  544 | [irq ] WAIT   mem 1/10
+TICK    165 | PC  544 | [irq ] WAIT   mem 2/10
+TICK    166 | PC  544 | [irq ] WAIT   mem 3/10
+TICK    167 | PC  544 | [irq ] WAIT   mem 4/10
+TICK    168 | PC  544 | [irq ] WAIT   mem 5/10
+TICK    169 | PC  544 | [irq ] WAIT   mem 6/10
+TICK    170 | PC  544 | [irq ] WAIT   mem 7/10
+TICK    171 | PC  544 | [irq ] WAIT   mem 8/10
+TICK    172 | PC  544 | [irq ] WAIT   mem 9/10
+TICK    173 | PC  544 | [irq ] WAIT   mem 10/10
+TICK    173 | PC  544 | [irq ] RETIRE sw s1, 4(zero) | ra=64 sp=8184 s1=1 s2=16 IE=false
+TICK    174 | PC  548 | [irq ] FETCH  iret
+TICK    175 | PC  548 | [main] LEAVE interrupt
+TICK    175 | PC  548 | [main] RETIRE iret | ra=64 sp=8184 s1=1 s2=16 IE=true
+TICK    176 | PC  380 | [main] FETCH  beqz t1, 0x0188
+TICK    177 | PC  380 | [main] RETIRE beqz t1, 0x0188 | ra=64 sp=8184 s1=1 s2=16 IE=true
+TICK    178 | PC  392 | [main] FETCH  lw t1, 0(zero)
+TICK    179 | PC  392 | [main] MEM    lw addr=0 MISS, 10 tick(s)
+TICK    180 | PC  392 | [main] WAIT   mem 1/10
+TICK    181 | PC  392 | [main] WAIT   mem 2/10
+TICK    182 | PC  392 | [main] WAIT   mem 3/10
+TICK    183 | PC  392 | [main] WAIT   mem 4/10
+TICK    184 | PC  392 | [main] WAIT   mem 5/10
+TICK    185 | PC  392 | [main] WAIT   mem 6/10
+TICK    186 | PC  392 | [main] WAIT   mem 7/10
+TICK    187 | PC  392 | [main] WAIT   mem 8/10
+TICK    188 | PC  392 | [main] WAIT   mem 9/10
+TICK    189 | PC  392 | [main] WAIT   mem 10/10
+TICK    189 | PC  392 | [main] CACHE  fill line 3 addr=0 (evicted valid=false addr=0)
+TICK    189 | PC  392 | [main] RETIRE lw t1, 0(zero) | ra=64 sp=8184 s1=1 s2=16 IE=true
+TICK    190 | PC  396 | [main] FETCH  lw t2, 4(zero)
+TICK    191 | PC  396 | [main] MEM    lw addr=4 HIT, 1 tick(s)
+TICK    192 | PC  396 | [main] WAIT   mem 1/1
+TICK    192 | PC  396 | [main] RETIRE lw t2, 4(zero) | ra=64 sp=8184 t2=1 s1=1 s2=16 IE=true
+TICK    193 | PC  400 | [main] FETCH  bne t1, t2, 0x0198
+TICK    194 | PC  400 | [main] RETIRE bne t1, t2, 0x0198 | ra=64 sp=8184 t2=1 s1=1 s2=16 IE=true
+TICK    195 | PC  408 | [main] FETCH  addi t0, zero, 0
+TICK    196 | PC  408 | [main] RETIRE addi t0, zero, 0 | ra=64 sp=8184 t2=1 s1=1 s2=16 IE=true
+TICK    197 | PC  412 | [main] FETCH  lw t0, 32(zero)
+TICK    198 | PC  412 | [main] MEM    lw addr=32 HIT, 1 tick(s)
+TICK    199 | PC  412 | [main] WAIT   mem 1/1
+TICK    199 | PC  412 | [main] RETIRE lw t0, 32(zero) | ra=64 sp=8184 t0=12 t2=1 s1=1 s2=16 IE=true
+TICK    200 | PC  416 | [main] IRQ raised (data='8')
+TICK    200 | PC  416 | [main] ENTER interrupt, epc=416
+TICK    201 | PC    4 | [irq ] FETCH  j 0x01F4
+TICK    202 | PC    4 | [irq ] RETIRE j 0x01F4 | ra=64 sp=8184 t0=12 t2=1 s1=1 s2=16 IE=false
+TICK    203 | PC  500 | [irq ] FETCH  lw s1, 32(zero)
+TICK    204 | PC  500 | [irq ] MEM    lw addr=32 HIT, 1 tick(s)
+TICK    205 | PC  500 | [irq ] WAIT   mem 1/1
+TICK    205 | PC  500 | [irq ] RETIRE lw s1, 32(zero) | ra=64 sp=8184 t0=12 t2=1 s1=12 s2=16 IE=false
+TICK    206 | PC  504 | [irq ] FETCH  lw s2, 4(zero)
+TICK    207 | PC  504 | [irq ] MEM    lw addr=4 HIT, 1 tick(s)
+TICK    208 | PC  504 | [irq ] WAIT   mem 1/1
+TICK    208 | PC  504 | [irq ] RETIRE lw s2, 4(zero) | ra=64 sp=8184 t0=12 t2=1 s1=12 s2=1 IE=false
+TICK    209 | PC  508 | [irq ] FETCH  add s1, s1, s2
+TICK    210 | PC  508 | [irq ] RETIRE add s1, s1, s2 | ra=64 sp=8184 t0=12 t2=1 s1=13 s2=1 IE=false
+TICK    211 | PC  512 | [irq ] FETCH  in s2, 0
+TICK    212 | PC  512 | [irq ] RETIRE in s2, 0 | ra=64 sp=8184 t0=12 t2=1 s1=13 s2=56 IE=false
+TICK    213 | PC  516 | [irq ] FETCH  sb s2, 0(s1)
+TICK    214 | PC  516 | [irq ] MEM    sb addr=13 WRITE-THROUGH, 10 tick(s)
+TICK    215 | PC  516 | [irq ] WAIT   mem 1/10
+TICK    216 | PC  516 | [irq ] WAIT   mem 2/10
+TICK    217 | PC  516 | [irq ] WAIT   mem 3/10
+TICK    218 | PC  516 | [irq ] WAIT   mem 4/10
+TICK    219 | PC  516 | [irq ] WAIT   mem 5/10
+TICK    220 | PC  516 | [irq ] WAIT   mem 6/10
+TICK    221 | PC  516 | [irq ] WAIT   mem 7/10
+TICK    222 | PC  516 | [irq ] WAIT   mem 8/10
+TICK    223 | PC  516 | [irq ] WAIT   mem 9/10
+TICK    224 | PC  516 | [irq ] WAIT   mem 10/10
+TICK    224 | PC  516 | [irq ] RETIRE sb s2, 0(s1) | ra=64 sp=8184 t0=12 t2=1 s1=13 s2=56 IE=false
+TICK    225 | PC  520 | [irq ] FETCH  addi s1, s2, 0
+TICK    226 | PC  520 | [irq ] RETIRE addi s1, s2, 0 | ra=64 sp=8184 t0=12 t2=1 s1=56 s2=56 IE=false
+TICK    227 | PC  524 | [irq ] FETCH  lw s1, 4(zero)
+TICK    228 | PC  524 | [irq ] MEM    lw addr=4 HIT, 1 tick(s)
+TICK    229 | PC  524 | [irq ] WAIT   mem 1/1
+TICK    229 | PC  524 | [irq ] RETIRE lw s1, 4(zero) | ra=64 sp=8184 t0=12 t2=1 s1=1 s2=56 IE=false
+TICK    230 | PC  528 | [irq ] FETCH  addi s2, zero, 1
+TICK    231 | PC  528 | [irq ] RETIRE addi s2, zero, 1 | ra=64 sp=8184 t0=12 t2=1 s1=1 s2=1 IE=false
+TICK    232 | PC  532 | [irq ] FETCH  add s1, s1, s2
+TICK    233 | PC  532 | [irq ] RETIRE add s1, s1, s2 | ra=64 sp=8184 t0=12 t2=1 s1=2 s2=1 IE=false
+TICK    234 | PC  536 | [irq ] FETCH  addi s2, zero, 16
+TICK    235 | PC  536 | [irq ] RETIRE addi s2, zero, 16 | ra=64 sp=8184 t0=12 t2=1 s1=2 s2=16 IE=false
+TICK    236 | PC  540 | [irq ] FETCH  rem s1, s1, s2
+TICK    237 | PC  540 | [irq ] RETIRE rem s1, s1, s2 | ra=64 sp=8184 t0=12 t2=1 s1=2 s2=16 IE=false
+TICK    238 | PC  544 | [irq ] FETCH  sw s1, 4(zero)
+TICK    239 | PC  544 | [irq ] MEM    sw addr=4 WRITE-THROUGH, 10 tick(s)
+TICK    240 | PC  544 | [irq ] WAIT   mem 1/10
+TICK    241 | PC  544 | [irq ] WAIT   mem 2/10
+TICK    242 | PC  544 | [irq ] WAIT   mem 3/10
+TICK    243 | PC  544 | [irq ] WAIT   mem 4/10
+TICK    244 | PC  544 | [irq ] WAIT   mem 5/10
+TICK    245 | PC  544 | [irq ] WAIT   mem 6/10
+TICK    246 | PC  544 | [irq ] WAIT   mem 7/10
+TICK    247 | PC  544 | [irq ] WAIT   mem 8/10
+TICK    248 | PC  544 | [irq ] WAIT   mem 9/10
+TICK    249 | PC  544 | [irq ] WAIT   mem 10/10
+TICK    249 | PC  544 | [irq ] RETIRE sw s1, 4(zero) | ra=64 sp=8184 t0=12 t2=1 s1=2 s2=16 IE=false
+TICK    250 | PC  548 | [irq ] FETCH  iret
+TICK    251 | PC  548 | [main] LEAVE interrupt
+TICK    251 | PC  548 | [main] RETIRE iret | ra=64 sp=8184 t0=12 t2=1 s1=2 s2=16 IE=true
+TICK    252 | PC  416 | [main] FETCH  lw t1, 0(zero)
+TICK    253 | PC  416 | [main] MEM    lw addr=0 HIT, 1 tick(s)
+TICK    254 | PC  416 | [main] WAIT   mem 1/1
+TICK    254 | PC  416 | [main] RETIRE lw t1, 0(zero) | ra=64 sp=8184 t0=12 t2=1 s1=2 s2=16 IE=true
+TICK    255 | PC  420 | [main] FETCH  add t0, t0, t1
+TICK    256 | PC  420 | [main] RETIRE add t0, t0, t1 | ra=64 sp=8184 t0=12 t2=1 s1=2 s2=16 IE=true
+TICK    257 | PC  424 | [main] FETCH  lb t0, 0(t0)
+TICK    258 | PC  424 | [main] MEM    lb addr=12 MISS, 10 tick(s)
+TICK    259 | PC  424 | [main] WAIT   mem 1/10
+TICK    260 | PC  424 | [main] WAIT   mem 2/10
+TICK    261 | PC  424 | [main] WAIT   mem 3/10
+TICK    262 | PC  424 | [main] WAIT   mem 4/10
+TICK    263 | PC  424 | [main] WAIT   mem 5/10
+TICK    264 | PC  424 | [main] WAIT   mem 6/10
+TICK    265 | PC  424 | [main] WAIT   mem 7/10
+TICK    266 | PC  424 | [main] WAIT   mem 8/10
+TICK    267 | PC  424 | [main] WAIT   mem 9/10
+TICK    268 | PC  424 | [main] WAIT   mem 10/10
+TICK    268 | PC  424 | [main] CACHE  fill line 4 addr=12 (evicted valid=false addr=0)
+TICK    268 | PC  424 | [main] RETIRE lb t0, 0(t0) | ra=64 sp=8184 t0=57 t2=1 s1=2 s2=16 IE=true
+TICK    269 | PC  428 | [main] FETCH  sw t0, 4(sp)
+TICK    270 | PC  428 | [main] MEM    sw addr=8188 WRITE-THROUGH, 10 tick(s)
+TICK    271 | PC  428 | [main] WAIT   mem 1/10
+TICK    272 | PC  428 | [main] WAIT   mem 2/10
+TICK    273 | PC  428 | [main] WAIT   mem 3/10
+TICK    274 | PC  428 | [main] WAIT   mem 4/10
+TICK    275 | PC  428 | [main] WAIT   mem 5/10
+TICK    276 | PC  428 | [main] WAIT   mem 6/10
+TICK    277 | PC  428 | [main] WAIT   mem 7/10
+TICK    278 | PC  428 | [main] WAIT   mem 8/10
+TICK    279 | PC  428 | [main] WAIT   mem 9/10
+TICK    280 | PC  428 | [main] WAIT   mem 10/10
+TICK    280 | PC  428 | [main] RETIRE sw t0, 4(sp) | ra=64 sp=8184 t0=57 t2=1 s1=2 s2=16 IE=true
+TICK    281 | PC  432 | [main] FETCH  lw t0, 0(zero)
+TICK    282 | PC  432 | [main] MEM    lw addr=0 HIT, 1 tick(s)
+TICK    283 | PC  432 | [main] WAIT   mem 1/1
+TICK    283 | PC  432 | [main] RETIRE lw t0, 0(zero) | ra=64 sp=8184 t2=1 s1=2 s2=16 IE=true
+TICK    284 | PC  436 | [main] FETCH  addi t1, zero, 1
+TICK    285 | PC  436 | [main] RETIRE addi t1, zero, 1 | ra=64 sp=8184 t1=1 t2=1 s1=2 s2=16 IE=true
+TICK    286 | PC  440 | [main] FETCH  add t0, t0, t1
+TICK    287 | PC  440 | [main] RETIRE add t0, t0, t1 | ra=64 sp=8184 t0=1 t1=1 t2=1 s1=2 s2=16 IE=true
+TICK    288 | PC  444 | [main] FETCH  addi t1, zero, 16
+TICK    289 | PC  444 | [main] RETIRE addi t1, zero, 16 | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=2 s2=16 IE=true
+TICK    290 | PC  448 | [main] FETCH  rem t0, t0, t1
+TICK    291 | PC  448 | [main] RETIRE rem t0, t0, t1 | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=2 s2=16 IE=true
+TICK    292 | PC  452 | [main] FETCH  sw t0, 0(zero)
+TICK    293 | PC  452 | [main] MEM    sw addr=0 WRITE-THROUGH, 10 tick(s)
+TICK    294 | PC  452 | [main] WAIT   mem 1/10
+TICK    295 | PC  452 | [main] WAIT   mem 2/10
+TICK    296 | PC  452 | [main] WAIT   mem 3/10
+TICK    297 | PC  452 | [main] WAIT   mem 4/10
+TICK    298 | PC  452 | [main] WAIT   mem 5/10
+TICK    299 | PC  452 | [main] WAIT   mem 6/10
+TICK    300 | PC  452 | [main] IRQ raised (data='\n')
+TICK    300 | PC  452 | [main] WAIT   mem 7/10
+TICK    301 | PC  452 | [main] WAIT   mem 8/10
+TICK    302 | PC  452 | [main] WAIT   mem 9/10
+TICK    303 | PC  452 | [main] WAIT   mem 10/10
+TICK    303 | PC  452 | [main] RETIRE sw t0, 0(zero) | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=2 s2=16 IE=true
+TICK    304 | PC  456 | [main] ENTER interrupt, epc=456
+TICK    305 | PC    4 | [irq ] FETCH  j 0x01F4
+TICK    306 | PC    4 | [irq ] RETIRE j 0x01F4 | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=2 s2=16 IE=false
+TICK    307 | PC  500 | [irq ] FETCH  lw s1, 32(zero)
+TICK    308 | PC  500 | [irq ] MEM    lw addr=32 HIT, 1 tick(s)
+TICK    309 | PC  500 | [irq ] WAIT   mem 1/1
+TICK    309 | PC  500 | [irq ] RETIRE lw s1, 32(zero) | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=12 s2=16 IE=false
+TICK    310 | PC  504 | [irq ] FETCH  lw s2, 4(zero)
+TICK    311 | PC  504 | [irq ] MEM    lw addr=4 HIT, 1 tick(s)
+TICK    312 | PC  504 | [irq ] WAIT   mem 1/1
+TICK    312 | PC  504 | [irq ] RETIRE lw s2, 4(zero) | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=12 s2=2 IE=false
+TICK    313 | PC  508 | [irq ] FETCH  add s1, s1, s2
+TICK    314 | PC  508 | [irq ] RETIRE add s1, s1, s2 | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=14 s2=2 IE=false
+TICK    315 | PC  512 | [irq ] FETCH  in s2, 0
+TICK    316 | PC  512 | [irq ] RETIRE in s2, 0 | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=14 s2=10 IE=false
+TICK    317 | PC  516 | [irq ] FETCH  sb s2, 0(s1)
+TICK    318 | PC  516 | [irq ] MEM    sb addr=14 WRITE-THROUGH, 10 tick(s)
+TICK    319 | PC  516 | [irq ] WAIT   mem 1/10
+TICK    320 | PC  516 | [irq ] WAIT   mem 2/10
+TICK    321 | PC  516 | [irq ] WAIT   mem 3/10
+TICK    322 | PC  516 | [irq ] WAIT   mem 4/10
+TICK    323 | PC  516 | [irq ] WAIT   mem 5/10
+TICK    324 | PC  516 | [irq ] WAIT   mem 6/10
+TICK    325 | PC  516 | [irq ] WAIT   mem 7/10
+TICK    326 | PC  516 | [irq ] WAIT   mem 8/10
+TICK    327 | PC  516 | [irq ] WAIT   mem 9/10
+TICK    328 | PC  516 | [irq ] WAIT   mem 10/10
+TICK    328 | PC  516 | [irq ] RETIRE sb s2, 0(s1) | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=14 s2=10 IE=false
+TICK    329 | PC  520 | [irq ] FETCH  addi s1, s2, 0
+TICK    330 | PC  520 | [irq ] RETIRE addi s1, s2, 0 | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=10 s2=10 IE=false
+TICK    331 | PC  524 | [irq ] FETCH  lw s1, 4(zero)
+TICK    332 | PC  524 | [irq ] MEM    lw addr=4 HIT, 1 tick(s)
+TICK    333 | PC  524 | [irq ] WAIT   mem 1/1
+TICK    333 | PC  524 | [irq ] RETIRE lw s1, 4(zero) | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=2 s2=10 IE=false
+TICK    334 | PC  528 | [irq ] FETCH  addi s2, zero, 1
+TICK    335 | PC  528 | [irq ] RETIRE addi s2, zero, 1 | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=2 s2=1 IE=false
+TICK    336 | PC  532 | [irq ] FETCH  add s1, s1, s2
+TICK    337 | PC  532 | [irq ] RETIRE add s1, s1, s2 | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=3 s2=1 IE=false
+TICK    338 | PC  536 | [irq ] FETCH  addi s2, zero, 16
+TICK    339 | PC  536 | [irq ] RETIRE addi s2, zero, 16 | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=3 s2=16 IE=false
+TICK    340 | PC  540 | [irq ] FETCH  rem s1, s1, s2
+TICK    341 | PC  540 | [irq ] RETIRE rem s1, s1, s2 | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=3 s2=16 IE=false
+TICK    342 | PC  544 | [irq ] FETCH  sw s1, 4(zero)
+TICK    343 | PC  544 | [irq ] MEM    sw addr=4 WRITE-THROUGH, 10 tick(s)
+TICK    344 | PC  544 | [irq ] WAIT   mem 1/10
+TICK    345 | PC  544 | [irq ] WAIT   mem 2/10
+TICK    346 | PC  544 | [irq ] WAIT   mem 3/10
+TICK    347 | PC  544 | [irq ] WAIT   mem 4/10
+TICK    348 | PC  544 | [irq ] WAIT   mem 5/10
+TICK    349 | PC  544 | [irq ] WAIT   mem 6/10
+TICK    350 | PC  544 | [irq ] WAIT   mem 7/10
+TICK    351 | PC  544 | [irq ] WAIT   mem 8/10
+TICK    352 | PC  544 | [irq ] WAIT   mem 9/10
+TICK    353 | PC  544 | [irq ] WAIT   mem 10/10
+TICK    353 | PC  544 | [irq ] RETIRE sw s1, 4(zero) | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=3 s2=16 IE=false
+TICK    354 | PC  548 | [irq ] FETCH  iret
+TICK    355 | PC  548 | [main] LEAVE interrupt
+TICK    355 | PC  548 | [main] RETIRE iret | ra=64 sp=8184 t0=1 t1=16 t2=1 s1=3 s2=16 IE=true
+TICK    356 | PC  456 | [main] FETCH  lw t1, 4(sp)
+TICK    357 | PC  456 | [main] MEM    lw addr=8188 MISS, 10 tick(s)
+TICK    358 | PC  456 | [main] WAIT   mem 1/10
+TICK    359 | PC  456 | [main] WAIT   mem 2/10
+TICK    360 | PC  456 | [main] WAIT   mem 3/10
+TICK    361 | PC  456 | [main] WAIT   mem 4/10
+TICK    362 | PC  456 | [main] WAIT   mem 5/10
+TICK    363 | PC  456 | [main] WAIT   mem 6/10
+TICK    364 | PC  456 | [main] WAIT   mem 7/10
+TICK    365 | PC  456 | [main] WAIT   mem 8/10
+TICK    366 | PC  456 | [main] WAIT   mem 9/10
+TICK    367 | PC  456 | [main] WAIT   mem 10/10
+TICK    367 | PC  456 | [main] CACHE  fill line 5 addr=8188 (evicted valid=false addr=0)
+TICK    367 | PC  456 | [main] RETIRE lw t1, 4(sp) | ra=64 sp=8184 t0=1 t1=57 t2=1 s1=3 s2=16 IE=true
+TICK    368 | PC  460 | [main] FETCH  addi t2, zero, 0
+TICK    369 | PC  460 | [main] RETIRE addi t2, zero, 0 | ra=64 sp=8184 t0=1 t1=57 s1=3 s2=16 IE=true
+TICK    370 | PC  464 | [main] FETCH  bne t1, t2, 0x01E0
+TICK    371 | PC  464 | [main] RETIRE bne t1, t2, 0x01E0 | ra=64 sp=8184 t0=1 t1=57 s1=3 s2=16 IE=true
+TICK    372 | PC  480 | [main] FETCH  lw t0, 4(sp)
+TICK    373 | PC  480 | [main] MEM    lw addr=8188 HIT, 1 tick(s)
+TICK    374 | PC  480 | [main] WAIT   mem 1/1
+TICK    374 | PC  480 | [main] RETIRE lw t0, 4(sp) | ra=64 sp=8184 t0=57 t1=57 s1=3 s2=16 IE=true
+TICK    375 | PC  484 | [main] FETCH  addi a0, t0, 0
+TICK    376 | PC  484 | [main] RETIRE addi a0, t0, 0 | ra=64 sp=8184 t0=57 t1=57 s1=3 a0=57 s2=16 IE=true
+TICK    377 | PC  488 | [main] FETCH  lw ra, 0(sp)
+TICK    378 | PC  488 | [main] MEM    lw addr=8184 MISS, 10 tick(s)
+TICK    379 | PC  488 | [main] WAIT   mem 1/10
+TICK    380 | PC  488 | [main] WAIT   mem 2/10
+TICK    381 | PC  488 | [main] WAIT   mem 3/10
+TICK    382 | PC  488 | [main] WAIT   mem 4/10
+TICK    383 | PC  488 | [main] WAIT   mem 5/10
+TICK    384 | PC  488 | [main] WAIT   mem 6/10
+TICK    385 | PC  488 | [main] WAIT   mem 7/10
+TICK    386 | PC  488 | [main] WAIT   mem 8/10
+TICK    387 | PC  488 | [main] WAIT   mem 9/10
+TICK    388 | PC  488 | [main] WAIT   mem 10/10
+TICK    388 | PC  488 | [main] CACHE  fill line 6 addr=8184 (evicted valid=false addr=0)
+TICK    388 | PC  488 | [main] RETIRE lw ra, 0(sp) | ra=64 sp=8184 t0=57 t1=57 s1=3 a0=57 s2=16 IE=true
+TICK    389 | PC  492 | [main] FETCH  addi sp, sp, 8
+TICK    390 | PC  492 | [main] RETIRE addi sp, sp, 8 | ra=64 sp=8192 t0=57 t1=57 s1=3 a0=57 s2=16 IE=true
+TICK    391 | PC  496 | [main] FETCH  jalr zero, ra, 0
+TICK    392 | PC  496 | [main] RETIRE jalr zero, ra, 0 | ra=64 sp=8192 t0=57 t1=57 s1=3 a0=57 s2=16 IE=true
+TICK    393 | PC   64 | [main] FETCH  addi t0, a0, 0
+TICK    394 | PC   64 | [main] RETIRE addi t0, a0, 0 | ra=64 sp=8192 t0=57 t1=57 s1=3 a0=57 s2=16 IE=true
+TICK    395 | PC   68 | [main] FETCH  sw t0, 40(zero)
+TICK    396 | PC   68 | [main] MEM    sw addr=40 WRITE-THROUGH, 10 tick(s)
+TICK    397 | PC   68 | [main] WAIT   mem 1/10
+TICK    398 | PC   68 | [main] WAIT   mem 2/10
+TICK    399 | PC   68 | [main] WAIT   mem 3/10
+TICK    400 | PC   68 | [main] IRQ raised (data='\x00')
+TICK    400 | PC   68 | [main] WAIT   mem 4/10
+TICK    401 | PC   68 | [main] WAIT   mem 5/10
+TICK    402 | PC   68 | [main] WAIT   mem 6/10
+TICK    403 | PC   68 | [main] WAIT   mem 7/10
+TICK    404 | PC   68 | [main] WAIT   mem 8/10
+TICK    405 | PC   68 | [main] WAIT   mem 9/10
+TICK    406 | PC   68 | [main] WAIT   mem 10/10
+TICK    406 | PC   68 | [main] RETIRE sw t0, 40(zero) | ra=64 sp=8192 t0=57 t1=57 s1=3 a0=57 s2=16 IE=true
+TICK    407 | PC   72 | [main] ENTER interrupt, epc=72
+TICK    408 | PC    4 | [irq ] FETCH  j 0x01F4
+TICK    409 | PC    4 | [irq ] RETIRE j 0x01F4 | ra=64 sp=8192 t0=57 t1=57 s1=3 a0=57 s2=16 IE=false
+TICK    410 | PC  500 | [irq ] FETCH  lw s1, 32(zero)
+TICK    411 | PC  500 | [irq ] MEM    lw addr=32 HIT, 1 tick(s)
+TICK    412 | PC  500 | [irq ] WAIT   mem 1/1
+TICK    412 | PC  500 | [irq ] RETIRE lw s1, 32(zero) | ra=64 sp=8192 t0=57 t1=57 s1=12 a0=57 s2=16 IE=false
+TICK    413 | PC  504 | [irq ] FETCH  lw s2, 4(zero)
+TICK    414 | PC  504 | [irq ] MEM    lw addr=4 HIT, 1 tick(s)
+TICK    415 | PC  504 | [irq ] WAIT   mem 1/1
+TICK    415 | PC  504 | [irq ] RETIRE lw s2, 4(zero) | ra=64 sp=8192 t0=57 t1=57 s1=12 a0=57 s2=3 IE=false
+TICK    416 | PC  508 | [irq ] FETCH  add s1, s1, s2
+TICK    417 | PC  508 | [irq ] RETIRE add s1, s1, s2 | ra=64 sp=8192 t0=57 t1=57 s1=15 a0=57 s2=3 IE=false
+TICK    418 | PC  512 | [irq ] FETCH  in s2, 0
+TICK    419 | PC  512 | [irq ] RETIRE in s2, 0 | ra=64 sp=8192 t0=57 t1=57 s1=15 a0=57 IE=false
+TICK    420 | PC  516 | [irq ] FETCH  sb s2, 0(s1)
+TICK    421 | PC  516 | [irq ] MEM    sb addr=15 WRITE-THROUGH, 10 tick(s)
+TICK    422 | PC  516 | [irq ] WAIT   mem 1/10
+TICK    423 | PC  516 | [irq ] WAIT   mem 2/10
+TICK    424 | PC  516 | [irq ] WAIT   mem 3/10
+TICK    425 | PC  516 | [irq ] WAIT   mem 4/10
+TICK    426 | PC  516 | [irq ] WAIT   mem 5/10
+TICK    427 | PC  516 | [irq ] WAIT   mem 6/10
+TICK    428 | PC  516 | [irq ] WAIT   mem 7/10
+TICK    429 | PC  516 | [irq ] WAIT   mem 8/10
+TICK    430 | PC  516 | [irq ] WAIT   mem 9/10
+TICK    431 | PC  516 | [irq ] WAIT   mem 10/10
+TICK    431 | PC  516 | [irq ] RETIRE sb s2, 0(s1) | ra=64 sp=8192 t0=57 t1=57 s1=15 a0=57 IE=false
+TICK    432 | PC  520 | [irq ] FETCH  addi s1, s2, 0
+TICK    433 | PC  520 | [irq ] RETIRE addi s1, s2, 0 | ra=64 sp=8192 t0=57 t1=57 a0=57 IE=false
+TICK    434 | PC  524 | [irq ] FETCH  lw s1, 4(zero)
+TICK    435 | PC  524 | [irq ] MEM    lw addr=4 HIT, 1 tick(s)
+TICK    436 | PC  524 | [irq ] WAIT   mem 1/1
+TICK    436 | PC  524 | [irq ] RETIRE lw s1, 4(zero) | ra=64 sp=8192 t0=57 t1=57 s1=3 a0=57 IE=false
+TICK    437 | PC  528 | [irq ] FETCH  addi s2, zero, 1
+TICK    438 | PC  528 | [irq ] RETIRE addi s2, zero, 1 | ra=64 sp=8192 t0=57 t1=57 s1=3 a0=57 s2=1 IE=false
+TICK    439 | PC  532 | [irq ] FETCH  add s1, s1, s2
+TICK    440 | PC  532 | [irq ] RETIRE add s1, s1, s2 | ra=64 sp=8192 t0=57 t1=57 s1=4 a0=57 s2=1 IE=false
+TICK    441 | PC  536 | [irq ] FETCH  addi s2, zero, 16
+TICK    442 | PC  536 | [irq ] RETIRE addi s2, zero, 16 | ra=64 sp=8192 t0=57 t1=57 s1=4 a0=57 s2=16 IE=false
+TICK    443 | PC  540 | [irq ] FETCH  rem s1, s1, s2
+TICK    444 | PC  540 | [irq ] RETIRE rem s1, s1, s2 | ra=64 sp=8192 t0=57 t1=57 s1=4 a0=57 s2=16 IE=false
+TICK    445 | PC  544 | [irq ] FETCH  sw s1, 4(zero)
+TICK    446 | PC  544 | [irq ] MEM    sw addr=4 WRITE-THROUGH, 10 tick(s)
+TICK    447 | PC  544 | [irq ] WAIT   mem 1/10
+TICK    448 | PC  544 | [irq ] WAIT   mem 2/10
+TICK    449 | PC  544 | [irq ] WAIT   mem 3/10
+TICK    450 | PC  544 | [irq ] WAIT   mem 4/10
+TICK    451 | PC  544 | [irq ] WAIT   mem 5/10
+TICK    452 | PC  544 | [irq ] WAIT   mem 6/10
+TICK    453 | PC  544 | [irq ] WAIT   mem 7/10
+TICK    454 | PC  544 | [irq ] WAIT   mem 8/10
+TICK    455 | PC  544 | [irq ] WAIT   mem 9/10
+TICK    456 | PC  544 | [irq ] WAIT   mem 10/10
+TICK    456 | PC  544 | [irq ] RETIRE sw s1, 4(zero) | ra=64 sp=8192 t0=57 t1=57 s1=4 a0=57 s2=16 IE=false
+TICK    457 | PC  548 | [irq ] FETCH  iret
+TICK    458 | PC  548 | [main] LEAVE interrupt
+TICK    458 | PC  548 | [main] RETIRE iret | ra=64 sp=8192 t0=57 t1=57 s1=4 a0=57 s2=16 IE=true
+TICK    459 | PC   72 | [main] FETCH  lw t1, 40(zero)
+TICK    460 | PC   72 | [main] MEM    lw addr=40 MISS, 10 tick(s)
+TICK    461 | PC   72 | [main] WAIT   mem 1/10
+TICK    462 | PC   72 | [main] WAIT   mem 2/10
+TICK    463 | PC   72 | [main] WAIT   mem 3/10
+TICK    464 | PC   72 | [main] WAIT   mem 4/10
+TICK    465 | PC   72 | [main] WAIT   mem 5/10
+TICK    466 | PC   72 | [main] WAIT   mem 6/10
+TICK    467 | PC   72 | [main] WAIT   mem 7/10
+TICK    468 | PC   72 | [main] WAIT   mem 8/10
+TICK    469 | PC   72 | [main] WAIT   mem 9/10
+TICK    470 | PC   72 | [main] WAIT   mem 10/10
+TICK    470 | PC   72 | [main] CACHE  fill line 7 addr=40 (evicted valid=false addr=0)
+TICK    470 | PC   72 | [main] RETIRE lw t1, 40(zero) | ra=64 sp=8192 t0=57 t1=57 s1=4 a0=57 s2=16 IE=true
+TICK    471 | PC   76 | [main] FETCH  addi t2, zero, 47
+TICK    472 | PC   76 | [main] RETIRE addi t2, zero, 47 | ra=64 sp=8192 t0=57 t1=57 t2=47 s1=4 a0=57 s2=16 IE=true
+TICK    473 | PC   80 | [main] FETCH  bge t2, t1, 0x0084
+TICK    474 | PC   80 | [main] RETIRE bge t2, t1, 0x0084 | ra=64 sp=8192 t0=57 t1=57 t2=47 s1=4 a0=57 s2=16 IE=true
+TICK    475 | PC   84 | [main] FETCH  lw t0, 36(zero)
+TICK    476 | PC   84 | [main] MEM    lw addr=36 MISS, 10 tick(s)
+TICK    477 | PC   84 | [main] WAIT   mem 1/10
+TICK    478 | PC   84 | [main] WAIT   mem 2/10
+TICK    479 | PC   84 | [main] WAIT   mem 3/10
+TICK    480 | PC   84 | [main] WAIT   mem 4/10
+TICK    481 | PC   84 | [main] WAIT   mem 5/10
+TICK    482 | PC   84 | [main] WAIT   mem 6/10
+TICK    483 | PC   84 | [main] WAIT   mem 7/10
+TICK    484 | PC   84 | [main] WAIT   mem 8/10
+TICK    485 | PC   84 | [main] WAIT   mem 9/10
+TICK    486 | PC   84 | [main] WAIT   mem 10/10
+TICK    486 | PC   84 | [main] CACHE  fill line 0 addr=36 (evicted valid=true addr=8)
+TICK    486 | PC   84 | [main] RETIRE lw t0, 36(zero) | ra=64 sp=8192 t1=57 t2=47 s1=4 a0=57 s2=16 IE=true
+TICK    487 | PC   88 | [main] FETCH  addi t1, zero, 10
+TICK    488 | PC   88 | [main] RETIRE addi t1, zero, 10 | ra=64 sp=8192 t1=10 t2=47 s1=4 a0=57 s2=16 IE=true
+TICK    489 | PC   92 | [main] FETCH  mul t0, t0, t1
+TICK    490 | PC   92 | [main] RETIRE mul t0, t0, t1 | ra=64 sp=8192 t1=10 t2=47 s1=4 a0=57 s2=16 IE=true
+TICK    491 | PC   96 | [main] FETCH  lw t1, 40(zero)
+TICK    492 | PC   96 | [main] MEM    lw addr=40 HIT, 1 tick(s)
+TICK    493 | PC   96 | [main] WAIT   mem 1/1
+TICK    493 | PC   96 | [main] RETIRE lw t1, 40(zero) | ra=64 sp=8192 t1=57 t2=47 s1=4 a0=57 s2=16 IE=true
+TICK    494 | PC  100 | [main] FETCH  addi t2, zero, 48
+TICK    495 | PC  100 | [main] RETIRE addi t2, zero, 48 | ra=64 sp=8192 t1=57 t2=48 s1=4 a0=57 s2=16 IE=true
+TICK    496 | PC  104 | [main] FETCH  sub t1, t1, t2
+TICK    497 | PC  104 | [main] RETIRE sub t1, t1, t2 | ra=64 sp=8192 t1=9 t2=48 s1=4 a0=57 s2=16 IE=true
+TICK    498 | PC  108 | [main] FETCH  add t0, t0, t1
+TICK    499 | PC  108 | [main] RETIRE add t0, t0, t1 | ra=64 sp=8192 t0=9 t1=9 t2=48 s1=4 a0=57 s2=16 IE=true
+TICK    500 | PC  112 | [main] FETCH  sw t0, 36(zero)
+TICK    501 | PC  112 | [main] MEM    sw addr=36 WRITE-THROUGH, 10 tick(s)
+TICK    502 | PC  112 | [main] WAIT   mem 1/10
+TICK    503 | PC  112 | [main] WAIT   mem 2/10
+TICK    504 | PC  112 | [main] WAIT   mem 3/10
+TICK    505 | PC  112 | [main] WAIT   mem 4/10
+TICK    506 | PC  112 | [main] WAIT   mem 5/10
+TICK    507 | PC  112 | [main] WAIT   mem 6/10
+TICK    508 | PC  112 | [main] WAIT   mem 7/10
+TICK    509 | PC  112 | [main] WAIT   mem 8/10
+TICK    510 | PC  112 | [main] WAIT   mem 9/10
+TICK    511 | PC  112 | [main] WAIT   mem 10/10
+TICK    511 | PC  112 | [main] RETIRE sw t0, 36(zero) | ra=64 sp=8192 t0=9 t1=9 t2=48 s1=4 a0=57 s2=16 IE=true
+TICK    512 | PC  116 | [main] FETCH  jal ra, 0x0170
+TICK    513 | PC  116 | [main] RETIRE jal ra, 0x0170 | ra=120 sp=8192 t0=9 t1=9 t2=48 s1=4 a0=57 s2=16 IE=true
+TICK    514 | PC  368 | [main] FETCH  addi sp, sp, -8
+TICK    515 | PC  368 | [main] RETIRE addi sp, sp, -8 | ra=120 sp=8184 t0=9 t1=9 t2=48 s1=4 a0=57 s2=16 IE=true
+TICK    516 | PC  372 | [main] FETCH  sw ra, 0(sp)
+TICK    517 | PC  372 | [main] MEM    sw addr=8184 WRITE-THROUGH, 10 tick(s)
+TICK    518 | PC  372 | [main] WAIT   mem 1/10
+TICK    519 | PC  372 | [main] WAIT   mem 2/10
+TICK    520 | PC  372 | [main] WAIT   mem 3/10
+TICK    521 | PC  372 | [main] WAIT   mem 4/10
+TICK    522 | PC  372 | [main] WAIT   mem 5/10
+TICK    523 | PC  372 | [main] WAIT   mem 6/10
+TICK    524 | PC  372 | [main] WAIT   mem 7/10
+TICK    525 | PC  372 | [main] WAIT   mem 8/10
+TICK    526 | PC  372 | [main] WAIT   mem 9/10
+TICK    527 | PC  372 | [main] WAIT   mem 10/10
+TICK    527 | PC  372 | [main] RETIRE sw ra, 0(sp) | ra=120 sp=8184 t0=9 t1=9 t2=48 s1=4 a0=57 s2=16 IE=true
+TICK    528 | PC  376 | [main] FETCH  lw t1, 8(zero)
+TICK    529 | PC  376 | [main] MEM    lw addr=8 MISS, 10 tick(s)
+TICK    530 | PC  376 | [main] WAIT   mem 1/10
+TICK    531 | PC  376 | [main] WAIT   mem 2/10
+TICK    532 | PC  376 | [main] WAIT   mem 3/10
+TICK    533 | PC  376 | [main] WAIT   mem 4/10
+TICK    534 | PC  376 | [main] WAIT   mem 5/10
+TICK    535 | PC  376 | [main] WAIT   mem 6/10
+TICK    536 | PC  376 | [main] WAIT   mem 7/10
+TICK    537 | PC  376 | [main] WAIT   mem 8/10
+TICK    538 | PC  376 | [main] WAIT   mem 9/10
+TICK    539 | PC  376 | [main] WAIT   mem 10/10
+TICK    539 | PC  376 | [main] CACHE  fill line 1 addr=8 (evicted valid=true addr=32)
+TICK    539 | PC  376 | [main] RETIRE lw t1, 8(zero) | ra=120 sp=8184 t0=9 t2=48 s1=4 a0=57 s2=16 IE=true
+TICK    540 | PC  380 | [main] FETCH  beqz t1, 0x0188
+TICK    541 | PC  380 | [main] RETIRE beqz t1, 0x0188 | ra=120 sp=8184 t0=9 t2=48 s1=4 a0=57 s2=16 IE=true
+TICK    542 | PC  392 | [main] FETCH  lw t1, 0(zero)
+TICK    543 | PC  392 | [main] MEM    lw addr=0 HIT, 1 tick(s)
+TICK    544 | PC  392 | [main] WAIT   mem 1/1
+TICK    544 | PC  392 | [main] RETIRE lw t1, 0(zero) | ra=120 sp=8184 t0=9 t1=1 t2=48 s1=4 a0=57 s2=16 IE=true
+TICK    545 | PC  396 | [main] FETCH  lw t2, 4(zero)
+TICK    546 | PC  396 | [main] MEM    lw addr=4 HIT, 1 tick(s)
+TICK    547 | PC  396 | [main] WAIT   mem 1/1
+TICK    547 | PC  396 | [main] RETIRE lw t2, 4(zero) | ra=120 sp=8184 t0=9 t1=1 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    548 | PC  400 | [main] FETCH  bne t1, t2, 0x0198
+TICK    549 | PC  400 | [main] RETIRE bne t1, t2, 0x0198 | ra=120 sp=8184 t0=9 t1=1 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    550 | PC  408 | [main] FETCH  addi t0, zero, 0
+TICK    551 | PC  408 | [main] RETIRE addi t0, zero, 0 | ra=120 sp=8184 t1=1 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    552 | PC  412 | [main] FETCH  lw t0, 32(zero)
+TICK    553 | PC  412 | [main] MEM    lw addr=32 MISS, 10 tick(s)
+TICK    554 | PC  412 | [main] WAIT   mem 1/10
+TICK    555 | PC  412 | [main] WAIT   mem 2/10
+TICK    556 | PC  412 | [main] WAIT   mem 3/10
+TICK    557 | PC  412 | [main] WAIT   mem 4/10
+TICK    558 | PC  412 | [main] WAIT   mem 5/10
+TICK    559 | PC  412 | [main] WAIT   mem 6/10
+TICK    560 | PC  412 | [main] WAIT   mem 7/10
+TICK    561 | PC  412 | [main] WAIT   mem 8/10
+TICK    562 | PC  412 | [main] WAIT   mem 9/10
+TICK    563 | PC  412 | [main] WAIT   mem 10/10
+TICK    563 | PC  412 | [main] CACHE  fill line 2 addr=32 (evicted valid=true addr=4)
+TICK    563 | PC  412 | [main] RETIRE lw t0, 32(zero) | ra=120 sp=8184 t0=12 t1=1 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    564 | PC  416 | [main] FETCH  lw t1, 0(zero)
+TICK    565 | PC  416 | [main] MEM    lw addr=0 HIT, 1 tick(s)
+TICK    566 | PC  416 | [main] WAIT   mem 1/1
+TICK    566 | PC  416 | [main] RETIRE lw t1, 0(zero) | ra=120 sp=8184 t0=12 t1=1 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    567 | PC  420 | [main] FETCH  add t0, t0, t1
+TICK    568 | PC  420 | [main] RETIRE add t0, t0, t1 | ra=120 sp=8184 t0=13 t1=1 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    569 | PC  424 | [main] FETCH  lb t0, 0(t0)
+TICK    570 | PC  424 | [main] MEM    lb addr=13 HIT, 1 tick(s)
+TICK    571 | PC  424 | [main] WAIT   mem 1/1
+TICK    571 | PC  424 | [main] RETIRE lb t0, 0(t0) | ra=120 sp=8184 t0=56 t1=1 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    572 | PC  428 | [main] FETCH  sw t0, 4(sp)
+TICK    573 | PC  428 | [main] MEM    sw addr=8188 WRITE-THROUGH, 10 tick(s)
+TICK    574 | PC  428 | [main] WAIT   mem 1/10
+TICK    575 | PC  428 | [main] WAIT   mem 2/10
+TICK    576 | PC  428 | [main] WAIT   mem 3/10
+TICK    577 | PC  428 | [main] WAIT   mem 4/10
+TICK    578 | PC  428 | [main] WAIT   mem 5/10
+TICK    579 | PC  428 | [main] WAIT   mem 6/10
+TICK    580 | PC  428 | [main] WAIT   mem 7/10
+TICK    581 | PC  428 | [main] WAIT   mem 8/10
+TICK    582 | PC  428 | [main] WAIT   mem 9/10
+TICK    583 | PC  428 | [main] WAIT   mem 10/10
+TICK    583 | PC  428 | [main] RETIRE sw t0, 4(sp) | ra=120 sp=8184 t0=56 t1=1 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    584 | PC  432 | [main] FETCH  lw t0, 0(zero)
+TICK    585 | PC  432 | [main] MEM    lw addr=0 HIT, 1 tick(s)
+TICK    586 | PC  432 | [main] WAIT   mem 1/1
+TICK    586 | PC  432 | [main] RETIRE lw t0, 0(zero) | ra=120 sp=8184 t0=1 t1=1 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    587 | PC  436 | [main] FETCH  addi t1, zero, 1
+TICK    588 | PC  436 | [main] RETIRE addi t1, zero, 1 | ra=120 sp=8184 t0=1 t1=1 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    589 | PC  440 | [main] FETCH  add t0, t0, t1
+TICK    590 | PC  440 | [main] RETIRE add t0, t0, t1 | ra=120 sp=8184 t0=2 t1=1 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    591 | PC  444 | [main] FETCH  addi t1, zero, 16
+TICK    592 | PC  444 | [main] RETIRE addi t1, zero, 16 | ra=120 sp=8184 t0=2 t1=16 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    593 | PC  448 | [main] FETCH  rem t0, t0, t1
+TICK    594 | PC  448 | [main] RETIRE rem t0, t0, t1 | ra=120 sp=8184 t0=2 t1=16 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    595 | PC  452 | [main] FETCH  sw t0, 0(zero)
+TICK    596 | PC  452 | [main] MEM    sw addr=0 WRITE-THROUGH, 10 tick(s)
+TICK    597 | PC  452 | [main] WAIT   mem 1/10
+TICK    598 | PC  452 | [main] WAIT   mem 2/10
+TICK    599 | PC  452 | [main] WAIT   mem 3/10
+TICK    600 | PC  452 | [main] WAIT   mem 4/10
+TICK    601 | PC  452 | [main] WAIT   mem 5/10
+TICK    602 | PC  452 | [main] WAIT   mem 6/10
+TICK    603 | PC  452 | [main] WAIT   mem 7/10
+TICK    604 | PC  452 | [main] WAIT   mem 8/10
+TICK    605 | PC  452 | [main] WAIT   mem 9/10
+TICK    606 | PC  452 | [main] WAIT   mem 10/10
+TICK    606 | PC  452 | [main] RETIRE sw t0, 0(zero) | ra=120 sp=8184 t0=2 t1=16 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    607 | PC  456 | [main] FETCH  lw t1, 4(sp)
+TICK    608 | PC  456 | [main] MEM    lw addr=8188 HIT, 1 tick(s)
+TICK    609 | PC  456 | [main] WAIT   mem 1/1
+TICK    609 | PC  456 | [main] RETIRE lw t1, 4(sp) | ra=120 sp=8184 t0=2 t1=56 t2=4 s1=4 a0=57 s2=16 IE=true
+TICK    610 | PC  460 | [main] FETCH  addi t2, zero, 0
+TICK    611 | PC  460 | [main] RETIRE addi t2, zero, 0 | ra=120 sp=8184 t0=2 t1=56 s1=4 a0=57 s2=16 IE=true
+TICK    612 | PC  464 | [main] FETCH  bne t1, t2, 0x01E0
+TICK    613 | PC  464 | [main] RETIRE bne t1, t2, 0x01E0 | ra=120 sp=8184 t0=2 t1=56 s1=4 a0=57 s2=16 IE=true
+TICK    614 | PC  480 | [main] FETCH  lw t0, 4(sp)
+TICK    615 | PC  480 | [main] MEM    lw addr=8188 HIT, 1 tick(s)
+TICK    616 | PC  480 | [main] WAIT   mem 1/1
+TICK    616 | PC  480 | [main] RETIRE lw t0, 4(sp) | ra=120 sp=8184 t0=56 t1=56 s1=4 a0=57 s2=16 IE=true
+TICK    617 | PC  484 | [main] FETCH  addi a0, t0, 0
+TICK    618 | PC  484 | [main] RETIRE addi a0, t0, 0 | ra=120 sp=8184 t0=56 t1=56 s1=4 a0=56 s2=16 IE=true
+TICK    619 | PC  488 | [main] FETCH  lw ra, 0(sp)
+TICK    620 | PC  488 | [main] MEM    lw addr=8184 HIT, 1 tick(s)
+TICK    621 | PC  488 | [main] WAIT   mem 1/1
+TICK    621 | PC  488 | [main] RETIRE lw ra, 0(sp) | ra=120 sp=8184 t0=56 t1=56 s1=4 a0=56 s2=16 IE=true
+TICK    622 | PC  492 | [main] FETCH  addi sp, sp, 8
+TICK    623 | PC  492 | [main] RETIRE addi sp, sp, 8 | ra=120 sp=8192 t0=56 t1=56 s1=4 a0=56 s2=16 IE=true
+TICK    624 | PC  496 | [main] FETCH  jalr zero, ra, 0
+TICK    625 | PC  496 | [main] RETIRE jalr zero, ra, 0 | ra=120 sp=8192 t0=56 t1=56 s1=4 a0=56 s2=16 IE=true
+TICK    626 | PC  120 | [main] FETCH  addi t0, a0, 0
+TICK    627 | PC  120 | [main] RETIRE addi t0, a0, 0 | ra=120 sp=8192 t0=56 t1=56 s1=4 a0=56 s2=16 IE=true
+TICK    628 | PC  124 | [main] FETCH  sw t0, 40(zero)
+TICK    629 | PC  124 | [main] MEM    sw addr=40 WRITE-THROUGH, 10 tick(s)
+TICK    630 | PC  124 | [main] WAIT   mem 1/10
+TICK    631 | PC  124 | [main] WAIT   mem 2/10
+TICK    632 | PC  124 | [main] WAIT   mem 3/10
+TICK    633 | PC  124 | [main] WAIT   mem 4/10
+TICK    634 | PC  124 | [main] WAIT   mem 5/10
+TICK    635 | PC  124 | [main] WAIT   mem 6/10
+TICK    636 | PC  124 | [main] WAIT   mem 7/10
+TICK    637 | PC  124 | [main] WAIT   mem 8/10
+TICK    638 | PC  124 | [main] WAIT   mem 9/10
+TICK    639 | PC  124 | [main] WAIT   mem 10/10
+TICK    639 | PC  124 | [main] RETIRE sw t0, 40(zero) | ra=120 sp=8192 t0=56 t1=56 s1=4 a0=56 s2=16 IE=true
+TICK    640 | PC  128 | [main] FETCH  j 0x0048
+TICK    641 | PC  128 | [main] RETIRE j 0x0048 | ra=120 sp=8192 t0=56 t1=56 s1=4 a0=56 s2=16 IE=true
+TICK    642 | PC   72 | [main] FETCH  lw t1, 40(zero)
+TICK    643 | PC   72 | [main] MEM    lw addr=40 HIT, 1 tick(s)
+TICK    644 | PC   72 | [main] WAIT   mem 1/1
+TICK    644 | PC   72 | [main] RETIRE lw t1, 40(zero) | ra=120 sp=8192 t0=56 t1=56 s1=4 a0=56 s2=16 IE=true
+TICK    645 | PC   76 | [main] FETCH  addi t2, zero, 47
+TICK    646 | PC   76 | [main] RETIRE addi t2, zero, 47 | ra=120 sp=8192 t0=56 t1=56 t2=47 s1=4 a0=56 s2=16 IE=true
+TICK    647 | PC   80 | [main] FETCH  bge t2, t1, 0x0084
+TICK    648 | PC   80 | [main] RETIRE bge t2, t1, 0x0084 | ra=120 sp=8192 t0=56 t1=56 t2=47 s1=4 a0=56 s2=16 IE=true
+TICK    649 | PC   84 | [main] FETCH  lw t0, 36(zero)
+TICK    650 | PC   84 | [main] MEM    lw addr=36 HIT, 1 tick(s)
+TICK    651 | PC   84 | [main] WAIT   mem 1/1
+TICK    651 | PC   84 | [main] RETIRE lw t0, 36(zero) | ra=120 sp=8192 t0=9 t1=56 t2=47 s1=4 a0=56 s2=16 IE=true
+TICK    652 | PC   88 | [main] FETCH  addi t1, zero, 10
+TICK    653 | PC   88 | [main] RETIRE addi t1, zero, 10 | ra=120 sp=8192 t0=9 t1=10 t2=47 s1=4 a0=56 s2=16 IE=true
+TICK    654 | PC   92 | [main] FETCH  mul t0, t0, t1
+TICK    655 | PC   92 | [main] RETIRE mul t0, t0, t1 | ra=120 sp=8192 t0=90 t1=10 t2=47 s1=4 a0=56 s2=16 IE=true
+TICK    656 | PC   96 | [main] FETCH  lw t1, 40(zero)
+TICK    657 | PC   96 | [main] MEM    lw addr=40 HIT, 1 tick(s)
+TICK    658 | PC   96 | [main] WAIT   mem 1/1
+TICK    658 | PC   96 | [main] RETIRE lw t1, 40(zero) | ra=120 sp=8192 t0=90 t1=56 t2=47 s1=4 a0=56 s2=16 IE=true
+TICK    659 | PC  100 | [main] FETCH  addi t2, zero, 48
+TICK    660 | PC  100 | [main] RETIRE addi t2, zero, 48 | ra=120 sp=8192 t0=90 t1=56 t2=48 s1=4 a0=56 s2=16 IE=true
+TICK    661 | PC  104 | [main] FETCH  sub t1, t1, t2
+TICK    662 | PC  104 | [main] RETIRE sub t1, t1, t2 | ra=120 sp=8192 t0=90 t1=8 t2=48 s1=4 a0=56 s2=16 IE=true
+TICK    663 | PC  108 | [main] FETCH  add t0, t0, t1
+TICK    664 | PC  108 | [main] RETIRE add t0, t0, t1 | ra=120 sp=8192 t0=98 t1=8 t2=48 s1=4 a0=56 s2=16 IE=true
+TICK    665 | PC  112 | [main] FETCH  sw t0, 36(zero)
+TICK    666 | PC  112 | [main] MEM    sw addr=36 WRITE-THROUGH, 10 tick(s)
+TICK    667 | PC  112 | [main] WAIT   mem 1/10
+TICK    668 | PC  112 | [main] WAIT   mem 2/10
+TICK    669 | PC  112 | [main] WAIT   mem 3/10
+TICK    670 | PC  112 | [main] WAIT   mem 4/10
+TICK    671 | PC  112 | [main] WAIT   mem 5/10
+TICK    672 | PC  112 | [main] WAIT   mem 6/10
+TICK    673 | PC  112 | [main] WAIT   mem 7/10
+TICK    674 | PC  112 | [main] WAIT   mem 8/10
+TICK    675 | PC  112 | [main] WAIT   mem 9/10
+TICK    676 | PC  112 | [main] WAIT   mem 10/10
+TICK    676 | PC  112 | [main] RETIRE sw t0, 36(zero) | ra=120 sp=8192 t0=98 t1=8 t2=48 s1=4 a0=56 s2=16 IE=true
+TICK    677 | PC  116 | [main] FETCH  jal ra, 0x0170
+TICK    678 | PC  116 | [main] RETIRE jal ra, 0x0170 | ra=120 sp=8192 t0=98 t1=8 t2=48 s1=4 a0=56 s2=16 IE=true
+TICK    679 | PC  368 | [main] FETCH  addi sp, sp, -8
+TICK    680 | PC  368 | [main] RETIRE addi sp, sp, -8 | ra=120 sp=8184 t0=98 t1=8 t2=48 s1=4 a0=56 s2=16 IE=true
+TICK    681 | PC  372 | [main] FETCH  sw ra, 0(sp)
+TICK    682 | PC  372 | [main] MEM    sw addr=8184 WRITE-THROUGH, 10 tick(s)
+TICK    683 | PC  372 | [main] WAIT   mem 1/10
+TICK    684 | PC  372 | [main] WAIT   mem 2/10
+TICK    685 | PC  372 | [main] WAIT   mem 3/10
+TICK    686 | PC  372 | [main] WAIT   mem 4/10
+TICK    687 | PC  372 | [main] WAIT   mem 5/10
+TICK    688 | PC  372 | [main] WAIT   mem 6/10
+TICK    689 | PC  372 | [main] WAIT   mem 7/10
+TICK    690 | PC  372 | [main] WAIT   mem 8/10
+TICK    691 | PC  372 | [main] WAIT   mem 9/10
+TICK    692 | PC  372 | [main] WAIT   mem 10/10
+TICK    692 | PC  372 | [main] RETIRE sw ra, 0(sp) | ra=120 sp=8184 t0=98 t1=8 t2=48 s1=4 a0=56 s2=16 IE=true
+TICK    693 | PC  376 | [main] FETCH  lw t1, 8(zero)
+TICK    694 | PC  376 | [main] MEM    lw addr=8 HIT, 1 tick(s)
+TICK    695 | PC  376 | [main] WAIT   mem 1/1
+TICK    695 | PC  376 | [main] RETIRE lw t1, 8(zero) | ra=120 sp=8184 t0=98 t2=48 s1=4 a0=56 s2=16 IE=true
+TICK    696 | PC  380 | [main] FETCH  beqz t1, 0x0188
+TICK    697 | PC  380 | [main] RETIRE beqz t1, 0x0188 | ra=120 sp=8184 t0=98 t2=48 s1=4 a0=56 s2=16 IE=true
+TICK    698 | PC  392 | [main] FETCH  lw t1, 0(zero)
+TICK    699 | PC  392 | [main] MEM    lw addr=0 HIT, 1 tick(s)
+TICK    700 | PC  392 | [main] WAIT   mem 1/1
+TICK    700 | PC  392 | [main] RETIRE lw t1, 0(zero) | ra=120 sp=8184 t0=98 t1=2 t2=48 s1=4 a0=56 s2=16 IE=true
+TICK    701 | PC  396 | [main] FETCH  lw t2, 4(zero)
+TICK    702 | PC  396 | [main] MEM    lw addr=4 MISS, 10 tick(s)
+TICK    703 | PC  396 | [main] WAIT   mem 1/10
+TICK    704 | PC  396 | [main] WAIT   mem 2/10
+TICK    705 | PC  396 | [main] WAIT   mem 3/10
+TICK    706 | PC  396 | [main] WAIT   mem 4/10
+TICK    707 | PC  396 | [main] WAIT   mem 5/10
+TICK    708 | PC  396 | [main] WAIT   mem 6/10
+TICK    709 | PC  396 | [main] WAIT   mem 7/10
+TICK    710 | PC  396 | [main] WAIT   mem 8/10
+TICK    711 | PC  396 | [main] WAIT   mem 9/10
+TICK    712 | PC  396 | [main] WAIT   mem 10/10
+TICK    712 | PC  396 | [main] CACHE  fill line 3 addr=4 (evicted valid=true addr=0)
+TICK    712 | PC  396 | [main] RETIRE lw t2, 4(zero) | ra=120 sp=8184 t0=98 t1=2 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    713 | PC  400 | [main] FETCH  bne t1, t2, 0x0198
+TICK    714 | PC  400 | [main] RETIRE bne t1, t2, 0x0198 | ra=120 sp=8184 t0=98 t1=2 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    715 | PC  408 | [main] FETCH  addi t0, zero, 0
+TICK    716 | PC  408 | [main] RETIRE addi t0, zero, 0 | ra=120 sp=8184 t1=2 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    717 | PC  412 | [main] FETCH  lw t0, 32(zero)
+TICK    718 | PC  412 | [main] MEM    lw addr=32 HIT, 1 tick(s)
+TICK    719 | PC  412 | [main] WAIT   mem 1/1
+TICK    719 | PC  412 | [main] RETIRE lw t0, 32(zero) | ra=120 sp=8184 t0=12 t1=2 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    720 | PC  416 | [main] FETCH  lw t1, 0(zero)
+TICK    721 | PC  416 | [main] MEM    lw addr=0 MISS, 10 tick(s)
+TICK    722 | PC  416 | [main] WAIT   mem 1/10
+TICK    723 | PC  416 | [main] WAIT   mem 2/10
+TICK    724 | PC  416 | [main] WAIT   mem 3/10
+TICK    725 | PC  416 | [main] WAIT   mem 4/10
+TICK    726 | PC  416 | [main] WAIT   mem 5/10
+TICK    727 | PC  416 | [main] WAIT   mem 6/10
+TICK    728 | PC  416 | [main] WAIT   mem 7/10
+TICK    729 | PC  416 | [main] WAIT   mem 8/10
+TICK    730 | PC  416 | [main] WAIT   mem 9/10
+TICK    731 | PC  416 | [main] WAIT   mem 10/10
+TICK    731 | PC  416 | [main] CACHE  fill line 4 addr=0 (evicted valid=true addr=12)
+TICK    731 | PC  416 | [main] RETIRE lw t1, 0(zero) | ra=120 sp=8184 t0=12 t1=2 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    732 | PC  420 | [main] FETCH  add t0, t0, t1
+TICK    733 | PC  420 | [main] RETIRE add t0, t0, t1 | ra=120 sp=8184 t0=14 t1=2 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    734 | PC  424 | [main] FETCH  lb t0, 0(t0)
+TICK    735 | PC  424 | [main] MEM    lb addr=14 MISS, 10 tick(s)
+TICK    736 | PC  424 | [main] WAIT   mem 1/10
+TICK    737 | PC  424 | [main] WAIT   mem 2/10
+TICK    738 | PC  424 | [main] WAIT   mem 3/10
+TICK    739 | PC  424 | [main] WAIT   mem 4/10
+TICK    740 | PC  424 | [main] WAIT   mem 5/10
+TICK    741 | PC  424 | [main] WAIT   mem 6/10
+TICK    742 | PC  424 | [main] WAIT   mem 7/10
+TICK    743 | PC  424 | [main] WAIT   mem 8/10
+TICK    744 | PC  424 | [main] WAIT   mem 9/10
+TICK    745 | PC  424 | [main] WAIT   mem 10/10
+TICK    745 | PC  424 | [main] CACHE  fill line 5 addr=12 (evicted valid=true addr=8188)
+TICK    745 | PC  424 | [main] RETIRE lb t0, 0(t0) | ra=120 sp=8184 t0=10 t1=2 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    746 | PC  428 | [main] FETCH  sw t0, 4(sp)
+TICK    747 | PC  428 | [main] MEM    sw addr=8188 WRITE-THROUGH, 10 tick(s)
+TICK    748 | PC  428 | [main] WAIT   mem 1/10
+TICK    749 | PC  428 | [main] WAIT   mem 2/10
+TICK    750 | PC  428 | [main] WAIT   mem 3/10
+TICK    751 | PC  428 | [main] WAIT   mem 4/10
+TICK    752 | PC  428 | [main] WAIT   mem 5/10
+TICK    753 | PC  428 | [main] WAIT   mem 6/10
+TICK    754 | PC  428 | [main] WAIT   mem 7/10
+TICK    755 | PC  428 | [main] WAIT   mem 8/10
+TICK    756 | PC  428 | [main] WAIT   mem 9/10
+TICK    757 | PC  428 | [main] WAIT   mem 10/10
+TICK    757 | PC  428 | [main] RETIRE sw t0, 4(sp) | ra=120 sp=8184 t0=10 t1=2 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    758 | PC  432 | [main] FETCH  lw t0, 0(zero)
+TICK    759 | PC  432 | [main] MEM    lw addr=0 HIT, 1 tick(s)
+TICK    760 | PC  432 | [main] WAIT   mem 1/1
+TICK    760 | PC  432 | [main] RETIRE lw t0, 0(zero) | ra=120 sp=8184 t0=2 t1=2 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    761 | PC  436 | [main] FETCH  addi t1, zero, 1
+TICK    762 | PC  436 | [main] RETIRE addi t1, zero, 1 | ra=120 sp=8184 t0=2 t1=1 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    763 | PC  440 | [main] FETCH  add t0, t0, t1
+TICK    764 | PC  440 | [main] RETIRE add t0, t0, t1 | ra=120 sp=8184 t0=3 t1=1 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    765 | PC  444 | [main] FETCH  addi t1, zero, 16
+TICK    766 | PC  444 | [main] RETIRE addi t1, zero, 16 | ra=120 sp=8184 t0=3 t1=16 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    767 | PC  448 | [main] FETCH  rem t0, t0, t1
+TICK    768 | PC  448 | [main] RETIRE rem t0, t0, t1 | ra=120 sp=8184 t0=3 t1=16 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    769 | PC  452 | [main] FETCH  sw t0, 0(zero)
+TICK    770 | PC  452 | [main] MEM    sw addr=0 WRITE-THROUGH, 10 tick(s)
+TICK    771 | PC  452 | [main] WAIT   mem 1/10
+TICK    772 | PC  452 | [main] WAIT   mem 2/10
+TICK    773 | PC  452 | [main] WAIT   mem 3/10
+TICK    774 | PC  452 | [main] WAIT   mem 4/10
+TICK    775 | PC  452 | [main] WAIT   mem 5/10
+TICK    776 | PC  452 | [main] WAIT   mem 6/10
+TICK    777 | PC  452 | [main] WAIT   mem 7/10
+TICK    778 | PC  452 | [main] WAIT   mem 8/10
+TICK    779 | PC  452 | [main] WAIT   mem 9/10
+TICK    780 | PC  452 | [main] WAIT   mem 10/10
+TICK    780 | PC  452 | [main] RETIRE sw t0, 0(zero) | ra=120 sp=8184 t0=3 t1=16 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    781 | PC  456 | [main] FETCH  lw t1, 4(sp)
+TICK    782 | PC  456 | [main] MEM    lw addr=8188 MISS, 10 tick(s)
+TICK    783 | PC  456 | [main] WAIT   mem 1/10
+TICK    784 | PC  456 | [main] WAIT   mem 2/10
+TICK    785 | PC  456 | [main] WAIT   mem 3/10
+TICK    786 | PC  456 | [main] WAIT   mem 4/10
+TICK    787 | PC  456 | [main] WAIT   mem 5/10
+TICK    788 | PC  456 | [main] WAIT   mem 6/10
+TICK    789 | PC  456 | [main] WAIT   mem 7/10
+TICK    790 | PC  456 | [main] WAIT   mem 8/10
+TICK    791 | PC  456 | [main] WAIT   mem 9/10
+TICK    792 | PC  456 | [main] WAIT   mem 10/10
+TICK    792 | PC  456 | [main] CACHE  fill line 6 addr=8188 (evicted valid=true addr=8184)
+TICK    792 | PC  456 | [main] RETIRE lw t1, 4(sp) | ra=120 sp=8184 t0=3 t1=10 t2=4 s1=4 a0=56 s2=16 IE=true
+TICK    793 | PC  460 | [main] FETCH  addi t2, zero, 0
+TICK    794 | PC  460 | [main] RETIRE addi t2, zero, 0 | ra=120 sp=8184 t0=3 t1=10 s1=4 a0=56 s2=16 IE=true
+TICK    795 | PC  464 | [main] FETCH  bne t1, t2, 0x01E0
+TICK    796 | PC  464 | [main] RETIRE bne t1, t2, 0x01E0 | ra=120 sp=8184 t0=3 t1=10 s1=4 a0=56 s2=16 IE=true
+TICK    797 | PC  480 | [main] FETCH  lw t0, 4(sp)
+TICK    798 | PC  480 | [main] MEM    lw addr=8188 HIT, 1 tick(s)
+TICK    799 | PC  480 | [main] WAIT   mem 1/1
+TICK    799 | PC  480 | [main] RETIRE lw t0, 4(sp) | ra=120 sp=8184 t0=10 t1=10 s1=4 a0=56 s2=16 IE=true
+TICK    800 | PC  484 | [main] FETCH  addi a0, t0, 0
+TICK    801 | PC  484 | [main] RETIRE addi a0, t0, 0 | ra=120 sp=8184 t0=10 t1=10 s1=4 a0=10 s2=16 IE=true
+TICK    802 | PC  488 | [main] FETCH  lw ra, 0(sp)
+TICK    803 | PC  488 | [main] MEM    lw addr=8184 MISS, 10 tick(s)
+TICK    804 | PC  488 | [main] WAIT   mem 1/10
+TICK    805 | PC  488 | [main] WAIT   mem 2/10
+TICK    806 | PC  488 | [main] WAIT   mem 3/10
+TICK    807 | PC  488 | [main] WAIT   mem 4/10
+TICK    808 | PC  488 | [main] WAIT   mem 5/10
+TICK    809 | PC  488 | [main] WAIT   mem 6/10
+TICK    810 | PC  488 | [main] WAIT   mem 7/10
+TICK    811 | PC  488 | [main] WAIT   mem 8/10
+TICK    812 | PC  488 | [main] WAIT   mem 9/10
+TICK    813 | PC  488 | [main] WAIT   mem 10/10
+TICK    813 | PC  488 | [main] CACHE  fill line 7 addr=8184 (evicted valid=true addr=40)
+TICK    813 | PC  488 | [main] RETIRE lw ra, 0(sp) | ra=120 sp=8184 t0=10 t1=10 s1=4 a0=10 s2=16 IE=true
+TICK    814 | PC  492 | [main] FETCH  addi sp, sp, 8
+TICK    815 | PC  492 | [main] RETIRE addi sp, sp, 8 | ra=120 sp=8192 t0=10 t1=10 s1=4 a0=10 s2=16 IE=true
+TICK    816 | PC  496 | [main] FETCH  jalr zero, ra, 0
+TICK    817 | PC  496 | [main] RETIRE jalr zero, ra, 0 | ra=120 sp=8192 t0=10 t1=10 s1=4 a0=10 s2=16 IE=true
+TICK    818 | PC  120 | [main] FETCH  addi t0, a0, 0
+TICK    819 | PC  120 | [main] RETIRE addi t0, a0, 0 | ra=120 sp=8192 t0=10 t1=10 s1=4 a0=10 s2=16 IE=true
+TICK    820 | PC  124 | [main] FETCH  sw t0, 40(zero)
+TICK    821 | PC  124 | [main] MEM    sw addr=40 WRITE-THROUGH, 10 tick(s)
+TICK    822 | PC  124 | [main] WAIT   mem 1/10
+TICK    823 | PC  124 | [main] WAIT   mem 2/10
+TICK    824 | PC  124 | [main] WAIT   mem 3/10
+TICK    825 | PC  124 | [main] WAIT   mem 4/10
+TICK    826 | PC  124 | [main] WAIT   mem 5/10
+TICK    827 | PC  124 | [main] WAIT   mem 6/10
+TICK    828 | PC  124 | [main] WAIT   mem 7/10
+TICK    829 | PC  124 | [main] WAIT   mem 8/10
+TICK    830 | PC  124 | [main] WAIT   mem 9/10
+TICK    831 | PC  124 | [main] WAIT   mem 10/10
+TICK    831 | PC  124 | [main] RETIRE sw t0, 40(zero) | ra=120 sp=8192 t0=10 t1=10 s1=4 a0=10 s2=16 IE=true
+TICK    832 | PC  128 | [main] FETCH  j 0x0048
+TICK    833 | PC  128 | [main] RETIRE j 0x0048 | ra=120 sp=8192 t0=10 t1=10 s1=4 a0=10 s2=16 IE=true
+TICK    834 | PC   72 | [main] FETCH  lw t1, 40(zero)
+TICK    835 | PC   72 | [main] MEM    lw addr=40 MISS, 10 tick(s)
+TICK    836 | PC   72 | [main] WAIT   mem 1/10
+TICK    837 | PC   72 | [main] WAIT   mem 2/10
+TICK    838 | PC   72 | [main] WAIT   mem 3/10
+TICK    839 | PC   72 | [main] WAIT   mem 4/10
+TICK    840 | PC   72 | [main] WAIT   mem 5/10
+TICK    841 | PC   72 | [main] WAIT   mem 6/10
+TICK    842 | PC   72 | [main] WAIT   mem 7/10
+TICK    843 | PC   72 | [main] WAIT   mem 8/10
+TICK    844 | PC   72 | [main] WAIT   mem 9/10
+TICK    845 | PC   72 | [main] WAIT   mem 10/10
+TICK    845 | PC   72 | [main] CACHE  fill line 0 addr=40 (evicted valid=true addr=36)
+TICK    845 | PC   72 | [main] RETIRE lw t1, 40(zero) | ra=120 sp=8192 t0=10 t1=10 s1=4 a0=10 s2=16 IE=true
+TICK    846 | PC   76 | [main] FETCH  addi t2, zero, 47
+TICK    847 | PC   76 | [main] RETIRE addi t2, zero, 47 | ra=120 sp=8192 t0=10 t1=10 t2=47 s1=4 a0=10 s2=16 IE=true
+TICK    848 | PC   80 | [main] FETCH  bge t2, t1, 0x0084
+TICK    849 | PC   80 | [main] RETIRE bge t2, t1, 0x0084 | ra=120 sp=8192 t0=10 t1=10 t2=47 s1=4 a0=10 s2=16 IE=true
+TICK    850 | PC  132 | [main] FETCH  addi t0, zero, 0
+TICK    851 | PC  132 | [main] RETIRE addi t0, zero, 0 | ra=120 sp=8192 t1=10 t2=47 s1=4 a0=10 s2=16 IE=true
+TICK    852 | PC  136 | [main] FETCH  addi t0, zero, 1
+TICK    853 | PC  136 | [main] RETIRE addi t0, zero, 1 | ra=120 sp=8192 t0=1 t1=10 t2=47 s1=4 a0=10 s2=16 IE=true
+TICK    854 | PC  140 | [main] FETCH  sw t0, 44(zero)
+TICK    855 | PC  140 | [main] MEM    sw addr=44 WRITE-THROUGH, 10 tick(s)
+TICK    856 | PC  140 | [main] WAIT   mem 1/10
+TICK    857 | PC  140 | [main] WAIT   mem 2/10
+TICK    858 | PC  140 | [main] WAIT   mem 3/10
+TICK    859 | PC  140 | [main] WAIT   mem 4/10
+TICK    860 | PC  140 | [main] WAIT   mem 5/10
+TICK    861 | PC  140 | [main] WAIT   mem 6/10
+TICK    862 | PC  140 | [main] WAIT   mem 7/10
+TICK    863 | PC  140 | [main] WAIT   mem 8/10
+TICK    864 | PC  140 | [main] WAIT   mem 9/10
+TICK    865 | PC  140 | [main] WAIT   mem 10/10
+TICK    865 | PC  140 | [main] RETIRE sw t0, 44(zero) | ra=120 sp=8192 t0=1 t1=10 t2=47 s1=4 a0=10 s2=16 IE=true
+TICK    866 | PC  144 | [main] FETCH  addi t0, zero, 2
+TICK    867 | PC  144 | [main] RETIRE addi t0, zero, 2 | ra=120 sp=8192 t0=2 t1=10 t2=47 s1=4 a0=10 s2=16 IE=true
+TICK    868 | PC  148 | [main] FETCH  sw t0, 48(zero)
+TICK    869 | PC  148 | [main] MEM    sw addr=48 WRITE-THROUGH, 10 tick(s)
+TICK    870 | PC  148 | [main] WAIT   mem 1/10
+TICK    871 | PC  148 | [main] WAIT   mem 2/10
+TICK    872 | PC  148 | [main] WAIT   mem 3/10
+TICK    873 | PC  148 | [main] WAIT   mem 4/10
+TICK    874 | PC  148 | [main] WAIT   mem 5/10
+TICK    875 | PC  148 | [main] WAIT   mem 6/10
+TICK    876 | PC  148 | [main] WAIT   mem 7/10
+TICK    877 | PC  148 | [main] WAIT   mem 8/10
+TICK    878 | PC  148 | [main] WAIT   mem 9/10
+TICK    879 | PC  148 | [main] WAIT   mem 10/10
+TICK    879 | PC  148 | [main] RETIRE sw t0, 48(zero) | ra=120 sp=8192 t0=2 t1=10 t2=47 s1=4 a0=10 s2=16 IE=true
+TICK    880 | PC  152 | [main] FETCH  lw t1, 36(zero)
+TICK    881 | PC  152 | [main] MEM    lw addr=36 MISS, 10 tick(s)
+TICK    882 | PC  152 | [main] WAIT   mem 1/10
+TICK    883 | PC  152 | [main] WAIT   mem 2/10
+TICK    884 | PC  152 | [main] WAIT   mem 3/10
+TICK    885 | PC  152 | [main] WAIT   mem 4/10
+TICK    886 | PC  152 | [main] WAIT   mem 5/10
+TICK    887 | PC  152 | [main] WAIT   mem 6/10
+TICK    888 | PC  152 | [main] WAIT   mem 7/10
+TICK    889 | PC  152 | [main] WAIT   mem 8/10
+TICK    890 | PC  152 | [main] WAIT   mem 9/10
+TICK    891 | PC  152 | [main] WAIT   mem 10/10
+TICK    891 | PC  152 | [main] CACHE  fill line 1 addr=36 (evicted valid=true addr=8)
+TICK    891 | PC  152 | [main] RETIRE lw t1, 36(zero) | ra=120 sp=8192 t0=2 t1=98 t2=47 s1=4 a0=10 s2=16 IE=true
+TICK    892 | PC  156 | [main] FETCH  addi t2, zero, 2
+TICK    893 | PC  156 | [main] RETIRE addi t2, zero, 2 | ra=120 sp=8192 t0=2 t1=98 t2=2 s1=4 a0=10 s2=16 IE=true
+TICK    894 | PC  160 | [main] FETCH  bge t1, t2, 0x00B0
+TICK    895 | PC  160 | [main] RETIRE bge t1, t2, 0x00B0 | ra=120 sp=8192 t0=2 t1=98 t2=2 s1=4 a0=10 s2=16 IE=true
+TICK    896 | PC  176 | [main] FETCH  addi t0, zero, 1
+TICK    897 | PC  176 | [main] RETIRE addi t0, zero, 1 | ra=120 sp=8192 t0=1 t1=98 t2=2 s1=4 a0=10 s2=16 IE=true
+TICK    898 | PC  180 | [main] FETCH  sw t0, 44(zero)
+TICK    899 | PC  180 | [main] MEM    sw addr=44 WRITE-THROUGH, 10 tick(s)
+TICK    900 | PC  180 | [main] WAIT   mem 1/10
+TICK    901 | PC  180 | [main] WAIT   mem 2/10
+TICK    902 | PC  180 | [main] WAIT   mem 3/10
+TICK    903 | PC  180 | [main] WAIT   mem 4/10
+TICK    904 | PC  180 | [main] WAIT   mem 5/10
+TICK    905 | PC  180 | [main] WAIT   mem 6/10
+TICK    906 | PC  180 | [main] WAIT   mem 7/10
+TICK    907 | PC  180 | [main] WAIT   mem 8/10
+TICK    908 | PC  180 | [main] WAIT   mem 9/10
+TICK    909 | PC  180 | [main] WAIT   mem 10/10
+TICK    909 | PC  180 | [main] RETIRE sw t0, 44(zero) | ra=120 sp=8192 t0=1 t1=98 t2=2 s1=4 a0=10 s2=16 IE=true
+TICK    910 | PC  184 | [main] FETCH  lw t1, 48(zero)
+TICK    911 | PC  184 | [main] MEM    lw addr=48 MISS, 10 tick(s)
+TICK    912 | PC  184 | [main] WAIT   mem 1/10
+TICK    913 | PC  184 | [main] WAIT   mem 2/10
+TICK    914 | PC  184 | [main] WAIT   mem 3/10
+TICK    915 | PC  184 | [main] WAIT   mem 4/10
+TICK    916 | PC  184 | [main] WAIT   mem 5/10
+TICK    917 | PC  184 | [main] WAIT   mem 6/10
+TICK    918 | PC  184 | [main] WAIT   mem 7/10
+TICK    919 | PC  184 | [main] WAIT   mem 8/10
+TICK    920 | PC  184 | [main] WAIT   mem 9/10
+TICK    921 | PC  184 | [main] WAIT   mem 10/10
+TICK    921 | PC  184 | [main] CACHE  fill line 2 addr=48 (evicted valid=true addr=32)
+TICK    921 | PC  184 | [main] RETIRE lw t1, 48(zero) | ra=120 sp=8192 t0=1 t1=2 t2=2 s1=4 a0=10 s2=16 IE=true
+TICK    922 | PC  188 | [main] FETCH  lw t2, 48(zero)
+TICK    923 | PC  188 | [main] MEM    lw addr=48 HIT, 1 tick(s)
+TICK    924 | PC  188 | [main] WAIT   mem 1/1
+TICK    924 | PC  188 | [main] RETIRE lw t2, 48(zero) | ra=120 sp=8192 t0=1 t1=2 t2=2 s1=4 a0=10 s2=16 IE=true
+TICK    925 | PC  192 | [main] FETCH  mul t1, t1, t2
+TICK    926 | PC  192 | [main] RETIRE mul t1, t1, t2 | ra=120 sp=8192 t0=1 t1=4 t2=2 s1=4 a0=10 s2=16 IE=true
+TICK    927 | PC  196 | [main] FETCH  lw t2, 36(zero)
+TICK    928 | PC  196 | [main] MEM    lw addr=36 HIT, 1 tick(s)
+TICK    929 | PC  196 | [main] WAIT   mem 1/1
+TICK    929 | PC  196 | [main] RETIRE lw t2, 36(zero) | ra=120 sp=8192 t0=1 t1=4 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK    930 | PC  200 | [main] FETCH  blt t2, t1, 0x0158
+TICK    931 | PC  200 | [main] RETIRE blt t2, t1, 0x0158 | ra=120 sp=8192 t0=1 t1=4 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK    932 | PC  204 | [main] FETCH  lw t0, 36(zero)
+TICK    933 | PC  204 | [main] MEM    lw addr=36 HIT, 1 tick(s)
+TICK    934 | PC  204 | [main] WAIT   mem 1/1
+TICK    934 | PC  204 | [main] RETIRE lw t0, 36(zero) | ra=120 sp=8192 t0=98 t1=4 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK    935 | PC  208 | [main] FETCH  lw t1, 48(zero)
+TICK    936 | PC  208 | [main] MEM    lw addr=48 HIT, 1 tick(s)
+TICK    937 | PC  208 | [main] WAIT   mem 1/1
+TICK    937 | PC  208 | [main] RETIRE lw t1, 48(zero) | ra=120 sp=8192 t0=98 t1=2 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK    938 | PC  212 | [main] FETCH  div t0, t0, t1
+TICK    939 | PC  212 | [main] RETIRE div t0, t0, t1 | ra=120 sp=8192 t0=49 t1=2 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK    940 | PC  216 | [main] FETCH  sw t0, 52(zero)
+TICK    941 | PC  216 | [main] MEM    sw addr=52 WRITE-THROUGH, 10 tick(s)
+TICK    942 | PC  216 | [main] WAIT   mem 1/10
+TICK    943 | PC  216 | [main] WAIT   mem 2/10
+TICK    944 | PC  216 | [main] WAIT   mem 3/10
+TICK    945 | PC  216 | [main] WAIT   mem 4/10
+TICK    946 | PC  216 | [main] WAIT   mem 5/10
+TICK    947 | PC  216 | [main] WAIT   mem 6/10
+TICK    948 | PC  216 | [main] WAIT   mem 7/10
+TICK    949 | PC  216 | [main] WAIT   mem 8/10
+TICK    950 | PC  216 | [main] WAIT   mem 9/10
+TICK    951 | PC  216 | [main] WAIT   mem 10/10
+TICK    951 | PC  216 | [main] RETIRE sw t0, 52(zero) | ra=120 sp=8192 t0=49 t1=2 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK    952 | PC  220 | [main] FETCH  lw t0, 52(zero)
+TICK    953 | PC  220 | [main] MEM    lw addr=52 MISS, 10 tick(s)
+TICK    954 | PC  220 | [main] WAIT   mem 1/10
+TICK    955 | PC  220 | [main] WAIT   mem 2/10
+TICK    956 | PC  220 | [main] WAIT   mem 3/10
+TICK    957 | PC  220 | [main] WAIT   mem 4/10
+TICK    958 | PC  220 | [main] WAIT   mem 5/10
+TICK    959 | PC  220 | [main] WAIT   mem 6/10
+TICK    960 | PC  220 | [main] WAIT   mem 7/10
+TICK    961 | PC  220 | [main] WAIT   mem 8/10
+TICK    962 | PC  220 | [main] WAIT   mem 9/10
+TICK    963 | PC  220 | [main] WAIT   mem 10/10
+TICK    963 | PC  220 | [main] CACHE  fill line 3 addr=52 (evicted valid=true addr=4)
+TICK    963 | PC  220 | [main] RETIRE lw t0, 52(zero) | ra=120 sp=8192 t0=49 t1=2 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK    964 | PC  224 | [main] FETCH  lw t1, 48(zero)
+TICK    965 | PC  224 | [main] MEM    lw addr=48 HIT, 1 tick(s)
+TICK    966 | PC  224 | [main] WAIT   mem 1/1
+TICK    966 | PC  224 | [main] RETIRE lw t1, 48(zero) | ra=120 sp=8192 t0=49 t1=2 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK    967 | PC  228 | [main] FETCH  mul t0, t0, t1
+TICK    968 | PC  228 | [main] RETIRE mul t0, t0, t1 | ra=120 sp=8192 t0=98 t1=2 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK    969 | PC  232 | [main] FETCH  sw t0, 52(zero)
+TICK    970 | PC  232 | [main] MEM    sw addr=52 WRITE-THROUGH, 10 tick(s)
+TICK    971 | PC  232 | [main] WAIT   mem 1/10
+TICK    972 | PC  232 | [main] WAIT   mem 2/10
+TICK    973 | PC  232 | [main] WAIT   mem 3/10
+TICK    974 | PC  232 | [main] WAIT   mem 4/10
+TICK    975 | PC  232 | [main] WAIT   mem 5/10
+TICK    976 | PC  232 | [main] WAIT   mem 6/10
+TICK    977 | PC  232 | [main] WAIT   mem 7/10
+TICK    978 | PC  232 | [main] WAIT   mem 8/10
+TICK    979 | PC  232 | [main] WAIT   mem 9/10
+TICK    980 | PC  232 | [main] WAIT   mem 10/10
+TICK    980 | PC  232 | [main] RETIRE sw t0, 52(zero) | ra=120 sp=8192 t0=98 t1=2 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK    981 | PC  236 | [main] FETCH  lw t0, 36(zero)
+TICK    982 | PC  236 | [main] MEM    lw addr=36 HIT, 1 tick(s)
+TICK    983 | PC  236 | [main] WAIT   mem 1/1
+TICK    983 | PC  236 | [main] RETIRE lw t0, 36(zero) | ra=120 sp=8192 t0=98 t1=2 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK    984 | PC  240 | [main] FETCH  lw t1, 52(zero)
+TICK    985 | PC  240 | [main] MEM    lw addr=52 HIT, 1 tick(s)
+TICK    986 | PC  240 | [main] WAIT   mem 1/1
+TICK    986 | PC  240 | [main] RETIRE lw t1, 52(zero) | ra=120 sp=8192 t0=98 t1=98 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK    987 | PC  244 | [main] FETCH  sub t0, t0, t1
+TICK    988 | PC  244 | [main] RETIRE sub t0, t0, t1 | ra=120 sp=8192 t1=98 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK    989 | PC  248 | [main] FETCH  sw t0, 56(zero)
+TICK    990 | PC  248 | [main] MEM    sw addr=56 WRITE-THROUGH, 10 tick(s)
+TICK    991 | PC  248 | [main] WAIT   mem 1/10
+TICK    992 | PC  248 | [main] WAIT   mem 2/10
+TICK    993 | PC  248 | [main] WAIT   mem 3/10
+TICK    994 | PC  248 | [main] WAIT   mem 4/10
+TICK    995 | PC  248 | [main] WAIT   mem 5/10
+TICK    996 | PC  248 | [main] WAIT   mem 6/10
+TICK    997 | PC  248 | [main] WAIT   mem 7/10
+TICK    998 | PC  248 | [main] WAIT   mem 8/10
+TICK    999 | PC  248 | [main] WAIT   mem 9/10
+TICK   1000 | PC  248 | [main] WAIT   mem 10/10
+TICK   1000 | PC  248 | [main] RETIRE sw t0, 56(zero) | ra=120 sp=8192 t1=98 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK   1001 | PC  252 | [main] FETCH  lw t1, 56(zero)
+TICK   1002 | PC  252 | [main] MEM    lw addr=56 MISS, 10 tick(s)
+TICK   1003 | PC  252 | [main] WAIT   mem 1/10
+TICK   1004 | PC  252 | [main] WAIT   mem 2/10
+TICK   1005 | PC  252 | [main] WAIT   mem 3/10
+TICK   1006 | PC  252 | [main] WAIT   mem 4/10
+TICK   1007 | PC  252 | [main] WAIT   mem 5/10
+TICK   1008 | PC  252 | [main] WAIT   mem 6/10
+TICK   1009 | PC  252 | [main] WAIT   mem 7/10
+TICK   1010 | PC  252 | [main] WAIT   mem 8/10
+TICK   1011 | PC  252 | [main] WAIT   mem 9/10
+TICK   1012 | PC  252 | [main] WAIT   mem 10/10
+TICK   1012 | PC  252 | [main] CACHE  fill line 4 addr=56 (evicted valid=true addr=0)
+TICK   1012 | PC  252 | [main] RETIRE lw t1, 56(zero) | ra=120 sp=8192 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK   1013 | PC  256 | [main] FETCH  addi t2, zero, 0
+TICK   1014 | PC  256 | [main] RETIRE addi t2, zero, 0 | ra=120 sp=8192 s1=4 a0=10 s2=16 IE=true
+TICK   1015 | PC  260 | [main] FETCH  bne t1, t2, 0x0114
+TICK   1016 | PC  260 | [main] RETIRE bne t1, t2, 0x0114 | ra=120 sp=8192 s1=4 a0=10 s2=16 IE=true
+TICK   1017 | PC  264 | [main] FETCH  addi t0, zero, 0
+TICK   1018 | PC  264 | [main] RETIRE addi t0, zero, 0 | ra=120 sp=8192 s1=4 a0=10 s2=16 IE=true
+TICK   1019 | PC  268 | [main] FETCH  sw t0, 44(zero)
+TICK   1020 | PC  268 | [main] MEM    sw addr=44 WRITE-THROUGH, 10 tick(s)
+TICK   1021 | PC  268 | [main] WAIT   mem 1/10
+TICK   1022 | PC  268 | [main] WAIT   mem 2/10
+TICK   1023 | PC  268 | [main] WAIT   mem 3/10
+TICK   1024 | PC  268 | [main] WAIT   mem 4/10
+TICK   1025 | PC  268 | [main] WAIT   mem 5/10
+TICK   1026 | PC  268 | [main] WAIT   mem 6/10
+TICK   1027 | PC  268 | [main] WAIT   mem 7/10
+TICK   1028 | PC  268 | [main] WAIT   mem 8/10
+TICK   1029 | PC  268 | [main] WAIT   mem 9/10
+TICK   1030 | PC  268 | [main] WAIT   mem 10/10
+TICK   1030 | PC  268 | [main] RETIRE sw t0, 44(zero) | ra=120 sp=8192 s1=4 a0=10 s2=16 IE=true
+TICK   1031 | PC  272 | [main] FETCH  j 0x011C
+TICK   1032 | PC  272 | [main] RETIRE j 0x011C | ra=120 sp=8192 s1=4 a0=10 s2=16 IE=true
+TICK   1033 | PC  284 | [main] FETCH  lw t1, 44(zero)
+TICK   1034 | PC  284 | [main] MEM    lw addr=44 MISS, 10 tick(s)
+TICK   1035 | PC  284 | [main] WAIT   mem 1/10
+TICK   1036 | PC  284 | [main] WAIT   mem 2/10
+TICK   1037 | PC  284 | [main] WAIT   mem 3/10
+TICK   1038 | PC  284 | [main] WAIT   mem 4/10
+TICK   1039 | PC  284 | [main] WAIT   mem 5/10
+TICK   1040 | PC  284 | [main] WAIT   mem 6/10
+TICK   1041 | PC  284 | [main] WAIT   mem 7/10
+TICK   1042 | PC  284 | [main] WAIT   mem 8/10
+TICK   1043 | PC  284 | [main] WAIT   mem 9/10
+TICK   1044 | PC  284 | [main] WAIT   mem 10/10
+TICK   1044 | PC  284 | [main] CACHE  fill line 5 addr=44 (evicted valid=true addr=12)
+TICK   1044 | PC  284 | [main] RETIRE lw t1, 44(zero) | ra=120 sp=8192 s1=4 a0=10 s2=16 IE=true
+TICK   1045 | PC  288 | [main] FETCH  addi t2, zero, 0
+TICK   1046 | PC  288 | [main] RETIRE addi t2, zero, 0 | ra=120 sp=8192 s1=4 a0=10 s2=16 IE=true
+TICK   1047 | PC  292 | [main] FETCH  bne t1, t2, 0x013C
+TICK   1048 | PC  292 | [main] RETIRE bne t1, t2, 0x013C | ra=120 sp=8192 s1=4 a0=10 s2=16 IE=true
+TICK   1049 | PC  296 | [main] FETCH  lw t0, 36(zero)
+TICK   1050 | PC  296 | [main] MEM    lw addr=36 HIT, 1 tick(s)
+TICK   1051 | PC  296 | [main] WAIT   mem 1/1
+TICK   1051 | PC  296 | [main] RETIRE lw t0, 36(zero) | ra=120 sp=8192 t0=98 s1=4 a0=10 s2=16 IE=true
+TICK   1052 | PC  300 | [main] FETCH  addi t1, zero, 1
+TICK   1053 | PC  300 | [main] RETIRE addi t1, zero, 1 | ra=120 sp=8192 t0=98 t1=1 s1=4 a0=10 s2=16 IE=true
+TICK   1054 | PC  304 | [main] FETCH  add t0, t0, t1
+TICK   1055 | PC  304 | [main] RETIRE add t0, t0, t1 | ra=120 sp=8192 t0=99 t1=1 s1=4 a0=10 s2=16 IE=true
+TICK   1056 | PC  308 | [main] FETCH  sw t0, 48(zero)
+TICK   1057 | PC  308 | [main] MEM    sw addr=48 WRITE-THROUGH, 10 tick(s)
+TICK   1058 | PC  308 | [main] WAIT   mem 1/10
+TICK   1059 | PC  308 | [main] WAIT   mem 2/10
+TICK   1060 | PC  308 | [main] WAIT   mem 3/10
+TICK   1061 | PC  308 | [main] WAIT   mem 4/10
+TICK   1062 | PC  308 | [main] WAIT   mem 5/10
+TICK   1063 | PC  308 | [main] WAIT   mem 6/10
+TICK   1064 | PC  308 | [main] WAIT   mem 7/10
+TICK   1065 | PC  308 | [main] WAIT   mem 8/10
+TICK   1066 | PC  308 | [main] WAIT   mem 9/10
+TICK   1067 | PC  308 | [main] WAIT   mem 10/10
+TICK   1067 | PC  308 | [main] RETIRE sw t0, 48(zero) | ra=120 sp=8192 t0=99 t1=1 s1=4 a0=10 s2=16 IE=true
+TICK   1068 | PC  312 | [main] FETCH  j 0x0144
+TICK   1069 | PC  312 | [main] RETIRE j 0x0144 | ra=120 sp=8192 t0=99 t1=1 s1=4 a0=10 s2=16 IE=true
+TICK   1070 | PC  324 | [main] FETCH  lw t0, 48(zero)
+TICK   1071 | PC  324 | [main] MEM    lw addr=48 HIT, 1 tick(s)
+TICK   1072 | PC  324 | [main] WAIT   mem 1/1
+TICK   1072 | PC  324 | [main] RETIRE lw t0, 48(zero) | ra=120 sp=8192 t0=99 t1=1 s1=4 a0=10 s2=16 IE=true
+TICK   1073 | PC  328 | [main] FETCH  addi t1, zero, 1
+TICK   1074 | PC  328 | [main] RETIRE addi t1, zero, 1 | ra=120 sp=8192 t0=99 t1=1 s1=4 a0=10 s2=16 IE=true
+TICK   1075 | PC  332 | [main] FETCH  add t0, t0, t1
+TICK   1076 | PC  332 | [main] RETIRE add t0, t0, t1 | ra=120 sp=8192 t0=100 t1=1 s1=4 a0=10 s2=16 IE=true
+TICK   1077 | PC  336 | [main] FETCH  sw t0, 48(zero)
+TICK   1078 | PC  336 | [main] MEM    sw addr=48 WRITE-THROUGH, 10 tick(s)
+TICK   1079 | PC  336 | [main] WAIT   mem 1/10
+TICK   1080 | PC  336 | [main] WAIT   mem 2/10
+TICK   1081 | PC  336 | [main] WAIT   mem 3/10
+TICK   1082 | PC  336 | [main] WAIT   mem 4/10
+TICK   1083 | PC  336 | [main] WAIT   mem 5/10
+TICK   1084 | PC  336 | [main] WAIT   mem 6/10
+TICK   1085 | PC  336 | [main] WAIT   mem 7/10
+TICK   1086 | PC  336 | [main] WAIT   mem 8/10
+TICK   1087 | PC  336 | [main] WAIT   mem 9/10
+TICK   1088 | PC  336 | [main] WAIT   mem 10/10
+TICK   1088 | PC  336 | [main] RETIRE sw t0, 48(zero) | ra=120 sp=8192 t0=100 t1=1 s1=4 a0=10 s2=16 IE=true
+TICK   1089 | PC  340 | [main] FETCH  j 0x00B8
+TICK   1090 | PC  340 | [main] RETIRE j 0x00B8 | ra=120 sp=8192 t0=100 t1=1 s1=4 a0=10 s2=16 IE=true
+TICK   1091 | PC  184 | [main] FETCH  lw t1, 48(zero)
+TICK   1092 | PC  184 | [main] MEM    lw addr=48 HIT, 1 tick(s)
+TICK   1093 | PC  184 | [main] WAIT   mem 1/1
+TICK   1093 | PC  184 | [main] RETIRE lw t1, 48(zero) | ra=120 sp=8192 t0=100 t1=100 s1=4 a0=10 s2=16 IE=true
+TICK   1094 | PC  188 | [main] FETCH  lw t2, 48(zero)
+TICK   1095 | PC  188 | [main] MEM    lw addr=48 HIT, 1 tick(s)
+TICK   1096 | PC  188 | [main] WAIT   mem 1/1
+TICK   1096 | PC  188 | [main] RETIRE lw t2, 48(zero) | ra=120 sp=8192 t0=100 t1=100 t2=100 s1=4 a0=10 s2=16 IE=true
+TICK   1097 | PC  192 | [main] FETCH  mul t1, t1, t2
+TICK   1098 | PC  192 | [main] RETIRE mul t1, t1, t2 | ra=120 sp=8192 t0=100 t1=10000 t2=100 s1=4 a0=10 s2=16 IE=true
+TICK   1099 | PC  196 | [main] FETCH  lw t2, 36(zero)
+TICK   1100 | PC  196 | [main] MEM    lw addr=36 HIT, 1 tick(s)
+TICK   1101 | PC  196 | [main] WAIT   mem 1/1
+TICK   1101 | PC  196 | [main] RETIRE lw t2, 36(zero) | ra=120 sp=8192 t0=100 t1=10000 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK   1102 | PC  200 | [main] FETCH  blt t2, t1, 0x0158
+TICK   1103 | PC  200 | [main] RETIRE blt t2, t1, 0x0158 | ra=120 sp=8192 t0=100 t1=10000 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK   1104 | PC  344 | [main] FETCH  addi t0, zero, 0
+TICK   1105 | PC  344 | [main] RETIRE addi t0, zero, 0 | ra=120 sp=8192 t1=10000 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK   1106 | PC  348 | [main] FETCH  addi t0, zero, 48
+TICK   1107 | PC  348 | [main] RETIRE addi t0, zero, 48 | ra=120 sp=8192 t0=48 t1=10000 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK   1108 | PC  352 | [main] FETCH  lw t1, 44(zero)
+TICK   1109 | PC  352 | [main] MEM    lw addr=44 HIT, 1 tick(s)
+TICK   1110 | PC  352 | [main] WAIT   mem 1/1
+TICK   1110 | PC  352 | [main] RETIRE lw t1, 44(zero) | ra=120 sp=8192 t0=48 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK   1111 | PC  356 | [main] FETCH  add t0, t0, t1
+TICK   1112 | PC  356 | [main] RETIRE add t0, t0, t1 | ra=120 sp=8192 t0=48 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK   1113 | PC  360 | [main] FETCH  out t0, 1
+TICK   1114 | PC  360 | [main] RETIRE out t0, 1 | ra=120 sp=8192 t0=48 t2=98 s1=4 a0=10 s2=16 IE=true
+TICK   1115 | PC  364 | [main] FETCH  halt
+TICK   1116 | PC  364 | [main] HALT

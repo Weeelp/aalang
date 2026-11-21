@@ -35,7 +35,6 @@ func Load(path string) (*Config, error) {
 	if cfg.TargetDir == "" {
 		cfg.TargetDir = "data"
 	}
-
 	if cfg.JournalFile == "" {
 		cfg.JournalFile = "journal.log"
 	}
@@ -67,4 +66,16 @@ func (c *Config) JournalPath(src string) string {
 	base := strings.TrimSuffix(c.JournalFile, ext)
 	name := strings.TrimSuffix(filepath.Base(src), filepath.Ext(src))
 	return base + "_" + name + ext
+}
+
+func (c *Config) CheckDuplicates(sources []string) error {
+	seen := make(map[string]string, len(sources))
+	for _, src := range sources {
+		dst := c.TargetPath(src)
+		if prev, ok := seen[dst]; ok {
+			return fmt.Errorf("%s and %s both produce %s", prev, src, dst)
+		}
+		seen[dst] = src
+	}
+	return nil
 }

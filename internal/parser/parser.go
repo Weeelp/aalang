@@ -2,106 +2,54 @@ package parser
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
-	"strings"
 )
 
 type Str string
 
 func ParseFile(tokens []string) ([]any, error) {
-	var fullTree []any
-
+	var tree []any
 	for len(tokens) > 0 {
-		expr, remTokens, err := parseExp(tokens)
-		if err != nil {
+		var e any
+		var err error
+		if e, tokens, err = parseExp(tokens); err != nil {
 			return nil, err
 		}
-		tokens = remTokens
-
-		if expr != nil {
-			_, isSlice := expr.([]any)
-			if !isSlice {
-				return nil, errors.New("Syntax error: top-level expression must be enclosed in brackets")
-			}
-			fullTree = append(fullTree, expr)
+		if _, ok := e.([]any); !ok {
+			return nil, errors.New("top-level expression must be enclosed in brackets")
 		}
+		tree = append(tree, e)
 	}
-	return fullTree, nil
+	return tree, nil
 }
 
 func parseExp(tokens []string) (any, []string, error) {
-	if len(tokens) == 0 {
-		return nil, tokens, nil
-	}
+	tok, tokens := tokens[0], tokens[1:]
 
-	token := tokens[0]
-	tokens = tokens[1:]
-
-	if token == "(" {
+	switch {
+	case tok == "(":
 		var list []any
 		for len(tokens) > 0 && tokens[0] != ")" {
-			var expr any
+			var e any
 			var err error
-			expr, tokens, err = parseExp(tokens)
-			if err != nil {
-				return nil, tokens, err
+			if e, tokens, err = parseExp(tokens); err != nil {
+				return nil, nil, err
 			}
-			list = append(list, expr)
+			list = append(list, e)
 		}
-
 		if len(tokens) == 0 {
-			return nil, tokens, errors.New("Syntax error: missing closing bracket ')'")
+			return nil, nil, errors.New("missing closing bracket ')'")
 		}
-
-		tokens = tokens[1:]
-		return list, tokens, nil
+		return list, tokens[1:], nil
+	case tok == ")":
+		return nil, nil, errors.New("unexpected closing bracket ')'")
+	case tok[0] == '"':
+		s, err := strconv.Unquote(tok)
+		return Str(s), tokens, err
 	}
 
-	if token == ")" {
-		return nil, tokens, errors.New("Syntax error: unexpected closing bracket ')'")
+	if n, err := strconv.Atoi(tok); err == nil {
+		return n, tokens, nil
 	}
-
-	if token[0] == '"' {
-		s, err := parseStr(token)
-		if err != nil {
-			return nil, tokens, err
-		}
-		return s, tokens, nil
-	}
-
-	if val, err := strconv.Atoi(token); err == nil {
-		return val, tokens, nil
-	}
-
-	return token, tokens, nil
-}
-
-func parseStr(tok string) (Str, error) {
-	var sb strings.Builder
-	for i := 1; i < len(tok); i++ {
-		c := tok[i]
-		switch {
-		case c == '\\' && i+1 < len(tok):
-			i++
-			switch tok[i] {
-			case 'n':
-				sb.WriteByte('\n')
-			case 't':
-				sb.WriteByte('\t')
-			case '\\', '"':
-				sb.WriteByte(tok[i])
-			default:
-				return "", fmt.Errorf("unknown escape \\%c in string", tok[i])
-			}
-		case c == '"':
-			if i != len(tok)-1 {
-				return "", fmt.Errorf("unexpected quote inside string")
-			}
-			return Str(sb.String()), nil
-		default:
-			sb.WriteByte(c)
-		}
-	}
-	return "", fmt.Errorf("unterminated string literal")
+	return tok, tokens, nil
 }

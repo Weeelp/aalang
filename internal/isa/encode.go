@@ -2,6 +2,7 @@ package isa
 
 import (
 	"encoding/binary"
+	"errors"
 	"fmt"
 	"strings"
 )
@@ -18,21 +19,16 @@ const (
 	fmtJ
 )
 
-type opInfo struct {
-	code uint32
+var opList = []struct {
+	name string
 	f    format
-}
-
-var ops = map[string]opInfo{
-	"halt": {0, fmtN}, "ei": {1, fmtN}, "di": {2, fmtN}, "iret": {3, fmtN},
-	"add": {4, fmtR}, "sub": {5, fmtR}, "mul": {6, fmtR}, "div": {7, fmtR}, "rem": {8, fmtR},
-	"slt": {9, fmtR}, "sll": {10, fmtR}, "srl": {11, fmtR}, "sra": {12, fmtR},
-	"addi": {13, fmtI}, "slti": {14, fmtI}, "slli": {15, fmtI}, "srli": {16, fmtI}, "srai": {17, fmtI},
-	"lui": {18, fmtI}, "lw": {19, fmtI}, "lb": {20, fmtI}, "sw": {21, fmtI}, "sb": {22, fmtI},
-	"jalr": {23, fmtI}, "in": {24, fmtI}, "out": {25, fmtI},
-	"beq": {26, fmtB}, "bne": {27, fmtB}, "blt": {28, fmtB}, "bge": {29, fmtB},
-	"bltu": {30, fmtB}, "bgeu": {31, fmtB}, "beqz": {32, fmtB}, "bnez": {33, fmtB},
-	"j": {34, fmtJ}, "jal": {35, fmtJ},
+}{
+	{"halt", fmtN}, {"ei", fmtN}, {"di", fmtN}, {"iret", fmtN},
+	{"add", fmtR}, {"sub", fmtR}, {"mul", fmtR}, {"div", fmtR}, {"rem", fmtR},
+	{"addi", fmtI}, {"lui", fmtI}, {"lw", fmtI}, {"lb", fmtI}, {"sw", fmtI}, {"sb", fmtI},
+	{"jalr", fmtI}, {"in", fmtI}, {"out", fmtI},
+	{"beq", fmtB}, {"bne", fmtB}, {"blt", fmtB}, {"bge", fmtB}, {"bltu", fmtB}, {"beqz", fmtB},
+	{"j", fmtJ}, {"jal", fmtJ},
 }
 
 var regNames = [32]string{
@@ -42,13 +38,13 @@ var regNames = [32]string{
 }
 
 var (
-	byCode = map[uint32]string{}
+	opCode = map[string]uint32{}
 	regNum = map[string]uint32{}
 )
 
 func init() {
-	for name, info := range ops {
-		byCode[info.code] = name
+	for i, o := range opList {
+		opCode[o.name] = uint32(i)
 	}
 	for i, n := range regNames {
 		regNum[n] = uint32(i)
@@ -68,59 +64,37 @@ func reg(name string) (uint32, error) {
 	return n, nil
 }
 
-func fits(v, bits int) bool {
-	lim := 1 << (bits - 1)
-	return v >= -lim && v < lim
-}
+func fits(v, bits int) bool { return v >= -(1<<(bits-1)) && v < 1<<(bits-1) }
 
-func sext(v uint32, bits uint) int {
-	return int(int32(v<<(32-bits)) >> (32 - bits))
-}
+func sext(v uint32, bits uint) int { return int(int32(v<<(32-bits)) >> (32 - bits)) }
 
 func Encode(in Instruction, pc int) (uint32, error) {
-	info, ok := ops[in.Opcode]
+	code, ok := opCode[in.Opcode]
 	if !ok {
 		return 0, fmt.Errorf("unknown opcode %q", in.Opcode)
 	}
-	w := info.code << 26
+	rd, e1 := reg(in.Reg)
+	rs1, e2 := reg(in.Reg1)
+	rs2, e3 := reg(in.Reg2)
+	if err := errors.Join(e1, e2, e3); err != nil {
+		return 0, err
+	}
 
-	switch info.f {
-	case fmtN:
+	w, k := code<<26, in.Addr-pc
+	switch opList[code].f {
 	case fmtR:
-		rd, e1 := reg(in.Reg)
-		rs1, e2 := reg(in.Reg1)
-		rs2, e3 := reg(in.Reg2)
-		if e1 != nil || e2 != nil || e3 != nil {
-			return 0, fmt.Errorf("%s: bad register", in.Opcode)
-		}
 		w |= rd<<21 | rs1<<16 | rs2<<11
 	case fmtI:
-		rd, e1 := reg(in.Reg)
-		rs1, e2 := reg(in.Reg1)
-		if e1 != nil || e2 != nil {
-			return 0, fmt.Errorf("%s: bad register", in.Opcode)
-		}
 		if !fits(in.Value, 16) {
 			return 0, fmt.Errorf("%s: immediate %d does not fit in 16 bits", in.Opcode, in.Value)
 		}
 		w |= rd<<21 | rs1<<16 | uint32(in.Value)&0xFFFF
 	case fmtB:
-		rs1, e1 := reg(in.Reg1)
-		rs2, e2 := reg(in.Reg2)
-		if e1 != nil || e2 != nil {
-			return 0, fmt.Errorf("%s: bad register", in.Opcode)
-		}
-		k := in.Addr - pc
 		if !fits(k, 16) {
 			return 0, fmt.Errorf("%s: branch too far (%d)", in.Opcode, k)
 		}
 		w |= rs1<<21 | rs2<<16 | uint32(k)&0xFFFF
 	case fmtJ:
-		rd, err := reg(in.Reg)
-		if err != nil {
-			return 0, err
-		}
-		k := in.Addr - pc
 		if !fits(k, 21) {
 			return 0, fmt.Errorf("%s: jump too far (%d)", in.Opcode, k)
 		}
@@ -130,56 +104,51 @@ func Encode(in Instruction, pc int) (uint32, error) {
 }
 
 func Decode(w uint32, pc int) (Instruction, error) {
-	name, ok := byCode[w>>26]
-	if !ok {
-		return Instruction{}, fmt.Errorf("unknown opcode %d at pc=%d", w>>26, pc)
+	code := int(w >> 26)
+	if code >= len(opList) {
+		return Instruction{}, fmt.Errorf("unknown opcode %d at pc=%d", code, pc)
 	}
-	in := Instruction{Opcode: name}
-	switch ops[name].f {
+	f, a, b, c := opList[code].f, regNames[w>>21&31], regNames[w>>16&31], regNames[w>>11&31]
+	in := Instruction{Opcode: opList[code].name}
+	switch f {
 	case fmtR:
-		in.Reg, in.Reg1, in.Reg2 = regNames[w>>21&31], regNames[w>>16&31], regNames[w>>11&31]
+		in.Reg, in.Reg1, in.Reg2 = a, b, c
 	case fmtI:
-		in.Reg, in.Reg1 = regNames[w>>21&31], regNames[w>>16&31]
-		in.Value = sext(w&0xFFFF, 16)
+		in.Reg, in.Reg1, in.Value = a, b, sext(w&0xFFFF, 16)
 	case fmtB:
-		in.Reg1, in.Reg2 = regNames[w>>21&31], regNames[w>>16&31]
-		in.Addr = pc + sext(w&0xFFFF, 16)
+		in.Reg1, in.Reg2, in.Addr = a, b, pc+sext(w&0xFFFF, 16)
 	case fmtJ:
-		in.Reg = regNames[w>>21&31]
-		in.Addr = pc + sext(w&0x1FFFFF, 21)
+		in.Reg, in.Addr = a, pc+sext(w&0x1FFFFF, 21)
 	}
 	return in, nil
 }
 
 func (in Instruction) String() string {
-	info, ok := ops[in.Opcode]
+	code, ok := opCode[in.Opcode]
 	if !ok {
 		return in.Opcode
 	}
-	switch info.f {
-	case fmtN:
-		return in.Opcode
+	switch in.Opcode {
+	case "lw", "lb", "sw", "sb":
+		return fmt.Sprintf("%s %s, %d(%s)", in.Opcode, in.Reg, in.Value, in.Reg1)
+	case "in", "out", "lui":
+		return fmt.Sprintf("%s %s, %d", in.Opcode, in.Reg, in.Value)
+	case "beqz":
+		return fmt.Sprintf("beqz %s, 0x%04X", in.Reg1, in.Addr)
+	case "j":
+		return fmt.Sprintf("j 0x%04X", in.Addr)
+	case "jal":
+		return fmt.Sprintf("jal %s, 0x%04X", in.Reg, in.Addr)
+	}
+	switch opList[code].f {
 	case fmtR:
 		return fmt.Sprintf("%s %s, %s, %s", in.Opcode, in.Reg, in.Reg1, in.Reg2)
 	case fmtI:
-		switch in.Opcode {
-		case "lw", "lb", "sw", "sb":
-			return fmt.Sprintf("%s %s, %d(%s)", in.Opcode, in.Reg, in.Value, in.Reg1)
-		case "in", "out", "lui":
-			return fmt.Sprintf("%s %s, %d", in.Opcode, in.Reg, in.Value)
-		}
 		return fmt.Sprintf("%s %s, %s, %d", in.Opcode, in.Reg, in.Reg1, in.Value)
 	case fmtB:
-		if in.Opcode == "beqz" || in.Opcode == "bnez" {
-			return fmt.Sprintf("%s %s, 0x%04X", in.Opcode, in.Reg1, in.Addr)
-		}
 		return fmt.Sprintf("%s %s, %s, 0x%04X", in.Opcode, in.Reg1, in.Reg2, in.Addr)
-	default:
-		if in.Opcode == "j" {
-			return fmt.Sprintf("j 0x%04X", in.Addr)
-		}
-		return fmt.Sprintf("jal %s, 0x%04X", in.Reg, in.Addr)
 	}
+	return in.Opcode
 }
 
 func Assemble(code []Instruction, data []byte) ([]byte, string, error) {
@@ -191,36 +160,32 @@ func Assemble(code []Instruction, data []byte) ([]byte, string, error) {
 	var sb strings.Builder
 	sb.WriteString(".text\n")
 	for i, in := range code {
-		pc := i * 4
-		w, err := Encode(in, pc)
+		w, err := Encode(in, i*4)
 		if err != nil {
-			return nil, "", fmt.Errorf("at 0x%04X: %w", pc, err)
+			return nil, "", fmt.Errorf("at 0x%04X: %w", i*4, err)
 		}
 		bin = binary.LittleEndian.AppendUint32(bin, w)
-		d, _ := Decode(w, pc)
-		fmt.Fprintf(&sb, "%04X - %08X - %s\n", pc, w, d)
+		d, _ := Decode(w, i*4)
+		fmt.Fprintf(&sb, "%04X - %08X - %s\n", i*4, w, d)
 	}
 	sb.WriteString(".data\n")
 	for i := 0; i < len(data); i += 16 {
-		end := min(i+16, len(data))
-		fmt.Fprintf(&sb, "%04X - % X\n", i, data[i:end])
+		fmt.Fprintf(&sb, "%04X - % X\n", i, data[i:min(i+16, len(data))])
 	}
 	return append(bin, data...), sb.String(), nil
 }
 
 func Load(bin []byte) ([]Instruction, []byte, error) {
 	if len(bin) < 12 || string(bin[:4]) != Magic {
-		return nil, nil, fmt.Errorf("not a valid program file")
+		return nil, nil, errors.New("not a valid program file")
 	}
-	cs := int(binary.LittleEndian.Uint32(bin[4:]))
-	ds := int(binary.LittleEndian.Uint32(bin[8:]))
+	cs, ds := int(binary.LittleEndian.Uint32(bin[4:])), int(binary.LittleEndian.Uint32(bin[8:]))
 	if cs%4 != 0 || len(bin) != 12+cs+ds {
-		return nil, nil, fmt.Errorf("corrupted program file")
+		return nil, nil, errors.New("corrupted program file")
 	}
 	code := make([]Instruction, cs/4)
 	for i := range code {
-		w := binary.LittleEndian.Uint32(bin[12+i*4:])
-		in, err := Decode(w, i*4)
+		in, err := Decode(binary.LittleEndian.Uint32(bin[12+i*4:]), i*4)
 		if err != nil {
 			return nil, nil, err
 		}

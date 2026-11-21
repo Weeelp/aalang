@@ -6,3 +6,4 @@ tr: clean
 
 clean:
 	@rm -rf data/output/*
+	@rm -rf log/*
