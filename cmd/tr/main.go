@@ -13,6 +13,13 @@ import (
 
 const maxG = 5
 
+const (
+	cReset = "\033[0m"
+	cFile  = "\033[38;5;110m"
+	cOut   = "\033[38;5;108m"
+	cErr   = "\033[38;5;167m"
+)
+
 func main() {
 	cfg, err := config.Load("config.json")
 	if err == nil && len(cfg.SourceFile) == 0 {
@@ -25,11 +32,11 @@ func main() {
 		err = os.MkdirAll(cfg.TargetDir, 0o755)
 	}
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "Error:", err)
+		fmt.Fprintf(os.Stderr, "%sError: %v%s\n", cErr, err, cReset)
 		os.Exit(1)
 	}
 
-	var failed atomic.Bool
+	var fail atomic.Int64
 	var wg sync.WaitGroup
 	tasks := make(chan string)
 
@@ -37,8 +44,8 @@ func main() {
 		wg.Go(func() {
 			for src := range tasks {
 				if err := translator.Translate(src, cfg.TargetPath(src)); err != nil {
-					fmt.Printf("[%s] ERROR: %v\n", src, err)
-					failed.Store(true)
+					fmt.Printf("%s[%s]%s %sERROR: %v%s\n", cFile, src, cReset, cErr, err, cReset)
+					fail.Add(1)
 				}
 			}
 		})
@@ -50,7 +57,13 @@ func main() {
 	close(tasks)
 	wg.Wait()
 
-	if failed.Load() {
+	statusColor := cOut
+	if fail.Load() > 0 {
+		statusColor = cErr
+	}
+	fmt.Printf("%s%d / %d success.%s\n", statusColor, len(cfg.SourceFile)-int(fail.Load()), len(cfg.SourceFile), cReset)
+
+	if fail.Load() > 0 {
 		os.Exit(1)
 	}
 }

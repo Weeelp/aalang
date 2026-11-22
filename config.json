@@ -1,9 +1,36 @@
+
 {
-  "source_file": ["test/hello_world.lisp", "test/formater.lisp", "test/is_prime.lisp"],
+  "source_file": [
+    "test/hello_world.lisp",
+    "test/cat.lisp",
+    "test/hello_user_name.lisp",
+    "test/is_prime.lisp",
+    "test/recursion.lisp",
+    "test/expressions.lisp",
+    "test/sort.lisp",
+    "test/double_precision.lisp",
+    "test/linear_filter.lisp",
+    "test/formater.lisp",
+    "test/irq_overrun.lisp",
+    "test/irq_nested.lisp"
+  ],
   "target_dir": "data/output",
-  "input_file": ["", "data/input/formater.txt", "data/input/is_prime.txt"],
+  "input_file": [
+    "",
+    "data/input/cat.txt",
+    "data/input/hello_user_name.txt",
+    "data/input/is_prime.txt",
+    "",
+    "",
+    "data/input/sort.txt",
+    "",
+    "",
+    "data/input/formater.txt",
+    "data/input/irq_overrun.txt",
+    "data/input/irq_nested.txt"
+  ],
   "journal_file": "log/journal.log",
   "input_first_tick": 100,
-  "input_period": 100,
+  "input_period": 1000,
   "cache_off": false
 }

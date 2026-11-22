@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/Weeelp/aalang/internal/config"
 	"github.com/Weeelp/aalang/internal/isa"
@@ -10,6 +11,14 @@ import (
 )
 
 const maxTicks = 5_000_000
+
+const (
+	cReset = "\033[0m"
+	cFile  = "\033[38;5;110m"
+	cOut   = "\033[38;5;108m"
+	cNum   = "\033[38;5;180m"
+	cErr   = "\033[38;5;167m"
+)
 
 func main() {
 	path := "config.json"
@@ -22,19 +31,27 @@ func main() {
 			len(cfg.InputFile), len(cfg.SourceFile))
 	}
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		fmt.Fprintf(os.Stderr, "%sERROR: %v%s\n", cErr, err, cReset)
 		os.Exit(1)
 	}
 
-	exit := 0
+	fail := 0
 	for k, src := range cfg.SourceFile {
-		fmt.Printf("> %s\n", src)
+		fmt.Printf("\n%s[%s]%s\n", cFile, src, cReset)
 		if err := run(cfg, src, cfg.InputFile[k]); err != nil {
-			fmt.Printf("ERROR: %v\n", err)
-			exit = 1
+			fmt.Printf("  %sERROR: %v%s\n", cErr, err, cReset)
+			fail++
 		}
 	}
-	os.Exit(exit)
+
+	statusColor := cOut
+	if fail > 0 {
+		statusColor = cErr
+	}
+	fmt.Printf("\n%s%d / %d failed.%s\n", statusColor, len(cfg.SourceFile)-fail, len(cfg.SourceFile), cReset)
+	if fail > 0 {
+		os.Exit(1)
+	}
 }
 
 func run(cfg *config.Config, src, inputPath string) error {
@@ -70,11 +87,28 @@ func run(cfg *config.Config, src, inputPath string) error {
 	}
 
 	if cpu.Fault != "" {
-		fmt.Println("FAULT:", cpu.Fault)
+		fmt.Printf("  %sFAULT: %s%s\n", cErr, cpu.Fault, cReset)
 	}
-	fmt.Printf("Output: %q\n", cpu.Dev.Output)
-	fmt.Printf("Ticks: %d, instructions: %d, overruns: %d, cache: enabled=%t hits=%d misses=%d\n",
-		cpu.Tick, cpu.Instructions, cpu.Dev.Overruns,
-		cpu.Cache.Enabled, cpu.Cache.Hits, cpu.Cache.Misses)
+
+	out := strings.TrimSuffix(string(cpu.Dev.Output), "\n")
+	if out != "" {
+		fmt.Printf("  Output:\n")
+		for _, line := range strings.Split(out, "\n") {
+			fmt.Printf("    %s%s%s\n", cOut, line, cReset)
+		}
+	} else {
+		fmt.Printf("  Output: %s(none)%s\n", cNum, cReset)
+	}
+
+	fmt.Printf("  CPU:   ticks=%s%d%s | instr=%s%d%s | overruns=%s%d%s\n",
+		cNum, cpu.Tick, cReset,
+		cNum, cpu.Instructions, cReset,
+		cNum, cpu.Dev.Overruns, cReset)
+
+	fmt.Printf("  Cache: enabled=%t | hits=%s%d%s | misses=%s%d%s\n",
+		cpu.Cache.Enabled,
+		cNum, cpu.Cache.Hits, cReset,
+		cNum, cpu.Cache.Misses, cReset)
+
 	return nil
 }

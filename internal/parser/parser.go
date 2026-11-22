@@ -3,6 +3,7 @@ package parser
 import (
 	"errors"
 	"strconv"
+	"strings"
 )
 
 type Str string
@@ -44,7 +45,9 @@ func parseExp(tokens []string) (any, []string, error) {
 	case tok == ")":
 		return nil, nil, errors.New("unexpected closing bracket ')'")
 	case tok[0] == '"':
-		s, err := strconv.Unquote(tok)
+		raw := strings.ReplaceAll(tok, "\r", "")
+		raw = strings.ReplaceAll(raw, "\n", `\n`)
+		s, err := strconv.Unquote(raw)
 		return Str(s), tokens, err
 	}
 

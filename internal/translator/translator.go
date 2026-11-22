@@ -10,6 +10,12 @@ import (
 	"github.com/Weeelp/aalang/internal/parser"
 )
 
+const (
+	cReset = "\033[0m"
+	cFile  = "\033[38;5;110m"
+	cNum   = "\033[38;5;180m"
+)
+
 func Translate(src, dst string) error {
 	content, err := os.ReadFile(src)
 	if err != nil {
@@ -33,6 +39,11 @@ func Translate(src, dst string) error {
 	if err := os.WriteFile(dst+".hex", []byte(listing), 0o644); err != nil {
 		return fmt.Errorf("writing listing: %w", err)
 	}
-	fmt.Printf("[%s] -> %s: %d instructions, %d data bytes\n", src, dst, len(code), len(data))
+
+	fmt.Printf("%s[%s]%s -> %s: %s%d%s instructions, %s%d%s data bytes\n",
+		cFile, src, cReset,
+		dst,
+		cNum, len(code), cReset,
+		cNum, len(data), cReset)
 	return nil
 }
