@@ -306,7 +306,7 @@ func (p *Processor) finishMem() {
 		if !m.hit {
 			w = p.word(wa)
 			if idx, old := p.Cache.fill(wa, w); idx >= 0 {
-				p.logf("CACHE  fill line %d addr=%d (evicted valid=%t addr=%d)", idx, wa, old.valid, old.addr)
+				p.logf("CACHE  fill line %d addr=%d (evicted valid=%t addr=%d)", idx, wa, old.valid, p.Cache.addrOf(old))
 			}
 		}
 		if p.ir.Opcode == "lb" {

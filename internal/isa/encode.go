@@ -24,10 +24,11 @@ var opList = []struct {
 	f    format
 }{
 	{"halt", fmtN}, {"ei", fmtN}, {"di", fmtN}, {"iret", fmtN},
-	{"add", fmtR}, {"sub", fmtR}, {"mul", fmtR}, {"div", fmtR}, {"rem", fmtR},
-	{"addi", fmtI}, {"lui", fmtI}, {"lw", fmtI}, {"lb", fmtI}, {"sw", fmtI}, {"sb", fmtI},
-	{"jalr", fmtI}, {"in", fmtI}, {"out", fmtI},
-	{"beq", fmtB}, {"bne", fmtB}, {"blt", fmtB}, {"bge", fmtB}, {"bltu", fmtB}, {"beqz", fmtB},
+	{"add", fmtR}, {"sub", fmtR}, {"mul", fmtR}, {"div", fmtR},
+	{"rem", fmtR}, {"addi", fmtI}, {"lui", fmtI}, {"lw", fmtI},
+	{"lb", fmtI}, {"sw", fmtI}, {"sb", fmtI}, {"jalr", fmtI},
+	{"in", fmtI}, {"out", fmtI}, {"beq", fmtB}, {"bne", fmtB},
+	{"blt", fmtB}, {"bge", fmtB}, {"bltu", fmtB}, {"beqz", fmtB},
 	{"j", fmtJ}, {"jal", fmtJ},
 }
 

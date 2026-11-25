@@ -48,7 +48,7 @@ func main() {
 	if fail > 0 {
 		statusColor = cErr
 	}
-	fmt.Printf("\n%s%d / %d failed.%s\n", statusColor, len(cfg.SourceFile)-fail, len(cfg.SourceFile), cReset)
+	fmt.Printf("\n%s%d / %d success.%s\n", statusColor, len(cfg.SourceFile)-fail, len(cfg.SourceFile), cReset)
 	if fail > 0 {
 		os.Exit(1)
 	}
